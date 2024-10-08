@@ -1,0 +1,163 @@
+/* Reset and Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #6a9a4a; /* Green */
+    padding: 10px 30px;
+    color: white;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px; /* Reduced height */
+    width: 40px; /* Reduced width for a smaller circular logo */
+    border-radius: 50%; /* Fully circular logo */
+    box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.4); /* Subtle drop shadow */
+    object-fit: cover; /* Ensures the image covers the container */
+    border: none; /* No border or stroke */
+    background-color: #ddd; /* No background color */
+    margin-right: 15px; /* Adjust spacing if needed */
+    transform: scale(1.1); /* Slightly increase the image size */
+    overflow: hidden; /* Ensure the image doesn't overflow the container */
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar-items span {
+    margin: 0 15px;
+    cursor: pointer; /* Make navbar items clickable */
+    font-weight: bold;
+}
+
+.icons .icon {
+    margin: 0 10px;
+    cursor: pointer; /* Ensure icons are clickable */
+}
+
+/* Carousel Wrapper to prevent overlap */
+.carousel-wrapper {
+    padding-bottom: 50px; /* Add spacing between carousel and other sections */
+}
+
+/* Carousel Container */
+.carousel-container {
+    height: 70vh; /* Adjust height to a smaller size */
+    width: 100%;
+    margin: 0 auto;
+}
+
+.carousel-item img {
+    height: 100%; /* Ensure images take the full height of the container */
+    object-fit: contain; /* Ensure the image fits within the container without distortion */
+    width: auto; /* Maintain aspect ratio */
+}
+
+/* Carousel Navigation */
+.carousel-control-prev,
+.carousel-control-next {
+    filter: invert(100%); /* Invert the arrow colors to make them visible */
+}
+
+/* Product Container */
+.product-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Wrap items to handle smaller screens */
+    padding: 20px;
+    gap: 20px; /* Space between product cards */
+}
+
+/* Product Card Styling */
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: white;
+    text-align: center;
+    width: 250px; /* Fixed width for consistency */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for better appearance */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.product-card:hover {
+    transform: scale(1.05); /* Enlarge slightly on hover */
+}
+
+.product-image {
+    width: 100%; /* Ensure the image fills the width of the card */
+    height: auto; /* Maintain the aspect ratio */
+    border-radius: 8px; /* Optional: Add rounded corners to the image */
+    object-fit: cover; /* Ensure the image fits within the container without stretching */
+}
+
+/* Product Types Section */
+.product-types {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Type Items in Flexbox */
+.type-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Wrap items for smaller screens */
+    gap: 20px; /* Space between types */
+}
+
+.type-item {
+    margin: 10px;
+    background-color: #9a4a8b; /* Purple */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer; /* Clickable type items */
+    transition: background-color 0.3s ease;
+}
+
+.type-item:hover {
+    background-color: #813b70; /* Darken on hover */
+}
+
+/* Footer Styling */
+.footer {
+    text-align: center;
+    background-color: #6a9a4a; /* Green */
+    color: white;
+    padding: 20px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-size: 1rem;
+}
+
+/* Footer Links and Social Media Icons */
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}

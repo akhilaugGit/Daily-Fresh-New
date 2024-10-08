@@ -1,0 +1,65 @@
+.home-container {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
+/* Parallax effect */
+.parallax-section {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 3rem;
+  font-weight: bold;
+  filter: brightness(75%); /* Adjust brightness as needed */
+}
+
+.parallax1 {
+  background-image: url('../assets/fishing.png'); /* Replace with your fisherman image path */
+}
+
+.parallax2 {
+  background-image: url('../assets/under.png'); /* Replace with your underwater image path */
+}
+
+.parallax3 {
+  background-image: url('../assets/platefish.jpg'); /* Replace with your plate image path */
+}
+
+/* Fixed fish image */
+.fish-image {
+  position: fixed;
+  bottom: 30vh; /* Adjust based on where you want the fish to start */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px; /* Adjust size as needed */
+  z-index: 10; /* Ensure it's above the parallax sections */
+}
+
+
+.fish-imagei {
+width: 1800px;
+
+}
+
+
+
+
+/* Content section */
+.content {
+  text-align: center;
+  background: rgba(106, 98, 98, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+}
