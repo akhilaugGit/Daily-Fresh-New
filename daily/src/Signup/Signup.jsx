@@ -57,6 +57,10 @@ function Signup() {
 
   return (
     <div className="bg-image">
+      {/* Logo added here */}
+      <div className="logo-container">
+        <img src="../assets/file.png" alt="Logo" className="logo" />
+      </div>
       <div className="container">
         <div className="left-section"></div>
         <div className="right-section">

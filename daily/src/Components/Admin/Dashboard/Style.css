@@ -16,7 +16,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #46ac46; /* Green */
+    background-color: #22a322; /* Green */
     padding: 10px 30px;
     color: white;
 }
@@ -27,8 +27,8 @@ body {
 }
 
 .logo {
-    height: 40px; /* Reduced height */
-    width: 40px; /* Reduced width for a smaller circular logo */
+    height: 35px; /* Reduced height */
+    width: 35px; /* Reduced width for a smaller circular logo */
     border-radius: 50%; /* Fully circular logo */
     box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.4); /* Subtle drop shadow */
     object-fit: cover; /* Ensures the image covers the container */

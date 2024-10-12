@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddProduct.css';
 
-
 const AddProduct = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -10,30 +9,51 @@ const AddProduct = () => {
     const [imageUrl, setImage] = useState('');
     const [category, setCategory] = useState('fish'); // Default category
     const [subcategory, setSubcategory] = useState(''); // Subcategory field
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Clear previous error message
+        setErrorMessage('');
+
+        // Validate price
+        if (price <= 0) {
+            setErrorMessage('Price must be greater than 0.');
+            return;
+        }
+        if (price > 100000) {
+            setErrorMessage('Price cannot exceed 100,000.');
+            return;
+        }
+
+        // Proceed if validations pass
         try {
             const data = {
-                name:name,
-                description:description,
-                price:price,
-                imageUrl:imageUrl,
-                category:category,
-                subcategory:setCategory
-            }
-            console.log(data);
-            const response = await axios.post('http://localhost:3001/api/product/add', {
                 name,
                 description,
                 price,
                 imageUrl,
-                category,  // Include category in request
-                subcategory // Include subcategory in request
-            });
+                category,
+                subcategory
+            };
+
+            console.log(data);  // For debugging
+
+            const response = await axios.post('http://localhost:3001/api/product/add', data);
             alert(response.data.message);
+
+            // Reset form fields
+            setName('');
+            setDescription('');
+            setPrice('');
+            setImage('');
+            setCategory('fish');
+            setSubcategory('');
+
         } catch (error) {
             console.error("There was an error adding the product!", error);
+            setErrorMessage('There was an error adding the product. Please try again.');
         }
     };
 
@@ -58,6 +78,8 @@ const AddProduct = () => {
                 value={price} 
                 onChange={(e) => setPrice(e.target.value)} 
                 required 
+                min="1"
+                max="100000"
             />
             <input 
                 type="text" 
@@ -81,6 +103,8 @@ const AddProduct = () => {
                 onChange={(e) => setSubcategory(e.target.value)} 
                 required 
             />
+
+            {errorMessage && <p className="error-message">{errorMessage}</p>}  {/* Display error message */}
 
             <button type="submit">Add Product</button>
         </form>

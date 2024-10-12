@@ -127,7 +127,15 @@ body, html {
     transition: border-bottom 0.3s ease; /* Line extends on hover */
 }
 
-
+.btn.btn-success.w-100 {
+    background-color: purple;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px 20px;
+    cursor: pointer;
+}
 
 p {
     text-align: center;
