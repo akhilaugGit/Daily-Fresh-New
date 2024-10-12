@@ -12,24 +12,17 @@ const Home = () => {
       {/* Section 1: Fisherman in a boat */}
       <section className="parallax-section parallax1">
         <div className="content">
-          <h1>From Waves</h1>
+          <h1> </h1>
        
         <Link to="/register" className="btn btn-default border" type="button">
-              Register
+              Dive
             </Link>
             </div>
       </section>
 
       
 
-      {/* Section 3: Fish falling effect */}
-      <section className="parallax-section parallax3">
-      <div className="content">
-          <h1>to Plates</h1>
-        </div>
-      </section>
-
-      {/* Fixed fish image */}
+      
       
     </div>
   );

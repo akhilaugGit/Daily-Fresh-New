@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { addProduct, editProduct, deleteProduct } = require('../controller/productcontroller');
+const { addProduct, editProduct, deleteProduct, viewProduct, viewProductById } = require('../controller/Productcontroller');
 
-// Route to add a new product
 router.post('/add', addProduct);
 
-// Route to edit an existing product
-router.put('/edit/:id', editProduct);  // The product ID will be passed as a URL parameter
+router.put('/edit/:id', editProduct);
+router.put('/editProduct/:id', editProduct);
 
-// Route to delete a product
-router.delete('/delete/:id', deleteProduct);  // The product ID will be passed as a URL parameter
+router.delete('/delete/:id', deleteProduct);
+
+
+router.get('/view-product', viewProduct);
+
+router.get('/view-product/:id', viewProductById);
 
 module.exports = router;

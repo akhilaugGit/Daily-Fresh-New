@@ -1,10 +1,33 @@
 const Product = require('../models/Productmodel');
 
+// Get all products (Mapped to viewProduct)
+const viewProduct = async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching products', error });
+    }
+};
+
+// Get product by ID (Mapped to viewProductById)
+const viewProductById = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching product', error });
+    }
+};
+
 // Add a new product
 const addProduct = async (req, res) => {
     try {
         const { name, description, price, imageUrl, category, subcategory } = req.body;
-        console.log(imageUrl);
+
         // Ensure the category is either 'fish' or 'poultry'
         if (!['fish', 'poultry'].includes(category)) {
             return res.status(400).json({ message: 'Invalid category. Must be fish or poultry.' });
@@ -26,20 +49,16 @@ const addProduct = async (req, res) => {
     }
 };
 
-// Edit an existing product
+// Edit Product
 const editProduct = async (req, res) => {
+    const { id } = req.params;
+    const { name, description, price, category, imageUrl } = req.body;
+
     try {
-        const { id } = req.params;
-        const { name, description, price, imageUrl, category, subcategory } = req.body;
-
-        // Ensure the category is either 'fish' or 'poultry'
-        if (!['fish', 'poultry'].includes(category)) {
-            return res.status(400).json({ message: 'Invalid category. Must be fish or poultry.' });
-        }
-
+        // Find product by ID and update
         const updatedProduct = await Product.findByIdAndUpdate(
             id,
-            { name, description, price, imageUrl, category, subcategory },
+            { name, description, price, category, imageUrl },
             { new: true }  // Return the updated product
         );
 
@@ -47,9 +66,10 @@ const editProduct = async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        res.status(200).json({ message: 'Product updated successfully', product: updatedProduct });
+        res.json({ message: 'Product updated successfully', updatedProduct });
     } catch (error) {
-        res.status(500).json({ message: 'Error updating product', error: error.message });
+        console.error("Error updating product:", error);
+        res.status(500).json({ message: 'Error updating product', error });
     }
 };
 
@@ -57,7 +77,7 @@ const editProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
-
+        console.log(`Deleting product with ID: ${id}`);
         const deletedProduct = await Product.findByIdAndDelete(id);
 
         if (!deletedProduct) {
@@ -70,8 +90,11 @@ const deleteProduct = async (req, res) => {
     }
 };
 
+// Export the functions
 module.exports = {
     addProduct,
     editProduct,
-    deleteProduct
+    deleteProduct,
+    viewProduct,       
+    viewProductById
 };

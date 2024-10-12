@@ -22,7 +22,7 @@ function ForgotPassword() {
     if (!validateEmail(email)) {
       setError('Please enter a valid email address.');
     } else {
-      axios.post('http://localhost:3001/forgotpassword', { email })
+      axios.post('http://localhost:3001/api/auth/forgotpassword', { email })
         .then(result => {
           console.log("Response:", result.data);
           if (result.data.Status === 'success') {

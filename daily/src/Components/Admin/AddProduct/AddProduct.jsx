@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddProduct.css';
 
+
 const AddProduct = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');

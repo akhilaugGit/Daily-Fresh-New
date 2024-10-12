@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 // Use routes
 app.use('/api', indexRoutes);
 
-// Handle 404 Errors
+
 app.use((req, res, next) => {
   res.status(404).json({ message: 'Route not found' });
 });

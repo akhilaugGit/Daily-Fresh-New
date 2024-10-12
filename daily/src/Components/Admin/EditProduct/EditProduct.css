@@ -1,0 +1,93 @@
+/* General container styling */
+.edit-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: 
+        url('../../../assets/edit.jpg'); /* Add your background image path here */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the image */
+    font-family: Arial, sans-serif;
+    position: relative; /* Add this to ensure children are positioned correctly */
+}
+
+/* Form container styling */
+.edit-product form {
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Heading styling */
+.edit-product h2 {
+    text-align: center;
+    color: #4caf50;  /* Green color for heading */
+    margin-bottom: 20px;
+}
+
+/* Form field styling */
+.edit-product form div {
+    margin-bottom: 15px;
+}
+
+.edit-product label {
+    display: block;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.edit-product input[type="text"],
+.edit-product input[type="number"],
+.edit-product textarea,
+.edit-product select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+.edit-product input[type="text"]:focus,
+.edit-product input[type="number"]:focus,
+.edit-product textarea:focus,
+.edit-product select:focus {
+    border-color: #6c63ff;  /* Violet color for focus state */
+    outline: none;
+}
+
+/* Button styling */
+.edit-product button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4caf50;  /* Green button */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-product button:hover {
+    background-color: #45a049;  /* Darker green on hover */
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+    .edit-product form {
+        padding: 15px;
+    }
+
+    .edit-product h2 {
+        font-size: 20px;
+    }
+}
