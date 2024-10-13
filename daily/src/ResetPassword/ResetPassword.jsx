@@ -57,6 +57,7 @@ function ResetPassword() {
                 className="form-control rounded-0"
                 onChange={(e) => setPassword(e.target.value)}
               />
+<p>Password must be at least 8 characters long, contain at least 1 uppercase letter, and have no spaces</p>
               {error && <p className="error-text">{error}</p>}
             </div>
             <button className="btn btn-success w-100" type="submit">

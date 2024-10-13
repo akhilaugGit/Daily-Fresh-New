@@ -8,12 +8,13 @@ function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({ email: '', password: '' });
+  const [errors, setErrors] = useState({ username: '', email: '', password: '' });
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const navigate = useNavigate();
 
-  // Email validation function
+  // Email validation function with added top-level domain check
   const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|org|in|co\.in)$/;
     return emailRegex.test(email);
   };
 
@@ -22,30 +23,87 @@ function Signup() {
     const hasUpperCase = /[A-Z]/.test(password);  // Check for at least one uppercase letter
     const hasNoSpaces = !/\s/.test(password);  // Check for no white spaces
     const isValidLength = password.length >= 8;  // Ensure at least 8 characters
-
     return hasUpperCase && hasNoSpaces && isValidLength;
+  };
+
+  // Username validation
+  const validateUsername = (username) => {
+    return username.trim().length > 0;
+  };
+
+  // Live validation for username
+  const handleUsernameChange = (e) => {
+    const usernameValue = e.target.value;
+    setUsername(usernameValue);
+
+    if (!validateUsername(usernameValue)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        username: 'Name is required.'
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        username: ''
+      }));
+    }
+
+    checkAllFields(usernameValue, email, password);
+  };
+
+  // Live validation for email
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue);
+
+    if (!validateEmail(emailValue)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: 'Please enter a valid email address.'
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: ''
+      }));
+    }
+
+    checkAllFields(username, emailValue, password);
+  };
+
+  // Live validation for password
+  const handlePasswordChange = (e) => {
+    const passwordValue = e.target.value;
+    setPassword(passwordValue);
+
+    if (!validatePassword(passwordValue)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: 'Password must be at least 8 characters long, contain at least 1 uppercase letter, and have no spaces.'
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: ''
+      }));
+    }
+
+    checkAllFields(username, email, passwordValue);
+  };
+
+  // Check if all fields are valid
+  const checkAllFields = (username, email, password) => {
+    if (validateUsername(username) && validateEmail(email) && validatePassword(password)) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let emailError = '';
-    let passwordError = '';
-
-    // Email validation
-    if (!validateEmail(email)) {
-      emailError = 'Please enter a valid email address.';
-    }
-
-    // Password validation
-    if (!validatePassword(password)) {
-      passwordError = 'Password must be at least 8 characters long, contain at least 1 uppercase letter, and have no spaces.';
-    }
-
-    if (emailError || passwordError) {
-      setErrors({ email: emailError, password: passwordError });
-    } else {
-      // If validation passes, proceed to submit
+    if (!isButtonDisabled) {
       axios.post('http://localhost:3001/api/auth/register', { username, email, password })
         .then(result => {
           console.log(result);
@@ -57,10 +115,6 @@ function Signup() {
 
   return (
     <div className="bg-image">
-      {/* Logo added here */}
-      <div className="logo-container">
-        <img src="../assets/file.png" alt="Logo" className="logo" />
-      </div>
       <div className="container">
         <div className="left-section"></div>
         <div className="right-section">
@@ -74,9 +128,12 @@ function Signup() {
                 type="text"
                 className="form-control rounded-0"
                 name="name"
-                onChange={(e) => setUsername(e.target.value)}
+                value={username}
+                onChange={handleUsernameChange}
               />
+              {errors.username && <p className="error-text">{errors.username}</p>}
             </div>
+
             <div className="mb-3">
               <label htmlFor="email">
                 <strong>Email</strong>
@@ -85,10 +142,12 @@ function Signup() {
                 type="email"
                 name="email"
                 className="form-control rounded-0"
-                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                onChange={handleEmailChange}
               />
               {errors.email && <p className="error-text">{errors.email}</p>}
             </div>
+
             <div className="mb-3">
               <label htmlFor="password">
                 <strong>Password</strong>
@@ -97,14 +156,21 @@ function Signup() {
                 type="password"
                 name="password"
                 className="form-control rounded-0"
-                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                onChange={handlePasswordChange}
               />
               {errors.password && <p className="error-text">{errors.password}</p>}
             </div>
-            <button className="btn btn-success w-100" type="submit">
+
+            <button
+              className="btn btn-success w-100"
+              type="submit"
+              disabled={isButtonDisabled}
+            >
               Register
             </button>
           </form>
+
           <p className="text-center mt-3">
             Already have an account?{' '}
             <Link to="/login" className="btn btn-default border" type="button">

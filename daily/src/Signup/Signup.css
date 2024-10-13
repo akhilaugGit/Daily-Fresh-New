@@ -13,7 +13,7 @@ body, html {
 
 
 .bg-image {
-    background-image: url('../assets/background.png'); /* Correctly specifying the path */
+    background-image: url('../assets/background1.png'); /* Correctly specifying the path */
     background-size: cover;
     background-position: center;
     height: 100vh;

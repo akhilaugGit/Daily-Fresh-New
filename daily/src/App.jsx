@@ -10,6 +10,8 @@ import ResetPassword from './ResetPassword/ResetPassword';
 import AddProduct from './Components/Admin/AddProduct/AddProduct'; // Import AddProduct component
 import ProductList from './Components/Admin/Dashboard/ProductList/ProductList'; // Import ProductList component
 import EditProduct from './Components/Admin/EditProduct/EditProduct'; // Import EditProduct component
+import Udashboard from './Components/User/Udashboard/Udashboard';
+import Cart from './Components/User/Udashboard/Cart/Cart';
 
 
 function App() {
@@ -25,6 +27,9 @@ function App() {
         <Route path='/edit-product/:id' element={<EditProduct />} /> {/* Route for editing products */}
         <Route path='/products' element={<ProductList />} /> {/* Route for viewing all products */}
         <Route path='/resetpassword/:userId/:token' element={<ResetPassword />} />
+        <Route path='/udashboard' element={<Udashboard />} />
+        <Route path='/cart' element={<Cart />} />
+
       </Routes>
     </BrowserRouter>
   );
