@@ -7,7 +7,7 @@ const Unavbar = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem('userVerified');
+        localStorage.removeItem('token');
         navigate('/login');
     };
 

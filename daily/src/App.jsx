@@ -11,8 +11,7 @@ import AddProduct from './Components/Admin/AddProduct/AddProduct'; // Import Add
 import ProductList from './Components/Admin/Dashboard/ProductList/ProductList'; // Import ProductList component
 import EditProduct from './Components/Admin/EditProduct/EditProduct'; // Import EditProduct component
 import Udashboard from './Components/User/Udashboard/Udashboard';
-import Cart from './Components/User/Udashboard/Cart/Cart';
-
+import Cart from './Components/User/Cart';
 
 function App() {
   return (
@@ -29,6 +28,7 @@ function App() {
         <Route path='/resetpassword/:userId/:token' element={<ResetPassword />} />
         <Route path='/udashboard' element={<Udashboard />} />
         <Route path='/cart' element={<Cart />} />
+
 
       </Routes>
     </BrowserRouter>

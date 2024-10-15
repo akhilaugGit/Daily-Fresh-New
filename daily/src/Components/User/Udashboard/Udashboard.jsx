@@ -69,6 +69,7 @@ const Udashboard = () => {
                 {filteredProducts.map((product) => (
                     <ProductCard
                         key={product._id}
+                        productId={product._id} // Pass productId here
                         imageUrl={product.imageUrl}
                         name={product.name}
                         description={product.description}

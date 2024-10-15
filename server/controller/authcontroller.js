@@ -80,7 +80,7 @@ const forgotPassword = async (req, res) => {
             service: 'gmail',
             auth: {
                 user: 'akhilaugustine2025@mca.ajce.in',
-                pass: '' // Use environment variables for security in production
+                pass: 'xbqzjtphrndrqkdu' // Use environment variables for security in production
             }
         });
 
