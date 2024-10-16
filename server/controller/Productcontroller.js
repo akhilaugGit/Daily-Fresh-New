@@ -1,6 +1,6 @@
 const Product = require('../models/Productmodel');
 
-// Get all products (Mapped to viewProduct)
+// Get all products
 const viewProduct = async (req, res) => {
     try {
         const products = await Product.find();
@@ -10,7 +10,7 @@ const viewProduct = async (req, res) => {
     }
 };
 
-// Get product by ID (Mapped to viewProductById)
+// Get product by ID
 const viewProductById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
@@ -55,7 +55,6 @@ const editProduct = async (req, res) => {
     const { name, description, price, category, imageUrl } = req.body;
 
     try {
-        // Find product by ID and update
         const updatedProduct = await Product.findByIdAndUpdate(
             id,
             { name, description, price, category, imageUrl },
@@ -68,7 +67,6 @@ const editProduct = async (req, res) => {
 
         res.json({ message: 'Product updated successfully', updatedProduct });
     } catch (error) {
-        console.error("Error updating product:", error);
         res.status(500).json({ message: 'Error updating product', error });
     }
 };
@@ -77,7 +75,6 @@ const editProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(`Deleting product with ID: ${id}`);
         const deletedProduct = await Product.findByIdAndDelete(id);
 
         if (!deletedProduct) {

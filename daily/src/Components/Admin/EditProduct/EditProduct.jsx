@@ -16,9 +16,9 @@ const EditProduct = () => {
 
     useEffect(() => {
         // Fetch the product by ID
-        axios.get(`http://localhost:3001/api/product/${id}`)
+        axios.get(`http://localhost:3001/api/product/view-products/${id}`)
             .then(response => {
-                setProduct(response.data);
+                setProduct(response.data);  // Pre-fill the form with current product data
             })
             .catch(error => {
                 console.error("There was an error fetching the product!", error);
@@ -75,7 +75,6 @@ const EditProduct = () => {
                 </div>
                 <div>
                     <label>Category:</label>
-                    {/* Category Dropdown */}
                     <select 
                         name="category"
                         value={product.category} 
