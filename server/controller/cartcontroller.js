@@ -44,7 +44,6 @@ const addItemToCart = async (req, res) => {
     }
 };
 
-
 // View cart items
 const viewCart = async (req, res) => {
     try {
@@ -57,8 +56,12 @@ const viewCart = async (req, res) => {
         // If no cart is found, return a 404 error
         if (!cart) return res.status(404).json({ message: 'Cart not found' });
 
-        // Populate the productId field in products array
-        await cart.populate('products.productId'); // Directly use populate
+        // Populate the productId field with details from the Product model
+        await cart.populate({
+            path: 'products.productId',
+            model: 'Product',
+            select: 'name price imageUrl' // Select only the fields you need
+        });
 
         console.log("Cart after population:", cart);
 
@@ -69,7 +72,6 @@ const viewCart = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 
 // Update item quantity in cart
 const updateItemQuantity = async (req, res) => {

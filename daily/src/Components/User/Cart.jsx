@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Cart.css'
+import './Cart.css';
 
 const Cart = () => {
   const [cart, setCart] = useState({ products: [] }); // Default empty cart products array
   const [totalPrice, setTotalPrice] = useState(0);
-  
+
   // Fetch token from localStorage
   const token = localStorage.getItem('token');
 
@@ -41,7 +41,10 @@ const Cart = () => {
   // Calculate total price based on products in the cart
   const calculateTotalPrice = (products) => {
     const total = products.reduce((sum, product) => {
-      return sum + product.productId.price * product.quantity;
+      if (product.productId) { // Add a safety check to ensure productId exists
+        return sum + product.productId.price * product.quantity;
+      }
+      return sum; // If productId is missing, skip it
     }, 0);
     setTotalPrice(total); // Set the total price state
   };
@@ -96,20 +99,22 @@ const Cart = () => {
       {cart.products.length > 0 ? (
         <>
           {cart.products.map((product) => (
-            <div key={product.productId._id} className="cart-item">
-            <img src={product.productId.imageUrl}/>
-              <h3>{product.productId.name}</h3>
-              <p>Price: ${product.productId.price}</p>
-              <p>Quantity: 
-                <input
-                  type="number"
-                  value={product.quantity}
-                  onChange={(e) => updateQuantity(product.productId._id, parseInt(e.target.value))}
-                  min="1"
-                />
-              </p>
-              <button onClick={() => removeItem(product.productId._id)}>Remove</button>
-            </div>
+            product.productId && ( // Only render if productId exists
+              <div key={product.productId._id} className="cart-item">
+                <img src={product.productId.imageUrl} alt={product.productId.name} />
+                <h3>{product.productId.name}</h3>
+                <p>Price: ${product.productId.price}</p>
+                <p>Quantity: 
+                  <input
+                    type="number"
+                    value={product.quantity}
+                    onChange={(e) => updateQuantity(product.productId._id, parseInt(e.target.value))}
+                    min="1"
+                  />
+                </p>
+                <button onClick={() => removeItem(product.productId._id)}>Remove</button>
+              </div>
+            )
           ))}
           <h3>Total Price: ${totalPrice}</h3>
         </>

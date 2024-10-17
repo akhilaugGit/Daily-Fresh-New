@@ -10,7 +10,8 @@ const Udashboard = () => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('all'); // State to track selected category
-    
+    const [searchQuery, setSearchQuery] = useState(''); // State for search query
+
     console.log(products);
 
     useEffect(() => {
@@ -26,21 +27,40 @@ const Udashboard = () => {
         fetchProducts();
     }, []);
 
-    // Function to filter products based on category
     const filterProducts = (category) => {
-        if (category === 'all') {
-            setFilteredProducts(products); // Show all products when no filter
-        } else {
-            const filtered = products.filter((product) => product.category === category);
-            setFilteredProducts(filtered);
+        let updatedProducts = products;
+
+        if (category !== 'all') {
+            updatedProducts = updatedProducts.filter((product) => product.category === category);
         }
+
+        if (searchQuery) {
+            updatedProducts = updatedProducts.filter((product) =>
+                product.name.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        }
+
+        setFilteredProducts(updatedProducts);
         setSelectedCategory(category);
+    };
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+        filterProducts(selectedCategory); // Re-filter based on selected category and new search query
     };
 
     return (
         <div>
             <Navbar />
             <CarouselComponent />
+            {/* Search Bar */}
+            <div className="search-bar">
+                <input
+                    type="text"
+                    placeholder="🔎"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                />
+            </div>
 
             {/* Filter Buttons */}
             <div className="fbuttons">

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Signup from './Signup/Signup';
 import Login from './Login/Login';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
@@ -15,8 +15,24 @@ import Cart from './Components/User/Cart';
 
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
-  const token = localStorage.getItem('token'); // Fetch token from localStorage
-  return token ? children : <Navigate to="/login" />; // Redirect to login if no token
+  const [loading, setLoading] = useState(true);  // Loading state
+  const token = localStorage.getItem('token');   // Fetch token from localStorage
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Simulate token validation (if needed)
+    if (!token) {
+      navigate('/login');  // Redirect to login if no token
+    } else {
+      setLoading(false);    // Token exists, stop loading
+    }
+  }, [token, navigate]);
+
+  if (loading) {
+    return <div>Loading...</div>;  // Display a loading message while checking token
+  }
+
+  return token ? children : null;   // Render children if token exists, otherwise render null
 };
 
 function App() {
@@ -27,7 +43,6 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/' element={<Home />} />
         <Route path='/forgotpassword' element={<ForgotPassword />} />
-        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/add-product' element={<AddProduct />} /> {/* Route for adding products */}
         <Route path='/edit-product/:id' element={<EditProduct />} /> {/* Route for editing products */}
         <Route path='/products' element={<ProductList />} /> {/* Route for viewing all products */}
@@ -40,6 +55,13 @@ function App() {
           </PrivateRoute>
         } />
         
+        {/* Protect the dashboard route with PrivateRoute */}
+        <Route path='/dashboard' element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        } />
+
         <Route path='/cart' element={<Cart />} />
       </Routes>
     </BrowserRouter>

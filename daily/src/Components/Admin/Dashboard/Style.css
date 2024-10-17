@@ -11,6 +11,41 @@ body {
     background-color: #f4f4f4; /* Fallback color in case the image doesn't load */
 }
 
+/* Search Bar Styling */
+.search-bar {
+    display: flex;
+    justify-content: center; /* Center the search bar */
+    margin: 20px 0; /* Space around the search bar */
+}
+
+.search-bar input {
+    width: 45px; /* Initial width */
+    padding: 10px; /* Padding inside the input */
+    border: 2px solid #ddd; /* Light border */
+    border-radius: 25px; /* Rounded edges */
+    font-size: 1rem; /* Font size */
+    outline: none; /* Remove outline */
+    transition: width 0.4s ease, border-color 0.4s ease, box-shadow 0.3s ease; /* Animation for width, border color, and shadow */
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.2); /* Small drop shadow */
+}
+
+.search-bar input::placeholder {
+    color: #aaa; /* Placeholder color */
+}
+
+.search-bar input:hover,
+.search-bar input:focus {
+    width: 250px; /* Wider on hover/focus */
+    border-color: #4caf50; /* Change border color on hover/focus */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slightly larger shadow on hover/focus */
+}
+
+/* Optional: Add a subtle shadow on focus */
+.search-bar input:focus {
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.5); /* Green shadow on focus */
+}
+
+
 /* Navbar Styling */
 .navbar {
     display: flex;
@@ -141,7 +176,7 @@ body {
 }
 
 .type-item:hover {
-    background-color: #813b70; /* Darken on hover */
+    background-color: #e5dee3; /* Darken on hover */
 }
 
 /* Footer Styling */
