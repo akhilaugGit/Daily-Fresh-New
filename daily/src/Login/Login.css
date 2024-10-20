@@ -122,3 +122,28 @@ p {
     text-align: center;
     margin-top: 15px;
 }
+/* Styling for Google sign-in button */
+.btn-google {
+    background-color: white;
+    color: #444;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 100%;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-google i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.btn-google:hover {
+    background-color: #f5f5f5;
+    border-color: #bbb;
+}

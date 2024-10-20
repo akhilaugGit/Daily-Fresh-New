@@ -1,5 +1,9 @@
 const Cart = require('../models/cartModel');
 const Product = require('../models/Productmodel');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId; // Import ObjectId correctly
+
+
 // Add item to cart
 const addItemToCart = async (req, res) => {
     const { userId, productId, quantity } = req.body;
@@ -74,36 +78,70 @@ const viewCart = async (req, res) => {
 };
 
 // Update item quantity in cart
-const updateItemQuantity = async (req, res) => {
-    const { userId, productId, quantity } = req.body;
+const updateCartItemQuantity = async (req, res) => {
     try {
-        const cart = await Cart.findOne({ userId });
-        const itemIndex = cart.products.findIndex(p => p.productId == productId);
+        const userId = req.identifier; // Get userId from the token
+        const { productId, quantity } = req.body;
 
-        if (itemIndex > -1) {
-            cart.products[itemIndex].quantity = quantity;
-            await cart.save();
-            return res.status(200).json(cart);
+        // Ensure productId is converted to ObjectId
+        const objectId = new ObjectId(productId);
+
+        // Find the user's cart
+        const cart = await Cart.findOne({ userId });
+
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
         }
 
-        res.status(404).json({ message: 'Product not found in cart' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+        // Update the quantity of the item
+        const itemIndex = cart.products.findIndex(item => item.productId.equals(objectId));
+        if (itemIndex > -1) {
+            cart.products[itemIndex].quantity = quantity; // Update quantity
+        } else {
+            return res.status(404).json({ message: 'Item not found in cart' });
+        }
 
-// Remove item from cart
-const removeItemFromCart = async (req, res) => {
-    const { userId, productId } = req.body;
-    try {
-        const cart = await Cart.findOne({ userId });
-        cart.products = cart.products.filter(p => p.productId != productId);
+        // Recalculate the total price of the cart
+        const totalPrice = cart.products.reduce((total, item) => {
+            return total + (item.productId.price * item.quantity); // Assuming itemId has price field populated
+        }, 0);
 
+        // Save the updated cart and total price
         await cart.save();
-        res.status(200).json(cart);
+        cart.totalPrice = totalPrice; // Set the total price in cart
+
+        return res.status(200).json({ message: 'Cart updated successfully', cart });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error(error);
+        return res.status(500).json({ message: 'Failed to update cart' });
     }
 };
 
-module.exports = { addItemToCart, viewCart, updateItemQuantity, removeItemFromCart };
+const removeItemFromCart = async (req, res) => {
+    try {
+        const { userId, productId } = req.body;
+
+        // Convert productId to ObjectId
+        const objectId = new ObjectId(productId); // Instantiate ObjectId correctly
+
+        const cart = await Cart.findOne({ userId });
+
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
+        }
+
+        // Remove the item from the cart
+        cart.products = cart.products.filter(item => !item.productId.equals(objectId));
+
+        // Save the updated cart
+        await cart.save();
+
+        return res.status(200).json({ message: 'Item removed from cart successfully', cart });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Failed to remove item from cart' });
+    }
+};
+
+
+module.exports = { addItemToCart, viewCart,updateCartItemQuantity,  removeItemFromCart };

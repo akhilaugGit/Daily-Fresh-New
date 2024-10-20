@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';  // Adjusted import
+
 import axios from 'axios';
 import './Cart.css';
 
@@ -70,23 +72,37 @@ const Cart = () => {
     }
   };
 
-  // Remove an item from the cart
+  const getUserIdFromToken = async () => {
+    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
+    if (token) {
+        const decodedToken = await jwtDecode(token);
+        
+        
+        return decodedToken.id; // Assuming the token has userId as a property
+    }
+    return null;
+};
   const removeItem = async (productId) => {
     try {
-      if (!token) return;
-
+      const userId = await getUserIdFromToken(); // Extract userId from token
+      if (!token || !userId) return;
+  
       // Make a DELETE request to remove the product
       await axios.delete(`http://localhost:3001/api/cart/remove`, {
         headers: {
           Authorization: `Bearer ${token}`, // Attach token in the request
         },
-        data: { productId }, // Send product ID in the request body
+        data: { userId, productId }, // Send both userId and productId in the request body
       });
-      fetchCart(); // Refetch cart after removal
+  
+      // Refetch cart after removal
+      fetchCart(); 
     } catch (error) {
       console.error('Failed to remove item:', error);
     }
   };
+  
+
 
   // Fetch the cart when the component mounts
   useEffect(() => {
@@ -103,7 +119,7 @@ const Cart = () => {
               <div key={product.productId._id} className="cart-item">
                 <img src={product.productId.imageUrl} alt={product.productId.name} />
                 <h3>{product.productId.name}</h3>
-                <p>Price: ${product.productId.price}</p>
+                <p>Price: ₹{product.productId.price}</p>
                 <p>Quantity: 
                   <input
                     type="number"
@@ -116,7 +132,7 @@ const Cart = () => {
               </div>
             )
           ))}
-          <h3>Total Price: ${totalPrice}</h3>
+          <h3>Total Price: ₹{totalPrice}</h3>
         </>
       ) : (
         <p>Your cart is empty.</p>
