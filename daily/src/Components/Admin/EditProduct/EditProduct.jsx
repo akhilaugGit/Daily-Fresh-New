@@ -10,7 +10,8 @@ const EditProduct = () => {
         description: '',
         price: '',
         category: 'fish',  // Default value set to 'fish'
-        imageUrl: ''
+        imageUrl: '',
+        isDisabled: false  // Add isDisabled field
     });
     const navigate = useNavigate();
 
@@ -43,10 +44,25 @@ const EditProduct = () => {
             });
     };
 
+    const handleDisableProduct = () => {
+        // Toggle the isDisabled field and update the product
+        const updatedProduct = { ...product, isDisabled: !product.isDisabled };
+    
+        axios.put(`http://localhost:3001/api/product/disableProduct/${id}`, updatedProduct)
+            .then(response => {
+                console.log("Product visibility toggled successfully", response);
+                navigate('/dashboard');  // Redirect to product list
+            })
+            .catch(error => {
+                console.error("There was an error disabling the product!", error);
+            });
+    };
+
     return (
         <div className="edit-product">
             <h2>Edit Product</h2>
             <form onSubmit={handleSubmit}>
+                {/* Form Fields */}
                 <div>
                     <label>Name:</label>
                     <input 
@@ -79,7 +95,6 @@ const EditProduct = () => {
                         name="category"
                         value={product.category} 
                         onChange={handleInputChange} 
-                        required
                     >
                         <option value="fish">Fish</option>
                         <option value="poultry">Poultry</option>
@@ -94,8 +109,17 @@ const EditProduct = () => {
                         onChange={handleInputChange} 
                     />
                 </div>
+                
                 <button type="submit">Save Changes</button>
             </form>
+
+            {/* Disable Button */}
+            <button 
+                onClick={handleDisableProduct} 
+                style={{ backgroundColor: product.isDisabled ? 'red' : 'green' }}
+            >
+                {product.isDisabled ? 'Enable Product' : 'Disable Product'}
+            </button>
         </div>
     );
 };

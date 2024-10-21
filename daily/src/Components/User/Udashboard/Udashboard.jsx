@@ -18,8 +18,9 @@ const Udashboard = () => {
         const fetchProducts = async () => {
             try {
                 const response = await axios.get('http://localhost:3001/api/product/view-product');
-                setProducts(response.data);
-                setFilteredProducts(response.data); // Initially show all products
+                const visibleProducts = response.data.filter(product => !product.isDisabled); // Filter disabled products
+                setProducts(visibleProducts);
+                setFilteredProducts(visibleProducts); // Initially show all visible products
             } catch (error) {
                 console.error("There was an error fetching the products!", error);
             }
@@ -43,6 +44,7 @@ const Udashboard = () => {
         setFilteredProducts(updatedProducts);
         setSelectedCategory(category);
     };
+    
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
         filterProducts(selectedCategory); // Re-filter based on selected category and new search query

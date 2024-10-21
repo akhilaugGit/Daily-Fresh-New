@@ -150,9 +150,50 @@ const resetPassword = async (req, res) => {
     }
 };
 
+const authWithGoogle = async (req, res) => {
+    const { name, email, password, images } = req.body;
+
+    try {
+        // Check if the user already exists in the database
+        const existingUser = await UserModel.findOne({ email: email });
+
+        if (!existingUser) {
+            // If user does not exist, create a new user
+            const result = await UserModel.create({
+                email: email,
+                password: password,
+
+            });
+
+            // Generate JWT token
+            
+
+            // Send response with the user and token
+            return res.status(200).send({
+                user: result,
+                msg: "User Login Successfully!",
+            });
+        } else {
+            // If user exists, generate token and return the existing user
+            
+
+            return res.status(200).send({
+                user: existingUser,
+                msg: "User Login Successfully!",
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ msg: "An error occurred" });
+    }
+};
+
+
+
 module.exports = {
     registerUser,
     loginUser,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    authWithGoogle
 };

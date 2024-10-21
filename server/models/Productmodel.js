@@ -10,7 +10,8 @@ const productSchema = new mongoose.Schema({
         enum: ['fish', 'poultry'],  // Dropdown with options
         required: true 
     },
-    subcategory: { type: String, required: true },  // Text field for fish or poultry types
+    subcategory: { type: String, required: true },
+    isDisabled: { type: Boolean, default: false }  // Add this field  // Text field for fish or poultry types
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

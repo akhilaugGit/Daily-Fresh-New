@@ -12,6 +12,9 @@ import ProductList from './Components/Admin/Dashboard/ProductList/ProductList';
 import EditProduct from './Components/Admin/EditProduct/EditProduct'; 
 import Udashboard from './Components/User/Udashboard/Udashboard';
 import Cart from './Components/User/Cart';
+import Buy from './Components/User/Udashboard/Buy';
+
+
 
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
@@ -47,7 +50,8 @@ function App() {
         <Route path='/edit-product/:id' element={<EditProduct />} /> {/* Route for editing products */}
         <Route path='/products' element={<ProductList />} /> {/* Route for viewing all products */}
         <Route path='/resetpassword/:userId/:token' element={<ResetPassword />} />
-        
+        <Route path='/buy' element={<Buy />} />
+
         {/* Protect the udashboard route with PrivateRoute */}
         <Route path='/udashboard' element={
           <PrivateRoute>

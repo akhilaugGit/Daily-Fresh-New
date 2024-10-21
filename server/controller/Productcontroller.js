@@ -86,6 +86,26 @@ const deleteProduct = async (req, res) => {
         res.status(500).json({ message: 'Error deleting product', error: error.message });
     }
 };
+// Disable/Enable Product
+const handleDisableProduct = async (req, res) => {
+    const { id } = req.params;
+    try {
+        // Find the product by ID
+        const product = await Product.findById(id);
+
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // Toggle the isDisabled field
+        product.isDisabled = !product.isDisabled;
+        await product.save();  // Ensure the product is saved
+
+        res.status(200).json({ message: `Product ${product.isDisabled ? 'disabled' : 'enabled'} successfully`, product });
+    } catch (error) {
+        res.status(500).json({ message: 'Error toggling product visibility', error });
+    }
+};
 
 // Export the functions
 module.exports = {
@@ -93,5 +113,6 @@ module.exports = {
     editProduct,
     deleteProduct,
     viewProduct,       
-    viewProductById
+    viewProductById,
+    handleDisableProduct
 };

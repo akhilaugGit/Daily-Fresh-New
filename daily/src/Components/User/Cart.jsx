@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';  // Adjusted import
 
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import axios from 'axios';
 import './Cart.css';
 
 const Cart = () => {
   const [cart, setCart] = useState({ products: [] }); // Default empty cart products array
   const [totalPrice, setTotalPrice] = useState(0);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Fetch token from localStorage
   const token = localStorage.getItem('token');
@@ -108,7 +110,11 @@ const Cart = () => {
   useEffect(() => {
     fetchCart();
   }, []);
+ 
 
+const handleBuy = () => {
+  navigate('/buy', { state: { totalPrice } });  // Pass totalPrice to Buy component
+};
   return (
     <div className="cart">
       <h2>Your Cart</h2>
@@ -121,18 +127,28 @@ const Cart = () => {
                 <h3>{product.productId.name}</h3>
                 <p>Price: ₹{product.productId.price}</p>
                 <p>Quantity: 
-                  <input
-                    type="number"
-                    value={product.quantity}
-                    onChange={(e) => updateQuantity(product.productId._id, parseInt(e.target.value))}
-                    min="1"
-                  />
-                </p>
+  <input
+    type="number"
+    value={product.quantity}
+    onChange={(e) => {
+      const value = parseInt(e.target.value);
+      if (value >= 1 && value <= 10) {
+        updateQuantity(product.productId._id, value);  // Only update if the value is within the valid range
+      }
+    }}
+    min="1"
+    max="10"
+  />
+</p>
+
                 <button onClick={() => removeItem(product.productId._id)}>Remove</button>
               </div>
             )
           ))}
           <h3>Total Price: ₹{totalPrice}</h3>
+          <button onClick={handleBuy}>
+                Buy
+            </button>
         </>
       ) : (
         <p>Your cart is empty.</p>
