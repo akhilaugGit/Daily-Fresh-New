@@ -1,108 +1,99 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from './Unavbar/Unavbar';
-import ProductCard from './UproductCard/UproductCard';
-import Footer from './Footer/Footer';
-import CarouselComponent from './Carousel/CarouselComponent';
-import axios from 'axios';
-import './Style.css';
+import React, { useEffect, useState } from "react";
+import Navbar from "./Unavbar/Unavbar";
+import ProductCard from "./UproductCard/UproductCard";
+import Footer from "./Footer/Footer";
+import CarouselComponent from "./Carousel/CarouselComponent";
+import axios from "axios";
+import "./Style.css";
 
 const Udashboard = () => {
-    const [products, setProducts] = useState([]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('all'); // State to track selected category
-    const [searchQuery, setSearchQuery] = useState(''); // State for search query
+  const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all"); // State to track selected category
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
-    console.log(products);
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await axios.get('http://localhost:3001/api/product/view-product');
-                const visibleProducts = response.data.filter(product => !product.isDisabled); // Filter disabled products
-                setProducts(visibleProducts);
-                setFilteredProducts(visibleProducts); // Initially show all visible products
-            } catch (error) {
-                console.error("There was an error fetching the products!", error);
-            }
-        };
-        fetchProducts();
-    }, []);
-
-    const filterProducts = (category) => {
-        let updatedProducts = products;
-
-        if (category !== 'all') {
-            updatedProducts = updatedProducts.filter((product) => product.category === category);
-        }
-
-        if (searchQuery) {
-            updatedProducts = updatedProducts.filter((product) =>
-                product.name.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-        }
-
-        setFilteredProducts(updatedProducts);
-        setSelectedCategory(category);
-    };
-    
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value);
-        filterProducts(selectedCategory); // Re-filter based on selected category and new search query
+  useEffect(() => {
+    // Fetch products when component mounts and whenever selectedCategory or searchQuery changes
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/api/product/view-product",
+          {
+            params: {
+              name: searchQuery,
+              category:
+                selectedCategory === "all" ? undefined : selectedCategory,
+            },
+          }
+        );
+        const visibleProducts = response.data.filter(
+          (product) => !product.isDisabled
+        ); // Filter disabled products
+        setProducts(visibleProducts);
+      } catch (error) {
+        console.error("There was an error fetching the products!", error);
+      }
     };
 
-    return (
-        <div>
-            <Navbar />
-            <CarouselComponent />
-            {/* Search Bar */}
-            <div className="search-bar">
-                <input
-                    type="text"
-                    placeholder="🔎"
-                    value={searchQuery}
-                    onChange={handleSearch}
-                />
-            </div>
+    fetchProducts();
+  }, [selectedCategory, searchQuery]); // Run this effect when selectedCategory or searchQuery changes
 
-            {/* Filter Buttons */}
-            <div className="fbuttons">
-                <button 
-                    className={`fbtn ${selectedCategory === 'fish' ? 'active' : ''}`} 
-                    onClick={() => filterProducts('fish')}
-                >
-                    Fish
-                </button>
-                <button 
-                    className={`fbtn ${selectedCategory === 'poultry' ? 'active' : ''}`} 
-                    onClick={() => filterProducts('poultry')}
-                >
-                    Poultry
-                </button>
-                <button 
-                    className={`fbtn ${selectedCategory === 'all' ? 'active' : ''}`} 
-                    onClick={() => filterProducts('all')}
-                >
-                    Show All
-                </button>
-            </div>
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value); // Update the search query state
+  };
 
-            {/* Display filtered products */}
-            <div className="product-container">
-                {filteredProducts.map((product) => (
-                    <ProductCard
-                        key={product._id}
-                        productId={product._id} // Pass productId here
-                        imageUrl={product.imageUrl}
-                        name={product.name}
-                        description={product.description}
-                        price={product.price}
-                        category={product.category}
-                    />
-                ))}
-            </div>
-            <Footer />
-        </div>
-    );
+  return (
+    <div>
+      <Navbar />
+      <CarouselComponent />
+      {/* Search Bar */}
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="🔎"
+          value={searchQuery}
+          onChange={handleSearch}
+        />
+      </div>
+
+      {/* Filter Buttons */}
+      <div className="fbuttons">
+        <button
+          className={`fbtn ${selectedCategory === "fish" ? "active" : ""}`}
+          onClick={() => setSelectedCategory("fish")}
+        >
+          Fish
+        </button>
+        <button
+          className={`fbtn ${selectedCategory === "poultry" ? "active" : ""}`}
+          onClick={() => setSelectedCategory("poultry")}
+        >
+          Poultry
+        </button>
+        <button
+          className={`fbtn ${selectedCategory === "all" ? "active" : ""}`}
+          onClick={() => setSelectedCategory("all")}
+        >
+          Show All
+        </button>
+      </div>
+
+      {/* Display filtered products */}
+      <div className="product-container">
+        {products.map((product) => (
+          <ProductCard
+            key={product._id}
+            productId={product._id} // Pass productId here
+            imageUrl={product.imageUrl}
+            name={product.name}
+            description={product.description}
+            price={product.price}
+            category={product.category}
+          />
+        ))}
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default Udashboard;
