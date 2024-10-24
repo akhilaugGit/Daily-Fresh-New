@@ -41,6 +41,12 @@ const loginUser = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
+        // Check if user is enabled
+        if (!user.isEnabled) {
+            console.log('User disabled, contact admin:', user.email);  // Log if user is disabled
+            return res.status(403).json({ message: 'User disabled, contact admin' });
+        }
+
         console.log('User found:', user);  // Log the user details
 
         // Compare the provided password with the hashed password in the database

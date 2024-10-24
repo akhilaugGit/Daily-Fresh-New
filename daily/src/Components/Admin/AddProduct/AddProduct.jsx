@@ -30,6 +30,7 @@ const AddProduct = () => {
         // Proceed if validations pass
         try {
             const data = {
+                
                 name,
                 description,
                 price,
@@ -37,10 +38,23 @@ const AddProduct = () => {
                 category,
                 subcategory
             };
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('category', category);
+            formData.append('subcategory', subcategory);
+            formData.append('image', imageUrl);
+
 
             console.log(data);  // For debugging
 
-            const response = await axios.post('http://localhost:3001/api/product/add', data);
+            const response = await axios.post('http://localhost:3001/api/product/add',formData,
+                {
+                    headers: {
+                      'Content-Type': 'multipart/form-data',
+                    },}
+            );
             alert(response.data.message);
 
             // Reset form fields
@@ -56,7 +70,12 @@ const AddProduct = () => {
             setErrorMessage('There was an error adding the product. Please try again.');
         }
     };
+    const imageUpload =  (e) => {
+        console.log(e)
+        setImage(event.target.files[0])
+    };
 
+        
     return (
         <form onSubmit={handleSubmit} className="add-product-form">
             <input 
@@ -82,10 +101,9 @@ const AddProduct = () => {
                 max="100000"
             />
             <input 
-                type="text" 
+                type="file" 
                 placeholder="Image URL" 
-                value={imageUrl} 
-                onChange={(e) => setImage(e.target.value)} 
+                onChange={imageUpload}
                 required 
             />
 

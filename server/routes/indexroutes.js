@@ -3,6 +3,8 @@ const router = express.Router();
 const authRoutes = require('./authroutes');  // Ensure this file exports router properly
 const productRoutes = require('./productroutes');  // Ensure this file exports router properly
 const cartRoutes = require('./cartRoutes');
+const userRoutes = require('./userRoutes');
+
 
 
 
@@ -10,6 +12,7 @@ const cartRoutes = require('./cartRoutes');
 router.use('/auth', authRoutes);  // Ensure authRoutes exports a valid router
 router.use('/product', productRoutes);  // Ensure productRoutes exports a valid router
 router.use('/cart', cartRoutes);
+router.use('/user', userRoutes);
 
   // Use product routes
 

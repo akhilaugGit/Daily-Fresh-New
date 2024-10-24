@@ -46,7 +46,7 @@ const ProductCard = ({ productId, imageUrl, name, description, price, category }
 
     return (
         <div className="product-card">
-            <img src={imageUrl} alt={name} className="product-image" />
+            <img src={`http://localhost:3001${imageUrl}`} alt={name} className="product-image" />
             <h3>{name}</h3>
             <p>{description}</p>
             <p>Price: ₹{price}</p>
