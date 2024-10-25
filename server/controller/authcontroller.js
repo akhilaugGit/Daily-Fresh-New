@@ -1,31 +1,55 @@
 const UserModel = require('../models/user'); // Assuming you have a User model
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const otpGenerator = require('otp-generator'); // Install using npm
 const bcrypt = require('bcryptjs');
      
 
-// User Registration
+// User Registration with OTP generation
 const registerUser = async (req, res) => {
     const { email, password, name } = req.body;
 
     try {
-        // Check if user already exists
         const existingUser = await UserModel.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Hash the password before saving the user
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         
-        // Create new user with hashed password
-        const newUser = new UserModel({ email, password: hashedPassword, name });
+        const otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
+
+        // Create new user with hashed password and otp
+        const newUser = new UserModel({ email, password: hashedPassword, name, otp });
         await newUser.save();
 
-        res.status(201).json({ message: 'User registered successfully' });
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'akhilaugustine2025@mca.ajce.in',
+                pass: process.env.APP_MAIL_PASSWORD
+            }
+        });
+
+        const mailOptions = {
+            from: 'akhilaugustine2025@mca.ajce.in',
+            to: email,
+            subject: 'Your OTP Code',
+            text: `Your OTP code is ${otp}`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).json({ message: 'Error sending OTP email', error });
+            } else {
+                res.status(201).json({ message: 'User registered successfully, OTP sent to email' });
+            }
+        });
+
     } catch (error) {
-        console.error('Error registering user:', error);  // Log error details for debugging
+        console.error('Error registering user:', error);
         res.status(500).json({ message: 'Error registering user', error });
     }
 };
@@ -194,12 +218,35 @@ const authWithGoogle = async (req, res) => {
     }
 };
 
+const verifyOtp = async (req, res) => {
+    const { email, otp } = req.body;
 
+    try {
+        const user = await UserModel.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (user.otp !== otp) {
+            return res.status(400).json({ message: 'Invalid OTP' });
+        }
+
+        // OTP is correct, enable the user account and clear OTP
+        user.isEnabled = true;
+        user.otp = undefined; // Clear OTP after verification
+        await user.save();
+
+        res.json({ message: 'OTP verified successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error verifying OTP', error });
+    }
+};
 
 module.exports = {
     registerUser,
     loginUser,
     forgotPassword,
     resetPassword,
-    authWithGoogle
+    authWithGoogle,
+    verifyOtp,
 };

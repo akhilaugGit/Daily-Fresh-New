@@ -46,7 +46,7 @@ const Navbar = () => {
             </div>
           
             <div className="icons">
-            <span className="icon">👤</span>
+            <span className="icon">Admin👤</span>
 
             <span onClick={handleLogout} style={{ cursor: 'pointer' }}>Logout</span>
 

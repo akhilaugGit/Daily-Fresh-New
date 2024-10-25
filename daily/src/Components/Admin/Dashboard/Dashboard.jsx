@@ -50,7 +50,6 @@ const Dashboard = () => {
     return (
         <div>
             <Navbar />
-            <CarouselComponent />
 
             {/* Search Bar */}
             <div className="search-bar">

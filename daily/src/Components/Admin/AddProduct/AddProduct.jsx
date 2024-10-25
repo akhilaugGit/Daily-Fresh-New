@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './AddProduct.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const AddProduct = () => {
     const [name, setName] = useState('');
@@ -10,22 +12,27 @@ const AddProduct = () => {
     const [category, setCategory] = useState('fish'); // Default category
     const [subcategory, setSubcategory] = useState(''); // Subcategory field
     const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();  // Move useNavigate hook here
+
 
     const handleSubmit = async (e) => {
+        
+
         e.preventDefault();
 
         // Clear previous error message
         setErrorMessage('');
 
-        // Validate price
-        if (price <= 0) {
+               // Validate price
+                     if (price <= 0) {
             setErrorMessage('Price must be greater than 0.');
             return;
-        }
+                     }
         if (price > 100000) {
             setErrorMessage('Price cannot exceed 100,000.');
             return;
         }
+        
 
         // Proceed if validations pass
         try {
@@ -69,15 +76,25 @@ const AddProduct = () => {
             console.error("There was an error adding the product!", error);
             setErrorMessage('There was an error adding the product. Please try again.');
         }
+
     };
     const imageUpload =  (e) => {
         console.log(e)
         setImage(event.target.files[0])
     };
 
+    const handleHomeClick = () => {
+
+        navigate('/dashboard');               
+
+    };
+   
+   
         
     return (
+        
         <form onSubmit={handleSubmit} className="add-product-form">
+            <span onClick={handleHomeClick} style={{ cursor: 'pointer' }}>Home</span>            
             <input 
                 type="text" 
                 placeholder="Product Name" 

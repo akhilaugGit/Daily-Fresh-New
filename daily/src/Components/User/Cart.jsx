@@ -115,8 +115,18 @@ const Cart = () => {
 const handleBuy = () => {
   navigate('/buy', { state: { totalPrice } });  // Pass totalPrice to Buy component
 };
+const handleUdashboard = () => {
+  navigate('/udashboard');  // Pass totalPrice to Buy component
+};
   return (
+    
+   
     <div className="cart">
+     
+    <button onClick={handleUdashboard}>
+    🏛️Home
+      </button>
+
       <h2>Your Cart</h2>
       {cart.products.length > 0 ? (
         <>
@@ -124,6 +134,8 @@ const handleBuy = () => {
             product.productId && ( // Only render if productId exists
               <div key={product.productId._id} className="cart-item">
                 <img src={product.productId.imageUrl} alt={product.productId.name} />
+
+                
                 <h3>{product.productId.name}</h3>
                 <p>Price: ₹{product.productId.price}</p>
                 <p>Quantity: 

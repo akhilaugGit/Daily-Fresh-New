@@ -37,7 +37,7 @@ const EditProduct = () => {
         axios.put(`http://localhost:3001/api/product/editProduct/${id}`, product)
             .then(response => {
                 console.log("Product updated successfully", response);
-                navigate('/product-list');  // Redirect to product list after successful update
+                navigate('/dashboard');  // Redirect to product list after successful update
             })
             .catch(error => {
                 console.error("There was an error updating the product!", error);

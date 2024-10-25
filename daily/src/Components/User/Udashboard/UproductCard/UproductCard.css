@@ -22,21 +22,9 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    text-align: center;
+    align-content: center;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* Product Image */
-.product-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover; /* Ensures the image covers the entire area */
-    border-radius: 8px 8px 0 0;
+    text-align: center; /* Align text to center */
 }
 
 /* Product Title */
@@ -44,6 +32,7 @@ body {
     font-size: 18px;
     color: #333;
     margin: 15px 0;
+    text-align: center; /* Ensure the title is centered */
 }
 
 /* Product Description */
@@ -51,6 +40,7 @@ body {
     font-size: 14px;
     color: #666;
     margin-bottom: 10px;
+    text-align: center; /* Ensure the description is centered */
 }
 
 /* Product Price */
@@ -58,6 +48,7 @@ body {
     font-size: 16px;
     font-weight: bold;
     color: #27ae60;
+    text-align: center; /* Ensure the price is centered */
 }
 
 /* Add to Cart Button */

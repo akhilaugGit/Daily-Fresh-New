@@ -11,11 +11,17 @@ const Unavbar = () => {
         
         navigate('/login');
     };
+    const handleCart = () => {
+        
+        navigate('/cart');
+    };
+
 
     const handleHomeClick = () => {
         navigate('/udashboard');
         window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top (Home)
     };
+
 
     const handleProductsClick = () => {
         navigate('/udashboard');
@@ -46,6 +52,9 @@ const Unavbar = () => {
                 <span className="icon">👤</span>
                 <span onClick={handleLogout} style={{ cursor: 'pointer' }}>Logout</span>
                 <span className="icon">🛒</span>
+                <span onClick={handleCart} style={{ cursor: 'pointer' }}>cart</span>
+
+                
             </div>
         </nav>
     );

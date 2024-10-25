@@ -8,8 +8,10 @@ function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({ username: '', email: '', password: '' });
+  const [otp, setOtp] = useState('');  // OTP input
+  const [errors, setErrors] = useState({ username: '', email: '', password: '', otp: '' });
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [otpSent, setOtpSent] = useState(false);  // To track OTP sent status
   const navigate = useNavigate();
 
   // Email validation function with added top-level domain check
@@ -91,6 +93,24 @@ function Signup() {
     checkAllFields(username, email, passwordValue);
   };
 
+  // Live validation for OTP
+  const handleOtpChange = (e) => {
+    const otpValue = e.target.value;
+    setOtp(otpValue);
+
+    if (otpValue.length !== 6) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        otp: 'OTP must be 6 digits.'
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        otp: ''
+      }));
+    }
+  };
+
   // Check if all fields are valid
   const checkAllFields = (username, email, password) => {
     if (validateUsername(username) && validateEmail(email) && validatePassword(password)) {
@@ -100,6 +120,7 @@ function Signup() {
     }
   };
 
+  // Register user and send OTP
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -107,10 +128,24 @@ function Signup() {
       axios.post('http://localhost:3001/api/auth/register', { username, email, password })
         .then(result => {
           console.log(result);
-          navigate('/login');
+          setOtpSent(true);  // Set OTP status to true after registration
         })
         .catch(error => console.log(error));
     }
+  };
+
+  // Handle OTP verification
+  const handleOtpSubmit = (e) => {
+    e.preventDefault();
+    
+    axios.post('http://localhost:3001/api/auth/verify-otp', { email, otp })
+      .then(response => {
+        alert("OTP verified successfully!");
+        navigate('/login');  // Redirect to login on success
+      })
+      .catch(error => {
+        console.error("OTP verification failed:", error);
+      });
   };
 
   return (
@@ -118,6 +153,7 @@ function Signup() {
       <div className="container">
         <div className="left-section"></div>
         <div className="right-section">
+        
           <h5>Register</h5>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -170,6 +206,29 @@ function Signup() {
               Register
             </button>
           </form>
+
+          {/* OTP form */}
+          {otpSent && (
+            <form onSubmit={handleOtpSubmit}>
+              <div className="mb-3">
+                <label htmlFor="otp">
+                  <strong>Enter OTP</strong>
+                </label>
+                <input
+                  type="text"
+                  name="otp"
+                  className="form-control rounded-0"
+                  value={otp}
+                  onChange={handleOtpChange}
+                />
+                {errors.otp && <p className="error-text">{errors.otp}</p>}
+              </div>
+
+              <button className="btn btn-primary w-100" type="submit">
+                Verify OTP
+              </button>
+            </form>
+          )}
 
           <p className="text-center mt-3">
             Already have an account?{' '}

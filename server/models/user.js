@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
-    isEnabled: { type: Boolean, default: true }, // Add this field
+    otp: String, // Store OTP temporarily
+    isEnabled: {
+        type: Boolean,
+        default: false
+    }
 });
 
-const UserModel = mongoose.model('User', UserSchema);
+const UserModel = mongoose.model('User', userSchema);
 module.exports = UserModel;
