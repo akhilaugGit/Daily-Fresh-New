@@ -36,9 +36,14 @@ const viewProductById = async (req, res) => {
 // Add a new product
 const addProduct = async (req, res) => {
   try {
-    const { name, description, price, category, subcategory } = req.body;
-    const imageUrl = `/uploads/${req.file.filename}`;
-    
+    const { name, description, price, category, subcategory, stock } = req.body;
+
+    let imageUrl = "";
+
+    if (req.file) {
+      imageUrl = `/uploads/${req?.file?.filename}`;
+    }
+
     // Ensure the category is either 'fish' or 'poultry'
     if (!["fish", "poultry"].includes(category)) {
       return res
@@ -53,6 +58,7 @@ const addProduct = async (req, res) => {
       imageUrl,
       category, // Category dropdown field
       subcategory, // Subcategory text field
+      stock,
     });
 
     await newProduct.save();
@@ -69,12 +75,12 @@ const addProduct = async (req, res) => {
 // Edit Product
 const editProduct = async (req, res) => {
   const { id } = req.params;
-  const { name, description, price, category, imageUrl } = req.body;
+  const { name, description, price, category, imageUrl, stock } = req.body;
 
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
-      { name, description, price, category, imageUrl },
+      { name, description, price, category, imageUrl, stock },
       { new: true } // Return the updated product
     );
 
