@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';  // Adjusted import
 import axios from 'axios';
 
-const ProductCard = ({ productId, imageUrl, name, description, price, category }) => {
+const ProductCard = ({ productId, imageUrl, name, description, price, category,stock }) => {
     const navigate = useNavigate();
 
     // Function to extract userId from token
@@ -44,11 +44,10 @@ const ProductCard = ({ productId, imageUrl, name, description, price, category }
 
     return (
         <div className="product-card">
-            <img src={`http://localhost:3001${imageUrl}`} alt={name} className="product-image" />
             <h3>{name}</h3>
-            <p>{description}</p>
             <p>Price: ₹{price}</p>
             <p>Category: {category}</p>
+            <p>Stock: {stock}</p>
             
         </div>
     );

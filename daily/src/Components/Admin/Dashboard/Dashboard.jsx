@@ -88,11 +88,9 @@ const Dashboard = () => {
                 {filteredProducts.map((product) => (
                     <ProductCard
                         key={product._id}
-                        imageUrl={product.imageUrl}
                         name={product.name}
-                        description={product.description}
-                        price={product.price}
                         category={product.category}
+                        stock={product.stock}
                     />
                 ))}
             </div>
