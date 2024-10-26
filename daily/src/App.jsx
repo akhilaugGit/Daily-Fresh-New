@@ -14,6 +14,7 @@ import Udashboard from './Components/User/Udashboard/Udashboard';
 import Cart from './Components/User/Cart';
 import Buy from './Components/User/Udashboard/Buy';
 import Manage from './Components/Admin/Manage/Manage';
+import ProductTable from './Components/Admin/Dashboard/ProductTable/ProductTable';
 
 
 // PrivateRoute Component
@@ -52,6 +53,8 @@ function App() {
         <Route path='/resetpassword/:userId/:token' element={<ResetPassword />} />
         <Route path='/buy' element={<Buy />} />
         <Route path='/manage' element={<Manage />} />
+        <Route path='/producttable' element={<ProductTable />} />
+
 
 
         {/* Protect the udashboard route with PrivateRoute */}

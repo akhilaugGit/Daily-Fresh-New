@@ -1,16 +1,16 @@
+// Dashboard.jsx
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar/Navbar';
 import ProductCard from './ProductCard/ProductCard';
 import Footer from './Footer/Footer';
-import CarouselComponent from './Carousel/CarouselComponent';
 import axios from 'axios';
-import './Style.css';
+import './ProductTable/ProductTable.css';
 
 const Dashboard = () => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('all');
-    const [searchQuery, setSearchQuery] = useState(''); // State for search query
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -19,7 +19,7 @@ const Dashboard = () => {
                 setProducts(response.data);
                 setFilteredProducts(response.data);
             } catch (error) {
-                console.error("There was an error fetching the products!", error);
+                console.error("Error fetching the products!", error);
             }
         };
         fetchProducts();
@@ -44,24 +44,22 @@ const Dashboard = () => {
 
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
-        filterProducts(selectedCategory); // Re-filter based on selected category and new search query
+        filterProducts(selectedCategory);
     };
 
     return (
         <div>
             <Navbar />
 
-            {/* Search Bar */}
             <div className="search-bar">
                 <input
                     type="text"
-                    placeholder="🔎"
+                    placeholder="🔎 Search by name"
                     value={searchQuery}
                     onChange={handleSearch}
                 />
             </div>
 
-            {/* Filter Buttons */}
             <div className="fbuttons">
                 <button 
                     className={`fbtn ${selectedCategory === 'fish' ? 'active' : ''}`} 
@@ -83,17 +81,29 @@ const Dashboard = () => {
                 </button>
             </div>
 
-            {/* Display filtered products */}
-            <div className="product-container">
-                {filteredProducts.map((product) => (
-                    <ProductCard
-                        key={product._id}
-                        name={product.name}
-                        category={product.category}
-                        stock={product.stock}
-                    />
-                ))}
+            <div className="product-table-container">
+                <h2>Product List</h2>
+                <table className="product-table">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredProducts.map((product) => (
+                            <ProductCard
+                                key={product._id}
+                                name={product.name}
+                                category={product.category}
+                                stock={product.stock}
+                            />
+                        ))}
+                    </tbody>
+                </table>
             </div>
+
             <Footer />
         </div>
     );

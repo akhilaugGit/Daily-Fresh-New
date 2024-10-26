@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';  // Adjusted import
 import axios from 'axios';
+import '../ProductTable/ProductTable.css';
 
 const ProductCard = ({ productId, imageUrl, name, description, price, category,stock }) => {
     const navigate = useNavigate();
@@ -43,13 +44,11 @@ const ProductCard = ({ productId, imageUrl, name, description, price, category,s
     };
 
     return (
-        <div className="product-card">
-            <h3>{name}</h3>
-            <p>Price: ₹{price}</p>
-            <p>Category: {category}</p>
-            <p>Stock: {stock}</p>
-            
-        </div>
+        <tr className="product-row">
+        <td>{name}</td>
+        <td>{category}</td>
+        <td>{stock}</td>
+    </tr>
     );
 };
 
