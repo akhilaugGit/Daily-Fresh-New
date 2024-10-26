@@ -11,6 +11,7 @@ const EditProduct = () => {
         price: '',
         category: 'fish',  // Default value set to 'fish'
         imageUrl: '',
+        stock:'',
         isDisabled: false  // Add isDisabled field
     });
     const navigate = useNavigate();
@@ -87,6 +88,17 @@ const EditProduct = () => {
                         name="price" 
                         value={product.price} 
                         onChange={handleInputChange} 
+                    />
+                </div>
+                <div>
+                    <label>Stock:</label>
+                    <input
+                        type="number"
+                        name='stock'
+                        value={product.stock}
+                        onChange={handleInputChange} 
+                        min="1"
+                        max="100000"
                     />
                 </div>
                 <div>
