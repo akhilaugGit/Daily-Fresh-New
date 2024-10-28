@@ -15,6 +15,10 @@ const Unavbar = () => {
         
         navigate('/cart');
     };
+    const handleUprofile = () => {
+        
+        navigate('/uprofile');
+    };
 
 
     const handleHomeClick = () => {
@@ -49,6 +53,7 @@ const Unavbar = () => {
                 <span onClick={handleContactClick} style={{ cursor: 'pointer' }}>Contact</span>
             </div>
             <div className="icons">
+            <span onClick={handleUprofile} style={{ cursor: 'pointer' }}>Profile</span>
                 <span className="icon">👤</span>
                 <span onClick={handleLogout} style={{ cursor: 'pointer' }}>Logout</span>
                 <span className="icon">🛒</span>

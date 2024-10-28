@@ -33,12 +33,36 @@ const toggleUserStatus = async (req, res) => {
     res.status(500).json({ error: 'Error updating user status' });
   }
 };
+// Function to get the logged-in user's profile
+const 
+
+getUserProfile = async (req, res) => {
+  try {
+    const userId = req.identifier;
+    console.log(req.identifier);
+    // return res.status(200).json({ mes: userId });
+    // console.log("params "+req.params);
+    // const { id } = req.params;
+    // console.log("Id of user" + id);
+    // console.log("Default id "+req.);
+    // Assuming user ID is stored in req.user (based on your auth middleware)
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ error: 'Error fetching user profile' });
+  }
+};
 
 // Define routes
 
 module.exports = {
   getAllUsers,
-  toggleUserStatus
+  toggleUserStatus,
+  getUserProfile
 
 
 }

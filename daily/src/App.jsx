@@ -15,6 +15,7 @@ import Cart from './Components/User/Cart';
 import Buy from './Components/User/Udashboard/Buy';
 import Manage from './Components/Admin/Manage/Manage';
 import ProductTable from './Components/Admin/Dashboard/ProductTable/ProductTable';
+import Uprofile from './Components/User/Udashboard/Uprofile/Uprofile';
 
 
 // PrivateRoute Component
@@ -54,6 +55,8 @@ function App() {
         <Route path='/buy' element={<Buy />} />
         <Route path='/manage' element={<Manage />} />
         <Route path='/producttable' element={<ProductTable />} />
+        <Route path='/uprofile' element={<Uprofile />} />
+
 
 
 
