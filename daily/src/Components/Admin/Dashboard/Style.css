@@ -53,7 +53,7 @@ body {
     align-items: center;
     background-color: #298029; /* Green */
     padding: 10px 30px;
-    color: white;
+    color: rgb(231, 215, 215);
 }
 
 .logo-container {
@@ -166,7 +166,7 @@ body {
 .type-item {
     margin: 10px;
     background-color: #9a4a8b; /* Purple */
-    color: white;
+    color: rgb(33, 4, 4);
     padding: 15px 25px;
     border-radius: 10px;
     font-size: 1rem;
@@ -176,7 +176,7 @@ body {
 }
 
 .type-item:hover {
-    background-color: #e5dee3; /* Darken on hover */
+    background-color: #410530; /* Darken on hover */
 }
 
 /* Footer Styling */
@@ -212,7 +212,7 @@ body {
     margin: 0 8px; /* Reduced margin between buttons */
     border: 2px solid transparent;
     background-color: #4caf50; /* Green default background */
-    color: white;
+    color: rgb(2, 0, 0);
     font-size: 0.9rem; /* Smaller font size */
     font-weight: bold;
     border-radius: 20px; /* Slightly smaller border radius */

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./AddProduct.css";
 import { useNavigate } from "react-router-dom";
-
 const AddProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -90,7 +89,7 @@ const AddProduct = () => {
   return (
     <form onSubmit={handleSubmit} className="add-product-form">
       <span onClick={handleHomeClick} style={{ cursor: "pointer" }}>
-        Home
+      🏛️Home
       </span>
       <input
         type="text"
