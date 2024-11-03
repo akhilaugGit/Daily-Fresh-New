@@ -4,7 +4,7 @@ import './Uprofile.css'; // Add CSS styling as needed
 
 const Uprofile = () => {
   const [user, setUser] = useState({
-    name: '',
+    username: '',
     email: '',
     password: '',
   });
@@ -45,10 +45,9 @@ const Uprofile = () => {
     <div className="profile-container">
       <h1>Your Profile</h1>
       <div className="profile-details">
-        <p><strong>Name:</strong> {user.name}</p>
+        <p><strong>Name:</strong> {user.username}</p>
         <p><strong>Email:</strong> {user.email}</p>
         {/* Only show last four characters of the password for security */}
-        <p><strong>Password:</strong> {'*'.repeat(user.password.length - 4) + user.password.slice(-4)}</p>
       </div>
     </div>
   );

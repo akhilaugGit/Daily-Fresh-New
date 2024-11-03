@@ -5,54 +5,33 @@ const otpGenerator = require('otp-generator'); // Install using npm
 const bcrypt = require('bcryptjs');
      
 
-// User Registration with OTP generation
 const registerUser = async (req, res) => {
-    const { email, password, name } = req.body;
+    const { email, password, username } = req.body;
 
     try {
+        // Check if the user already exists
         const existingUser = await UserModel.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
 
+        // Hash the password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         
-        const otp = otpGenerator.generate(6, { upperCase: false, specialChars: false });
-
-        // Create new user with hashed password and otp
-        const newUser = new UserModel({ email, password: hashedPassword, name, otp });
+        // Create a new user with the hashed password
+        const newUser = new UserModel({ email, password: hashedPassword, username });
         await newUser.save();
 
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'akhilaugustine2025@mca.ajce.in',
-                pass: process.env.APP_MAIL_PASSWORD
-            }
-        });
-
-        const mailOptions = {
-            from: 'akhilaugustine2025@mca.ajce.in',
-            to: email,
-            subject: 'Your OTP Code',
-            text: `Your OTP code is ${otp}`
-        };
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log(error);
-                return res.status(500).json({ message: 'Error sending OTP email', error });
-            } else {
-                res.status(201).json({ message: 'User registered successfully, OTP sent to email' });
-            }
-        });
+        // Respond with a success message
+        res.status(201).json({ message: 'User registered successfully' });
 
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).json({ message: 'Error registering user', error });
     }
 };
+
 // User Login
 const loginUser = async (req, res) => {
     const { email, password } = req.body;

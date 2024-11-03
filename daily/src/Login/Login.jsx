@@ -161,7 +161,7 @@ function Login() {
             Sign in with Google
           </button>
 
-          <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+          <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
           <p><Link to="/forgotpassword">Forgot your password?</Link></p>
 
           {/* Add ToastContainer to display the notifications */}

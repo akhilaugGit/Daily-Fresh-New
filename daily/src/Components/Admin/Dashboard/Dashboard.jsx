@@ -4,6 +4,8 @@ import Navbar from './Navbar/Navbar';
 import ProductCard from './ProductCard/ProductCard';
 import Footer from './Footer/Footer';
 import axios from 'axios';
+import { jsPDF } from 'jspdf';  // Import jsPDF
+import 'jspdf-autotable';  // Import autoTable plugin for table support in jsPDF
 import './ProductTable/ProductTable.css';
 
 const Dashboard = () => {
@@ -45,6 +47,24 @@ const Dashboard = () => {
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
         filterProducts(selectedCategory);
+    };
+
+    // Function to generate PDF
+    const generatePDF = () => {
+        const doc = new jsPDF();
+        doc.text('Product Report', 14, 10);
+
+        // Using autoTable to format table in PDF
+        doc.autoTable({
+            head: [['Product Name', 'Category', 'Stock']],
+            body: filteredProducts.map((product) => [
+                product.name,
+                product.category,
+                product.stock
+            ]),
+        });
+
+        doc.save('Product_Report.pdf');
     };
 
     return (
@@ -102,6 +122,11 @@ const Dashboard = () => {
                         ))}
                     </tbody>
                 </table>
+
+                {/* Button to Generate PDF Report */}
+                <button onClick={generatePDF} className="btn btn-primary">
+                    Generate PDF Report
+                </button>
             </div>
 
             <Footer />
