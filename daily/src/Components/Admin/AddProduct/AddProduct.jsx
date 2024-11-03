@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./AddProduct.css";
 import { useNavigate } from "react-router-dom";
+
 const AddProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -10,8 +11,9 @@ const AddProduct = () => {
   const [imageUrl, setImage] = useState("");
   const [category, setCategory] = useState("fish"); // Default category
   const [subcategory, setSubcategory] = useState(""); // Subcategory field
+  const [offer, setOffer] = useState(""); // Offer field
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate(); // Move useNavigate hook here
+  const navigate = useNavigate(); // useNavigate hook
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,6 +41,7 @@ const AddProduct = () => {
         category,
         subcategory,
         stock,
+        offer,
       };
       const formData = new FormData();
       formData.append("name", name);
@@ -48,6 +51,7 @@ const AddProduct = () => {
       formData.append("subcategory", subcategory);
       formData.append("image", imageUrl);
       formData.append("stock", stock);
+      formData.append("offer", offer);
 
       console.log(data); // For debugging
 
@@ -69,6 +73,7 @@ const AddProduct = () => {
       setStock("");
       setImage("");
       setCategory("fish");
+      setOffer("");
       setSubcategory("");
     } catch (error) {
       console.error("There was an error adding the product!", error);
@@ -77,9 +82,9 @@ const AddProduct = () => {
       );
     }
   };
+
   const imageUpload = (e) => {
-    console.log(e);
-    setImage(event.target.files[0]);
+    setImage(e.target.files[0]);
   };
 
   const handleHomeClick = () => {
@@ -89,7 +94,7 @@ const AddProduct = () => {
   return (
     <form onSubmit={handleSubmit} className="add-product-form">
       <span onClick={handleHomeClick} style={{ cursor: "pointer" }}>
-      🏛️Home
+        🏛️Home
       </span>
       <input
         type="text"
@@ -137,6 +142,17 @@ const AddProduct = () => {
         <option value="fish">Fish</option>
         <option value="poultry">Poultry</option>
       </select>
+       {/* Offer Dropdown */}
+       <select
+        value={offer}
+        onChange={(e) => setOffer(e.target.value)}
+        required
+      >
+        <option value="">Select Offer</option>
+        <option value="10%">10% off</option>
+        <option value="25%">25% off</option>
+        <option value="30%">30% off</option>
+      </select>
       {/* Subcategory field */}
       <input
         type="text"
@@ -145,8 +161,8 @@ const AddProduct = () => {
         onChange={(e) => setSubcategory(e.target.value)}
         required
       />
-      {errorMessage && <p className="error-message">{errorMessage}</p>}{" "}
-      {/* Display error message */}
+     
+      {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
       <button type="submit">Add Product</button>
     </form>
   );

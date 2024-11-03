@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';  // Adjusted import
 import axios from 'axios';
 import './UproductCard.css'
 
-const ProductCard = ({ productId, imageUrl, name, description, price, category }) => {
+const ProductCard = ({ productId, imageUrl, name, description, price, category,offer }) => {
     const navigate = useNavigate();
     console.log(productId);
     // Function to extract userId from token
@@ -51,6 +51,8 @@ const ProductCard = ({ productId, imageUrl, name, description, price, category }
             <p>{description}</p>
             <p>Price: ₹{price}</p>
             <p>Category: {category}</p>
+            <p className="offer">Offer: {offer}</p>
+
             <button className="add-to-cart-btn" onClick={handleAddToCart}>
                 Add to Cart
             </button>

@@ -85,3 +85,22 @@ body {
         grid-template-columns: 1fr; /* 1 card per row for mobile screens */
     }
 }
+
+/* Style for Offer Text with Icon */
+.product-card p.offer {
+    font-size: 14px;
+    color: #27ae60; /* Green color for offer text */
+    margin-bottom: 10px;
+    text-align: center; /* Ensure the offer is centered */
+    position: relative; /* Position to allow pseudo-element */
+}
+
+/* Add Icon Before Offer Text */
+.product-card p.offer::before {
+    content: ""; /* Green heart icon as a visual representation */
+    font-size: 16px;
+    margin-right: 5px; /* Space between icon and text */
+    color: #27ae60; /* Ensure icon color matches the offer text */
+    vertical-align: middle;
+}
+

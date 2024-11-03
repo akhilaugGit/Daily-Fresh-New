@@ -135,6 +135,7 @@ const Udashboard = () => {
             description={product.description}
             price={product.price}
             category={product.category}
+            offer={product.offer}
           />
         ))}
       </div>

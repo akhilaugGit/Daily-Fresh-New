@@ -36,7 +36,7 @@ const viewProductById = async (req, res) => {
 // Add a new product
 const addProduct = async (req, res) => {
   try {
-    const { name, description, price, category, subcategory, stock } = req.body;
+    const { name, description, price, category, offer,subcategory,stock } = req.body;
 
     let imageUrl = "";
 
@@ -56,9 +56,11 @@ const addProduct = async (req, res) => {
       description,
       price,
       imageUrl,
-      category, // Category dropdown field
+      category,
+      offer, // Category dropdown field
       subcategory, // Subcategory text field
       stock,
+      
     });
 
     await newProduct.save();

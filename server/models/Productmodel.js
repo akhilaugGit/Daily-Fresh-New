@@ -11,10 +11,21 @@ const productSchema = new mongoose.Schema(
       enum: ["fish", "poultry"], // Dropdown with options
       required: true,
     },
+    offer: {
+      type: String,
+      enum: ["10%", "20%","30%"], // Dropdown with options
+      required: true,
+    },
+
+
+
     subcategory: { type: String, required: true },
     stock: { type: Number, required: true },
+   
     isDisabled: { type: Boolean, default: false }, // Add this field  // Text field for fish or poultry types
   },
+  
+  
   { timestamps: true }
 );
 
