@@ -10,9 +10,10 @@ const Udashboard = () => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all"); // State to track selected category
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [priceFilter, setPriceFilter] = useState(""); // State for price filter
 
   useEffect(() => {
-    // Fetch products when component mounts and whenever selectedCategory or searchQuery changes
+    // Fetch products when component mounts and whenever selectedCategory, searchQuery, or priceFilter changes
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
@@ -25,9 +26,17 @@ const Udashboard = () => {
             },
           }
         );
-        const visibleProducts = response.data.filter(
+        let visibleProducts = response.data.filter(
           (product) => !product.isDisabled
         ); // Filter disabled products
+
+        // Sort products based on the selected price filter
+        if (priceFilter === "lowToHigh") {
+          visibleProducts = visibleProducts.sort((a, b) => a.price - b.price);
+        } else if (priceFilter === "highToLow") {
+          visibleProducts = visibleProducts.sort((a, b) => b.price - a.price);
+        }
+
         setProducts(visibleProducts);
       } catch (error) {
         console.error("There was an error fetching the products!", error);
@@ -35,16 +44,21 @@ const Udashboard = () => {
     };
 
     fetchProducts();
-  }, [selectedCategory, searchQuery]); // Run this effect when selectedCategory or searchQuery changes
+  }, [selectedCategory, searchQuery, priceFilter]); // Run this effect when selectedCategory, searchQuery, or priceFilter changes
 
   const handleSearch = (event) => {
     setSearchQuery(event.target.value); // Update the search query state
+  };
+
+  const handlePriceFilterChange = (event) => {
+    setPriceFilter(event.target.value); // Update the price filter state
   };
 
   return (
     <div>
       <Navbar />
       <CarouselComponent />
+      
       {/* Search Bar */}
       <div className="search-bar">
         <input
@@ -77,12 +91,26 @@ const Udashboard = () => {
         </button>
       </div>
 
+      {/* Price Filter Dropdown */}
+      <div className="price-filter">
+        <label htmlFor="priceFilter">Price💰</label>
+        <select
+          id="priceFilter"
+          value={priceFilter}
+          onChange={handlePriceFilterChange}
+        >
+          <option value="">None</option>
+          <option value="lowToHigh">Low to High</option>
+          <option value="highToLow">High to Low</option>
+        </select>
+      </div>
+
       {/* Display filtered products */}
       <div className="product-container">
         {products.map((product) => (
           <ProductCard
             key={product._id}
-            productId={product._id} // Pass productId here
+            productId={product._id}
             imageUrl={product.imageUrl}
             name={product.name}
             description={product.description}
@@ -91,6 +119,7 @@ const Udashboard = () => {
           />
         ))}
       </div>
+      
       <Footer />
     </div>
   );

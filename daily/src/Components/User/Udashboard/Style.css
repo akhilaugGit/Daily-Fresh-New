@@ -194,3 +194,66 @@ body {
     background-color: #2e7d32; /* Darker green for active button */
     border: 2px solid #fff; /* Highlight active button with white border */
 }
+/* Price Filter Wrapper */
+.price-filter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Move filter to the right end */
+    margin: 10px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #f1fcf0;
+    position: relative; /* Allows for more control over positioning */
+}
+
+/* Adjusted Label Styling */
+.price-filter label {
+    margin-right: 10px;
+    color: #f1fcf0;
+}
+
+/* Price Filter Dropdown */
+.price-filter select {
+    padding: 8px 12px; /* Smaller initial padding */
+    border: 2px solid #4caf50;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #333;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease; /* Smooth expansion effect */
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="5"><polygon points="0,0 10,0 5,5" fill="%23333333"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px 5px;
+    width: 70px; /* Initial smaller width */
+}
+
+/* Expand on Hover */
+.price-filter select:hover {
+    background-color: #e0f7e9;
+    border-color: #388e3c;
+    width: 180px; /* Expanded width on hover */
+    padding: 10px 15px; /* Expanded padding */
+}
+
+/* Dropdown Focus Effect */
+.price-filter select:focus {
+    border-color: #1b5e20;
+    box-shadow: 0px 0px 5px rgba(27, 94, 32, 0.5);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .price-filter {
+        justify-content: center; /* Center on smaller screens */
+    }
+
+    .price-filter select {
+        width: 100%;
+        max-width: 180px;
+    }
+}
