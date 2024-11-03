@@ -257,3 +257,58 @@ body {
         max-width: 180px;
     }
 }
+/* Base styles for light mode */
+.light-mode {
+    color: #333; /* Dark text color */
+}
+
+/* Base styles for dark mode */
+.dark-mode {
+    background-color: #333; /* Dark background */
+    color: #ffffff; /* Light text color */
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Styling for the toggle button */
+.dark-mode-toggle {
+    appearance: none; /* Remove default styling */
+    width: 40px; /* Set a smaller width */
+    height: 20px; /* Set a smaller height */
+    border-radius: 20px; /* Rounded edges */
+    background-color: #ccc; /* Light background color for off state */
+    position: relative; /* Position for the sliding effect */
+    outline: none; /* Remove outline */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s ease; /* Smooth transition for background */
+}
+
+/* Slider indicator */
+.dark-mode-toggle::before {
+    content: "";
+    position: absolute;
+    width: 18px; /* Width of the slider */
+    height: 18px; /* Height of the slider */
+    left: 1px; /* Adjust for better alignment */
+    bottom: 1px; /* Position the slider */
+    border-radius: 50%; /* Make it round */
+    background-color: white; /* Color of the slider */
+    transition: transform 0.3s ease; /* Smooth transition for sliding */
+}
+
+/* Toggle button for dark mode enabled */
+.dark-mode-toggle:checked {
+    background-color: #4caf50; /* Green background for on state */
+}
+
+/* Position the slider on toggle */
+.dark-mode-toggle:checked::before {
+    transform: translateX(20px); /* Slide the indicator */
+}
+
+.dark-mode-toggle:hover {
+    background-color: #388e3c; /* Darker green on hover */
+}

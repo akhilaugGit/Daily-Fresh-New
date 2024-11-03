@@ -11,6 +11,7 @@ const Udashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState("all"); // State to track selected category
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [priceFilter, setPriceFilter] = useState(""); // State for price filter
+  const [darkMode, setDarkMode] = useState(false); // State for dark mode
 
   useEffect(() => {
     // Fetch products when component mounts and whenever selectedCategory, searchQuery, or priceFilter changes
@@ -54,11 +55,29 @@ const Udashboard = () => {
     setPriceFilter(event.target.value); // Update the price filter state
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode); // Toggle the dark mode state
+  };
+
   return (
-    <div>
+    <div className={darkMode ? "dark-mode" : "light-mode"}>
       <Navbar />
       <CarouselComponent />
-      
+
+      {/* Dark Mode Toggle Button */}
+      <div className="toggle-container">
+    <label className="dark-mode-toggle">
+        <p style={{ color: 'white' }}>Dark</p>
+        <input 
+            type="checkbox" 
+            onChange={toggleDarkMode} 
+            checked={darkMode} 
+            style={{ display: 'none' }} // Hide the default checkbox
+        />
+    </label>
+</div>
+
+
       {/* Search Bar */}
       <div className="search-bar">
         <input
@@ -119,7 +138,7 @@ const Udashboard = () => {
           />
         ))}
       </div>
-      
+
       <Footer />
     </div>
   );
