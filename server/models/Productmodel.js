@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema(
     },
     offer: {
       type: String,
-      enum: ["10%", "20%","30%"], // Dropdown with options
+      enum: ["10%", "25%","30%"], // Dropdown with options
       required: true,
     },
 
