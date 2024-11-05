@@ -49,11 +49,11 @@ const Unavbar = () => {
             </div>
             <div className="navbar-items">
                 <span onClick={handleHomeClick} style={{ cursor: 'pointer' }}>Home</span>
-                <span onClick={handleProductsClick} style={{ cursor: 'pointer' }}>Products</span>
+                <span id="prod"  onClick={handleProductsClick} style={{ cursor: 'pointer' }}>Products</span>
                 <span onClick={handleContactClick} style={{ cursor: 'pointer' }}>Contact</span>
             </div>
             <div className="icons">
-            <span onClick={handleUprofile} style={{ cursor: 'pointer' }}>Profile</span>
+            <span id= "prf"onClick={handleUprofile} style={{ cursor: 'pointer' }}>Profile</span>
                 <span className="icon">👤</span>
                 <span onClick={handleLogout} style={{ cursor: 'pointer' }}>Logout</span>
                 <span className="icon">🛒</span>

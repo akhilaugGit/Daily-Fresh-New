@@ -13,6 +13,7 @@ import EditProduct from './Components/Admin/EditProduct/EditProduct';
 import Udashboard from './Components/User/Udashboard/Udashboard';
 import Cart from './Components/User/Cart';
 import Buy from './Components/User/Udashboard/Buy';
+import UproductCard from './Components/User/Udashboard/UproductCard/UproductCard';
 import Manage from './Components/Admin/Manage/Manage';
 import ProductTable from './Components/Admin/Dashboard/ProductTable/ProductTable';
 import Uprofile from './Components/User/Udashboard/Uprofile/Uprofile';
@@ -54,6 +55,8 @@ function App() {
         <Route path='/resetpassword/:userId/:token' element={<ResetPassword />} />
         <Route path='/buy' element={<Buy />} />
         <Route path='/manage' element={<Manage />} />
+        <Route path='/uproductcard' element={<UproductCard />} />
+
         <Route path='/producttable' element={<ProductTable />} />
         <Route path='/uprofile' element={<Uprofile />} />
 

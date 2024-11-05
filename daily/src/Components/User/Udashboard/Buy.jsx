@@ -58,6 +58,7 @@ const Buy = () => {
     <div className="buy-page">
       <h2>Checkout</h2>
       <p>Total Price to Pay: ₹{totalPrice}</p>
+      
       <button onClick={handlePayment}>
         Confirm Purchase
       </button>

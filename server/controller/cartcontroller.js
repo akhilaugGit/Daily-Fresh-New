@@ -3,7 +3,6 @@ const Product = require('../models/Productmodel');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId; // Import ObjectId correctly
 
-
 // Add item to cart
 const addItemToCart = async (req, res) => {
     const { userId, productId, quantity } = req.body;
@@ -94,7 +93,7 @@ const updateCartItemQuantity = async (req, res) => {
         }
 
         // Update the quantity of the item
-        const itemIndex = cart.products.findIndex(item => item.productId.equals(objectId));
+        const itemIndex = cart.products.findIndex(item => item.productId && item.productId.equals(objectId));
         if (itemIndex > -1) {
             cart.products[itemIndex].quantity = quantity; // Update quantity
         } else {
@@ -103,7 +102,7 @@ const updateCartItemQuantity = async (req, res) => {
 
         // Recalculate the total price of the cart
         const totalPrice = cart.products.reduce((total, item) => {
-            return total + (item.productId.price * item.quantity); // Assuming itemId has price field populated
+            return item.productId ? total + (item.productId.price * item.quantity) : total;
         }, 0);
 
         // Save the updated cart and total price
@@ -131,7 +130,7 @@ const removeItemFromCart = async (req, res) => {
         }
 
         // Remove the item from the cart
-        cart.products = cart.products.filter(item => !item.productId.equals(objectId));
+        cart.products = cart.products.filter(item => item.productId && !item.productId.equals(objectId));
 
         // Save the updated cart
         await cart.save();
@@ -143,5 +142,4 @@ const removeItemFromCart = async (req, res) => {
     }
 };
 
-
-module.exports = { addItemToCart, viewCart,updateCartItemQuantity,  removeItemFromCart };
+module.exports = { addItemToCart, viewCart, updateCartItemQuantity, removeItemFromCart };
