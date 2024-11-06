@@ -22,7 +22,7 @@ const Cart = () => {
       }
 
       // Make a request with the token in the Authorization header
-      const response = await axios.get(`http://localhost:3001/api/cart/view`, {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/cart/view`, {
         headers: {
           Authorization: `Bearer ${token}`, // Attach token in the request
         },
@@ -60,7 +60,7 @@ const Cart = () => {
 
       // Make a PUT request to update the quantity of a specific product
       await axios.put(
-        `http://localhost:3001/api/cart/update`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/cart/update`,
         { productId, quantity },
         {
           headers: {
@@ -90,7 +90,7 @@ const Cart = () => {
       if (!token || !userId) return;
   
       // Make a DELETE request to remove the product
-      await axios.delete(`http://localhost:3001/api/cart/remove`, {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/cart/remove`, {
         headers: {
           Authorization: `Bearer ${token}`, // Attach token in the request
         },

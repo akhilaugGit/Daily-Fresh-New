@@ -18,7 +18,7 @@ const EditProduct = () => {
 
     useEffect(() => {
         // Fetch the product by ID
-        axios.get(`http://localhost:3001/api/product/view-products/${id}`)
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/product/view-products/${id}`)
             .then(response => {
                 setProduct(response.data);  // Pre-fill the form with current product data
             })
@@ -35,7 +35,7 @@ const EditProduct = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Make the PUT request to update the product
-        axios.put(`http://localhost:3001/api/product/editProduct/${id}`, product)
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/product/editProduct/${id}`, product)
             .then(response => {
                 console.log("Product updated successfully", response);
                 navigate('/dashboard');  // Redirect to product list after successful update
@@ -49,7 +49,7 @@ const EditProduct = () => {
         // Toggle the isDisabled field and update the product
         const updatedProduct = { ...product, isDisabled: !product.isDisabled };
     
-        axios.put(`http://localhost:3001/api/product/disableProduct/${id}`, updatedProduct)
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/product/disableProduct/${id}`, updatedProduct)
             .then(response => {
                 console.log("Product visibility toggled successfully", response);
                 navigate('/dashboard');  // Redirect to product list

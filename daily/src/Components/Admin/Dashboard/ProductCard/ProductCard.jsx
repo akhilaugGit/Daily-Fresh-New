@@ -29,7 +29,7 @@ const ProductCard = ({ productId, imageUrl, name, description, price, category,s
             return;
         }
             // Send a POST request to add the product to the cart
-            const response = await axios.post('http://localhost:3001/api/cart/add', {
+            const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/cart/add`, {
                 userId,  // Pass the extracted userId in the request body
                 productId,  // Pass the productId in the request body
                 quantity: 1 // Default quantity set to 1, modify as needed

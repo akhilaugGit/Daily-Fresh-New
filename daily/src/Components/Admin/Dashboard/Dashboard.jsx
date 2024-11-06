@@ -17,7 +17,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api/product/view-product');
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/product/view-product`);
                 setProducts(response.data);
                 setFilteredProducts(response.data);
             } catch (error) {

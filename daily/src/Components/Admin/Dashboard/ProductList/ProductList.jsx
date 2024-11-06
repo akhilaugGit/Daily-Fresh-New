@@ -8,7 +8,7 @@ const ProductList = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/product/view-product')  
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/product/view-product`)  
             .then(response => {
                 setProducts(response.data);
             })
@@ -19,7 +19,7 @@ const ProductList = () => {
 
     const handleDelete = (id) => {
         if (window.confirm("Are you sure you want to delete this product?")) {
-            axios.delete(`http://localhost:3001/api/product/delete/${id}`)
+            axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/product/delete/${id}`)
     .then(response => {
         setProducts(products.filter(product => product._id !== id));
         console.log("Product deleted successfully");

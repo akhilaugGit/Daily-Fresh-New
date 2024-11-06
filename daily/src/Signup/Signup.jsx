@@ -105,7 +105,7 @@ function Signup() {
     e.preventDefault();
 
     if (!isButtonDisabled) {
-      axios.post('http://localhost:3001/api/auth/register', { username, email, password })
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, { username, email, password })
         .then(result => {
           console.log(result);
           navigate('/login');  // Redirect to login on successful registration

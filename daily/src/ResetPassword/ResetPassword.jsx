@@ -27,7 +27,7 @@ function ResetPassword() {
     }
 
     // Include userId and token in the request
-    axios.post(`http://localhost:3001/api/auth/resetpassword/${userId}/${token}`,{ password })
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/resetpassword/${userId}/${token}`,{ password })
       .then(result => {
         console.log("reset password:", result.data);
         if (result.data.Status === 'Success') {

@@ -21,7 +21,7 @@ const Uprofile = () => {
           return;
         }
         // const response = await axios.get(``); // Replace with your actual endpoint
-        const response = await axios.get(`http://localhost:3001/api/user/profile`, {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/profile`, {
           headers: {
             Authorization: `Bearer ${token}`, // Attach token in the request
           },

@@ -9,7 +9,7 @@ const Manage = () => {
     // Fetch the list of users from the API when the component mounts
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/user/fetch'); // Replace with your API endpoint
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/fetch`); // Replace with your API endpoint
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -22,7 +22,7 @@ const Manage = () => {
   const toggleUserStatus = async (userId, currentStatus) => {
     try {
       const updatedStatus = !currentStatus;
-      await axios.patch(`http://localhost:3001/api/user/${userId}/status`, { isEnabled: updatedStatus }); // Replace with your API endpoint
+      await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/user/${userId}/status`, { isEnabled: updatedStatus }); // Replace with your API endpoint
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
           user._id === userId ? { ...user, isEnabled: updatedStatus } : user

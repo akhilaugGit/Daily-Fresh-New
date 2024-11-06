@@ -41,7 +41,7 @@ function Login() {
     e.preventDefault();
     if (validateEmail(email)) {
       try {
-        const result = await axios.post('http://localhost:3001/api/auth/login', { email, password });
+        const result = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, { email, password });
         
         if (result.data.message === 'Login successful') {
           localStorage.setItem('token', result.data.token);
@@ -87,7 +87,7 @@ function Login() {
         };
 
         // Send user data to backend
-        axios.post('http://localhost:3001/api/auth/glogin', fields)
+        axios.post('${import.meta.env.VITE_BACKEND_URL}/api/auth/glogin', fields)
           .then(result => {
             if (result.data.msg === 'User Login Successfully!') {
               // Show success toast
