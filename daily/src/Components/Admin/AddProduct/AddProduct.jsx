@@ -56,7 +56,7 @@ const AddProduct = () => {
       console.log(data); // For debugging
 
       const response = await axios.post(
-        "http://localhost:3001/api/product/add",
+        `${import.meta.env.VITE_BACKEND_URL}/api/product/add`,
         formData,
         {
           headers: {
