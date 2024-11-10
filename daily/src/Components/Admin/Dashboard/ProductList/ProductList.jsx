@@ -20,7 +20,7 @@ const ProductList = () => {
     }, []);
 
     const handleDelete = (id) => {
-        if (window.confirm("Are you sure you want to delete this product?")) {
+        if (window.confirm(" sure you want to delete this product?")) {
             axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/product/delete/${id}`)
     .then(response => {
         setProducts(products.filter(product => product._id !== id));
