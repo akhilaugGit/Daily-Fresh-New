@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Uprofile.css'; // Add CSS styling as needed
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 const Uprofile = () => {
   const [user, setUser] = useState({
@@ -10,6 +11,7 @@ const Uprofile = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     // Fetch user details from the API when the component mounts
@@ -40,9 +42,15 @@ const Uprofile = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
-
+  const handleUdashboard = () => {
+    navigate('/udashboard');  // Pass totalPrice to Buy component
+  };
   return (
     <div className="profile-container">
+    
+ <button onClick={handleUdashboard}>
+    ⬅️Back
+      </button>
       <h1>Your Profile</h1>
       <div className="profile-details">
         <p><strong>Name:</strong> {user.username}</p>
