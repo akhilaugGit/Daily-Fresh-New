@@ -35,9 +35,7 @@ const Navbar = () => {
                 <div className="logo-text">Daily Fresh</div>
             </div>
             <div className="navbar-items">
-                <span>Home</span>
-                <span>Products</span>
-                <span>Contact</span>
+               
                 <span onClick={handleAddProduct} style={{ cursor: 'pointer' }}>AddProduct</span>
                 <span onClick={handleEditProduct} style={{ cursor: 'pointer' }}>EditProduct</span>
                 <span onClick={handleManage} style={{ cursor: 'pointer' }}>Manage</span>
