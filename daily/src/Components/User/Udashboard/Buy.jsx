@@ -1,4 +1,3 @@
-// Buy.jsx
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -27,7 +26,7 @@ const Buy = () => {
     if (!validateForm()) return;
 
     try {
-      const response = await fetch('http://localhost:3001/create-order', {
+      const response = await fetch('http://localhost:3001/api/create-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,26 +67,55 @@ const Buy = () => {
   };
 
   return (
-    <div className="buy-page">
+    <div className="buy-page" style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
       <h2>Checkout</h2>
       <p>Total Price to Pay: ₹{totalPrice}</p>
 
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={(e) => e.preventDefault()} style={{ marginTop: '20px' }}>
         <input
           type="text"
           placeholder="Enter your phone number"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '10px',
+            marginBottom: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '5px',
+            fontSize: '16px',
+          }}
         />
-        <br />
         <textarea
           placeholder="Enter your address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '10px',
+            marginBottom: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '5px',
+            fontSize: '16px',
+            height: '100px',
+          }}
         />
-        <br />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button onClick={handlePayment}>Confirm Purchase</button>
+        {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
+        <button
+          onClick={handlePayment}
+          style={{
+            width: '100%',
+            padding: '12px',
+            backgroundColor: '#3399cc',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '5px',
+            fontSize: '16px',
+            cursor: 'pointer',
+          }}
+        >
+          Confirm Purchase
+        </button>
       </form>
     </div>
   );
