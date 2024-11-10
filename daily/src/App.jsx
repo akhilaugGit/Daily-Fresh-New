@@ -17,8 +17,7 @@ import UproductCard from './Components/User/Udashboard/UproductCard/UproductCard
 import Manage from './Components/Admin/Manage/Manage';
 import ProductTable from './Components/Admin/Dashboard/ProductTable/ProductTable';
 import Uprofile from './Components/User/Udashboard/Uprofile/Uprofile';
-
-
+import About from './Components/about/about';
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);  // Loading state
@@ -56,7 +55,7 @@ function App() {
         <Route path='/buy' element={<Buy />} />
         <Route path='/manage' element={<Manage />} />
         <Route path='/uproductcard' element={<UproductCard />} />
-
+        <Route path='/about' element={<About />} /> 
         <Route path='/producttable' element={<ProductTable />} />
         <Route path='/uprofile' element={<Uprofile />} />
 

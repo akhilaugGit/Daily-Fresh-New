@@ -1,0 +1,99 @@
+.about-page {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #b930d2;
+  padding: 20px;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.tagline {
+  font-size: 1.5rem;
+  color: #ffffff;
+  margin-top: 10px;
+}
+
+.market-insights {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.graph-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.graph-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.graph-caption {
+  font-style: italic;
+  color: #aa2af0;
+}
+
+.market-players {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+.market-players li {
+  background-color: #172f3b;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+}
+.about-daily-fresh {
+  margin-bottom: 30px;
+}
+
+.founder-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.founder-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.founder-image {
+  max-width: 200px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.founder-details {
+  max-width: 600px;
+  color: white; /* Ensure the text inside this container is white */
+}
+
+h1, h2, h3 {
+  color: #ffffff; /* Ensures headers (h1, h2, h3) are white */
+}
+
+p {
+  color: white; /* Makes sure all paragraphs have white text */
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  color: white; /* Ensures market player list items have white text */
+}
