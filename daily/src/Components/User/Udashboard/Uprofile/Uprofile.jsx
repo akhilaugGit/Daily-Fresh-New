@@ -51,8 +51,8 @@ const Uprofile = () => {
  <button onClick={handleUdashboard}>
     ⬅️Back
       </button>
-      <h1>Your Profile</h1>
       <div className="profile-details">
+      <h2>Hello  {user.username}</h2>
         <p><strong>Name:</strong> {user.username}</p>
         <p><strong>Email:</strong> {user.email}</p>
         {/* Only show last four characters of the password for security */}
