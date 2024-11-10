@@ -58,9 +58,14 @@ const EditProduct = () => {
                 console.error("There was an error disabling the product!", error);
             });
     };
-
+    const handledashboard = () => {
+        navigate('/dashboard');  // Pass totalPrice to Buy component
+      };
     return (
         <div className="edit-product">
+         <button onClick={handledashboard}>
+    ⬅️Back
+      </button>
             <h2>Edit Product</h2>
             <form onSubmit={handleSubmit}>
                 {/* Form Fields */}

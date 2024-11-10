@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 const Buy = () => {
   const location = useLocation();
   const { totalPrice } = location.state || { totalPrice: 0 };
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
@@ -65,10 +67,16 @@ const Buy = () => {
       alert('Something went wrong with the payment');
     }
   };
+  const handleCart = () => {
+    navigate('/cart');  // Pass totalPrice to Buy component
+  };
 
   return (
     <div className="buy-page" style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
       <h2>Checkout</h2>
+      <button onClick={handleCart}>
+    ⬅️Back
+      </button>
       <p>Total Price to Pay: ₹{totalPrice}</p>
 
       <form onSubmit={(e) => e.preventDefault()} style={{ marginTop: '20px' }}>

@@ -3,9 +3,11 @@ import axios from 'axios';
 import ProductCard from '../ProductCard/ProductCard';
 import { Link } from 'react-router-dom';
 import './ProductList.css';  // Ensure to import the CSS file
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/product/view-product`)  
@@ -29,9 +31,15 @@ const ProductList = () => {
     });
         }
     };
+    const handledashboard = () => {
+        navigate('/dashboard');  // Pass totalPrice to Buy component
+      };
     return (
         <div className="product-list">
             <h2>Products</h2>
+            <button onClick={handledashboard}>
+    ⬅️Back
+      </button>
             <div className="product-grid">
                 {products.map(product => (
                     <div key={product._id} className="product-item">
