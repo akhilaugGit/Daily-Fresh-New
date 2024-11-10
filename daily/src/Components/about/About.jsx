@@ -25,37 +25,55 @@ const About = () => {
       {/* About Section */}
       <div className="section about-section">
         <div className="section-wrapper">
-          <h2>About Akhil Augustine</h2>
+          <h2>Experinece</h2>
           
           <div className="experience-cards">
             {/* Experience Card 1 */}
             <div className="experience-card">
-              <img src="./orion-logo.png" alt="Orion Innovation" className="company-logo" />
-              <div className="card-content">
-                <h3>Associate Software Engineer</h3>
-                <p>Orion Innovation, Infopark Kochi</p>
-                <p>2022 - 2023</p>
+    <div className="company-logo1" />
+    <div className="card-content">
+      <h3>Associate Software Engineer</h3>
+      <p>Orion Innovation, Infopark Kochi</p>
+      <p>full-time</p>
+      <p>2022 - 2023</p>
+
               </div>
             </div>
 
             {/* Experience Card 2 */}
             <div className="experience-card">
-              <img src="./prime-edumate-logo.png" alt="Prime Edumate" className="company-logo" />
-              <div className="card-content">
+            <div className="company-logo2" />
+            <div className="card-content">
                 <h3>Digital Marketing Manager</h3>
                 <p>Prime Edumate</p>
-                <p>Year</p>
-              </div>
+                <p>part-time</p>
+                <p>2024</p>
+
+                </div>
             </div>
           </div>
 
           <div className="linkedin-link">
-            <a href="https://www.linkedin.com/in/akhilaugustine" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/akhil--augustine/" target="_blank" rel="noopener noreferrer">
               Visit my LinkedIn
             </a>
           </div>
         </div>
       </div>
+
+
+
+      <div className="section about-section">
+      <div className="company-logo3" />
+      <div className="company-logo4" />
+
+
+        <div className="section-wrapper">
+          </div>
+        </div>
+
+
+
 
       {/* Footer Section (Optional, remove if not needed) */}
       <div className="section footer">

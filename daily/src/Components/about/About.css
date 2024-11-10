@@ -33,8 +33,7 @@
 .about-section {
   padding: 40px;
   background-color: #fff;
-  width: 80%;
-  max-width: 1200px;
+  width: 100%;
   margin-top: 100px; /* Adjust margin to not overlap hero section */
   text-align: center;
   border-radius: 10px;
@@ -59,7 +58,7 @@
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 250px;
+  width: 700px;
   padding: 20px;
   text-align: center;
   display: flex;
@@ -74,12 +73,35 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.company-logo {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-bottom: 10px;
+.company-logo1 {
+  background-image: url("./orion.png");
+
+  width: 200px; /* Set the width of the logo */
+  height: 200px; /* Set the height of the logo */
+  border-radius: 90%; /* Makes the logo circular */
+  margin-bottom: 10px; /* Space between the logo and the content */
+  border: 2px solid #ddd; /* Optional: Adds a border around the logo */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow around the logo */
+}
+.company-logo2 {
+  background-image: url("./prime.jpeg");
+
+  width: 190px; /* Set the width of the logo */
+  height: 190px; /* Set the height of the logo */
+  border-radius: 90%; /* Makes the logo circular */
+  margin-bottom: 10px; /* Space between the logo and the content */
+  border: 2px solid #ddd; /* Optional: Adds a border around the logo */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow around the logo */
+}
+.company-logo3 {
+  background-image: url("./qc.png");
+  display: flex;
+
+  width: 800px; /* Set the width of the logo */
+  height: 500px; /* Set the height of the logo */
+  margin-bottom: 10px; /* Space between the logo and the content */
+  border: 2px solid #ddd; /* Optional: Adds a border around the logo */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow around the logo */
 }
 
 .card-content {
