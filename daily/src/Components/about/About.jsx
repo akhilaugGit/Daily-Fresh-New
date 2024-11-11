@@ -55,7 +55,7 @@ const About = () => {
 
           <div className="linkedin-link">
             <a href="https://www.linkedin.com/in/akhil--augustine/" target="_blank" rel="noopener noreferrer">
-              Visit my LinkedIn
+              Connect on LinkedIn
             </a>
           </div>
         </div>
