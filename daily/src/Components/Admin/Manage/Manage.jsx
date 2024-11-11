@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+
 import './Manage.css'
 
 const Manage = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     // Fetch the list of users from the API when the component mounts
@@ -32,9 +35,15 @@ const Manage = () => {
       console.error('Error updating user status:', error);
     }
   };
+  const handledashboard = () => {
+    navigate('/dashboard');  // Pass totalPrice to Buy component
+  };
 
   return (
     <div className="manage-container">
+    <button onClick={handledashboard}>
+    ⬅️Back
+      </button>
       <h1>Manage Users</h1>
       <table>
         <thead>
