@@ -33,7 +33,7 @@ const About = () => {
     <div className="company-logo1" />
     <div className="card-content">
       <h3>Associate Software Engineer</h3>
-      <p>Orion Innovation, Infopark Kochi</p>
+      <h3>Orion Innovation, Infopark Kochi</h3>
       <p>full-time</p>
       <p>2022 - 2023</p>
 
@@ -45,7 +45,7 @@ const About = () => {
             <div className="company-logo2" />
             <div className="card-content">
                 <h3>Digital Marketing Manager</h3>
-                <p>Prime Edumate</p>
+                <h3>Prime Edumate</h3>
                 <p>part-time</p>
                 <p>2024</p>
 
