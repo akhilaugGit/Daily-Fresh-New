@@ -133,7 +133,7 @@ const handleUdashboard = () => {
           {cart.products.map((product) => (
             product.productId && ( // Only render if productId exists
               <div key={product.productId._id} className="cart-item">
-                <img src={product.productId.imageUrl} alt={product.productId.name} />
+                <img src={`${import.meta.env.VITE_BACKEND_URL}${product.productId.imageUrl}`} alt={product.productId.name} />
 
                 
                 <h3>{product.productId.name}</h3>
