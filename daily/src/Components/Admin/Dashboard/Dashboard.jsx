@@ -125,7 +125,7 @@ const Dashboard = () => {
 
                 {/* Button to Generate PDF Report */}
                 <button onClick={generatePDF} className="btn btn-primary">
-                    Generate PDF Report
+                    Generate Report
                 </button>
             </div>
 
