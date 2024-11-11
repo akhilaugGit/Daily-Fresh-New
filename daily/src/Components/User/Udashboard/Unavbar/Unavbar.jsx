@@ -63,7 +63,7 @@ const Unavbar = () => {
                 <span className="icon">👤</span>
                 <span onClick={handleLogout} style={{ cursor: 'pointer' }}>Logout</span>
                 <span className="icon">🛒</span>
-                <span onClick={handleCart} style={{ cursor: 'pointer' }}>cart</span>
+                <span onClick={handleCart} style={{ cursor: 'pointer' }}>Cart</span>
 
                 
             </div>
