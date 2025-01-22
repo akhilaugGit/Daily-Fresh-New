@@ -4,9 +4,8 @@ const nodemailer = require('nodemailer');
 const otpGenerator = require('otp-generator'); // Install using npm
 const bcrypt = require('bcryptjs');
      
-
 const registerUser = async (req, res) => {
-    const { email, password, username } = req.body;
+    const { email, password, username, isDuser } = req.body;
 
     try {
         // Check if the user already exists
@@ -18,9 +17,15 @@ const registerUser = async (req, res) => {
         // Hash the password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Create a new user with the hashed password and delivery partner status
+        const newUser = new UserModel({
+            email,
+            password: hashedPassword,
+            username,
+            isDuser: isDuser || false, // Default to false if not provided
+        });
         
-        // Create a new user with the hashed password
-        const newUser = new UserModel({ email, password: hashedPassword, username });
         await newUser.save();
 
         // Respond with a success message
@@ -31,6 +36,25 @@ const registerUser = async (req, res) => {
         res.status(500).json({ message: 'Error registering user', error });
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // User Login
 const loginUser = async (req, res) => {
@@ -62,7 +86,12 @@ const loginUser = async (req, res) => {
         // Generate JWT token if login is successful
         const token = jwt.sign({ id: user._id }, 'jwt_secret_key', { expiresIn: '1d' });
 
-        res.json({ message: 'Login successful', token });
+        // Include `isDuser` in the response
+        res.json({ 
+            message: 'Login successful', 
+            token, 
+            isDuser: user.isDuser // Include the isDuser field
+        });
     } catch (error) {
         console.error('Error logging in:', error);  // Log the error for better debugging
         res.status(500).json({ message: 'Error logging in', error });

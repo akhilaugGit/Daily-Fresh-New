@@ -36,39 +36,55 @@ function Login() {
     }
   };
 
-  // Handle form submit for regular login
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validateEmail(email)) {
-      try {
-        const result = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, { email, password });
-        
-        if (result.data.message === 'Login successful') {
-          localStorage.setItem('token', result.data.token);
-          
-          // Show success toast
-          toast.success(result.data.message);
+ // Updated handleSubmit for regular login
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-          if (email === 'akhilaugustine2025@mca.ajce.in') {
-            navigate('/dashboard');
-          } else {
-            navigate('/udashboard');
-          }
+  if (validateEmail(email)) {
+    try {
+      // Make login API call
+      const result = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
+        email,
+        password,
+      });
+
+      // Check if the response indicates success
+      if (result.data && result.data.message === 'Login successful') {
+        // Store the token in localStorage
+        localStorage.setItem('token', result.data.token);
+
+        // Show success toast
+        toast.success(result.data.message);
+
+        // Navigate based on the `isDuser` field
+        if (result.data.isDuser) {
+          navigate('/duser'); // Redirect to Duser page
+          console.log('API Response:', result.data);
+console.log('isDuser:', result.data.isDuser);
+        } else if (email === 'akhilaugustine2025@mca.ajce.in') {
+          navigate('/dashboard'); // Redirect to admin dashboard
         } else {
-          // Show error toast if login fails
-          toast.error(result.data.message);
+          console.log('isDuser:', result.data.isDuser);
+          navigate('/udashboard'); // Redirect to user dashboard
         }
-      } catch (error) {
-        const backendMessage = error.response?.data?.message || 'Error logging in';
-        setErrorMessage(backendMessage);
-        // Show error toast in case of error
-        toast.error(backendMessage);
+      } else {
+        // If the backend response is not as expected, handle it here
+        const errorMessage = result.data?.message || 'Unexpected error occurred';
+        setErrorMessage(errorMessage);
+        toast.error(errorMessage);
       }
-    } else {
-      setErrorMessage('Please fix the errors before submitting.');
-      toast.error('Please fix the errors before submitting.');
+    } catch (error) {
+      // Handle network or server errors
+      const backendMessage = error.response?.data?.message || 'Error logging in';
+      setErrorMessage(backendMessage);
+      toast.error(backendMessage);
     }
-  };
+  } else {
+    // Show validation error if email is invalid
+    setErrorMessage('Please fix the errors before submitting.');
+    toast.error('Please fix the errors before submitting.');
+  }
+};
 
   // Handle Google Sign-In
   const handleGoogleSignIn = () => {

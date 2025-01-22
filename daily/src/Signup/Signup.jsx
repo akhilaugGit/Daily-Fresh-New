@@ -8,6 +8,7 @@ function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isDuser, setIsDuser] = useState(false); // Track Delivery Partner checkbox state
   const [errors, setErrors] = useState({ username: '', email: '', password: '' });
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const navigate = useNavigate();
@@ -100,12 +101,17 @@ function Signup() {
     }
   };
 
+  // Handle Delivery Partner checkbox change
+  const handleDuserChange = (e) => {
+    setIsDuser(e.target.checked);
+  };
+
   // Register user and navigate to login page
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!isButtonDisabled) {
-      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, { username, email, password })
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, { username, email, password, isDuser })
         .then(result => {
           console.log(result);
           navigate('/login');  // Redirect to login on successful registration
@@ -162,6 +168,19 @@ function Signup() {
                 onChange={handlePasswordChange}
               />
               {errors.password && <p className="error-text">{errors.password}</p>}
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="isDuser">
+                <strong>Are you a Delivery Partner?</strong>
+              </label>
+              <input
+                type="checkbox"
+                id="isDuser"
+                name="isDuser"
+                checked={isDuser}
+                onChange={handleDuserChange}
+              />
             </div>
 
             <button

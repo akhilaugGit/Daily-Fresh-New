@@ -18,6 +18,8 @@ import Manage from './Components/Admin/Manage/Manage';
 import ProductTable from './Components/Admin/Dashboard/ProductTable/ProductTable';
 import Uprofile from './Components/User/Udashboard/Uprofile/Uprofile';
 import About from './Components/about/about';
+import ADashboard from './Components/Admin/Dashboard/Adashboard/Adashboard';
+import Duser from './Components/Duser/Duser';
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);  // Loading state
@@ -58,6 +60,8 @@ function App() {
         <Route path='/about' element={<About />} /> 
         <Route path='/producttable' element={<ProductTable />} />
         <Route path='/uprofile' element={<Uprofile />} />
+        <Route path='/duser'element={<Duser />} />
+        <Route path='/adashboard' element={<ADashboard />} />
 
 
 
