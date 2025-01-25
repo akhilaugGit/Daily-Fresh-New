@@ -8,6 +8,8 @@ const DeliveryRegister = () => {
     location: '',
     drivingLicense: null,
   });
+  const token = localStorage.getItem('token');
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,6 +39,7 @@ const DeliveryRegister = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
           },
         }
       );

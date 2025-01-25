@@ -15,7 +15,7 @@ const registerDuser = async (req, res) => {
       userId,
       {
         location,
-        imag: req.file.path,
+        image: req.file.path,
         isDuser: true
       },
       { new: true } // Return the updated document
