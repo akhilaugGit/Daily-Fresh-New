@@ -28,6 +28,11 @@ const Navbar = () => {
         // Redirect to the login page
         navigate('/manage');
     };
+    const handleManageDuser = () => {
+        // Remove user verification from local storage
+        // Redirect to the login page
+        navigate('/managedusers');
+    };
     return (
         <nav className="navbar">
             <div className="logo-container">
@@ -38,7 +43,8 @@ const Navbar = () => {
                
                 <span onClick={handleAddProduct} style={{ cursor: 'pointer' }}>AddProduct</span>
                 <span onClick={handleEditProduct} style={{ cursor: 'pointer' }}>EditProduct</span>
-                <span onClick={handleManage} style={{ cursor: 'pointer' }}>Manage</span>
+                <span onClick={handleManage} style={{ cursor: 'pointer' }}>Users</span>
+                <span onClick={handleManageDuser} style={{ cursor: 'pointer' }}>Delivery Partner</span>
 
 
             </div>

@@ -6,7 +6,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "teachers", // Folder in Cloudinary
-    allowed_formats: ["jpeg", "pdf"], // Correct formats
+    allowed_formats: ["jpeg","png"], // Correct formats
   },
 });
 
