@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Duser.css'; // Import the CSS file
 import '../../Components/User/Udashboard/Unavbar/Unavbar';
 import Unavbar from '../../Components/User/Udashboard/Unavbar/Unavbar';
 
-
 const Duser = () => {
+  const navigate = useNavigate();
+
   return (
-    
     <div className="duser-container">
-          <Unavbar/>
+      <Unavbar />
 
       <header className="duser-header">
         <h1>Welcome, Delivery Partner!</h1>
@@ -32,6 +33,12 @@ const Duser = () => {
           <h2>Account Settings</h2>
           <p>Update your profile, change password, and more.</p>
           <button className="btn">Manage Account</button>
+        </div>
+
+        <div className="card register-service">
+          <h2>Register for Delivery Service</h2>
+          <p>You just need to register to access this service.</p>
+          <button className="btn" onClick={() => navigate('/deliveryregister')}>Register Now</button>
         </div>
       </div>
 

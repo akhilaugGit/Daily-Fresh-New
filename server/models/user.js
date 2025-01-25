@@ -5,6 +5,15 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     otp: String, // Store OTP temporarily
+    image : {type: String,
+        required : false,
+    },
+
+    location : {
+        type: String,
+        required : false,
+    },
+    
     isEnabled: {
         type: Boolean,
         default: true
