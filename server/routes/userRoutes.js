@@ -1,14 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const verifyToken = require("../utils/verifytoken");
-const { getAllUsers,toggleUserStatus,getUserProfile } = require('../controller/userController');
+const { 
+  getAllUsers, 
+  toggleUserStatus, 
+  getUserProfile,
+  fetchDUsers // Added fetchDUsers controller
+} = require('../controller/userController');
 
-// Define auth routes
-
+// User routes
 router.get('/fetch', getAllUsers);
 router.patch('/:id/status', toggleUserStatus);
-router.get('/profile',verifyToken, getUserProfile); // Ensure `authenticate` middleware checks user authentication
+router.get('/profile', verifyToken, getUserProfile); 
+router.get('/dusers', verifyToken, fetchDUsers); // New route for fetching delivery users
 
-
-module.exports = router;  // Correctly export the router object
-getUserProfile
+module.exports = router;

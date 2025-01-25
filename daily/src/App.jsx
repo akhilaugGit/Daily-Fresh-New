@@ -21,6 +21,7 @@ import About from './Components/about/about';
 import ADashboard from './Components/Admin/Dashboard/Adashboard/Adashboard';
 import Duser from './Components/Duser/Duser';
 import DeliveryRegister from './Components/Duser/DeliveryRegister';
+import ManageDusers from './Components/Admin/ManageDusers';
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);  // Loading state
@@ -64,6 +65,7 @@ function App() {
         <Route path='/duser'element={<Duser />} />
         <Route path='/adashboard' element={<ADashboard />} />
         <Route path='/deliveryregister'element={<DeliveryRegister/>} />
+        <Route path='/managedusers' element={<ManageDusers />} />
 
 
 

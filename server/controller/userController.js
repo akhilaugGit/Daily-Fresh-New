@@ -57,12 +57,24 @@ getUserProfile = async (req, res) => {
   }
 };
 
+// Fetch delivery users
+const fetchDUsers = async (req, res) => {
+  try {
+    const dUsers = await UserModel.find({ isDuser: true }).select('username email location image');
+    res.status(200).json({ dusers: dUsers });
+  } catch (error) {
+    console.error('Error fetching delivery users:', error);
+    res.status(500).json({ message: 'Failed to fetch delivery users.' });
+  }
+};
+
 // Define routes
 
 module.exports = {
   getAllUsers,
   toggleUserStatus,
-  getUserProfile
+  getUserProfile,
+  fetchDUsers
 
 
 }
