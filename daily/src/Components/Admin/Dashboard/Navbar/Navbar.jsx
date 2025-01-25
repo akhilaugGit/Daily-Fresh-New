@@ -43,8 +43,8 @@ const Navbar = () => {
                
                 <span onClick={handleAddProduct} style={{ cursor: 'pointer' }}>AddProduct</span>
                 <span onClick={handleEditProduct} style={{ cursor: 'pointer' }}>EditProduct</span>
-                <span onClick={handleManage} style={{ cursor: 'pointer' }}>Users</span>
-                <span onClick={handleManageDuser} style={{ cursor: 'pointer' }}>Delivery Partner</span>
+                <span onClick={handleManage} style={{ cursor: 'pointer' }}>Users👥</span>
+                <span onClick={handleManageDuser} style={{ cursor: 'pointer' }}>Delivery Partner🛵</span>
 
 
             </div>

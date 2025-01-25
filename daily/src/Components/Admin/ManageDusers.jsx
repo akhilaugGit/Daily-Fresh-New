@@ -23,6 +23,25 @@ const ManageDUsers = () => {
     fetchDUsers();
   }, []);
 
+  // Function to toggle delivery user's enabled/disabled status
+  const toggleDUserStatus = async (userId, currentStatus) => {
+    try {
+      const updatedStatus = !currentStatus;
+      await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/user/${userId}/status`, { isEnabled: updatedStatus }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      setDUsers((prevDUsers) =>
+        prevDUsers.map((user) =>
+          user._id === userId ? { ...user, isEnabled: updatedStatus } : user
+        )
+      );
+    } catch (error) {
+      console.error('Error updating delivery user status:', error);
+    }
+  };
+
   const handledashboard = () => {
     navigate('/dashboard');
   };
@@ -56,6 +75,8 @@ const ManageDUsers = () => {
             <th style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'left' }}>Email</th>
             <th style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'left' }}>Location</th>
             <th style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>Image</th>
+            <th style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>Status</th>
+            <th style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -76,9 +97,9 @@ const ManageDUsers = () => {
                       src={user.image}
                       alt="User"
                       style={{
-                        width: '100px',
-                        height: '100px',
-                      
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
                         objectFit: 'cover',
                         display: 'block',
                         margin: '0 auto',
@@ -88,6 +109,24 @@ const ManageDUsers = () => {
                 ) : (
                   'No Image'
                 )}
+              </td>
+              <td style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>
+                {user.isEnabled ? 'Enabled' : 'Disabled'}
+              </td>
+              <td style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>
+                <button
+                  onClick={() => toggleDUserStatus(user._id, user.isEnabled)}
+                  style={{
+                    padding: '5px 10px',
+                    backgroundColor: user.isEnabled ? '#FF6347' : '#32CD32',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {user.isEnabled ? 'Disable' : 'Enable'}
+                </button>
               </td>
             </tr>
           ))}
