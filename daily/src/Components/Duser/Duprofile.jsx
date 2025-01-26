@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../User/Udashboard/Uprofile/Uprofile.css'; // Add CSS styling as needed
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import delvImage from '../../assets/delv.png';
+
 
 const Duprofile = () => {
   const [user, setUser] = useState({

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import backgroundImg from '../../assets/delv.png';
 
 const DeliveryRegister = () => {
   const navigate = useNavigate();
@@ -9,7 +10,6 @@ const DeliveryRegister = () => {
     drivingLicense: null,
   });
   const token = localStorage.getItem('token');
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,42 +52,143 @@ const DeliveryRegister = () => {
       alert('Failed to register. Please try again.');
     }
   };
+  
+
+const handleBack = () => {
+  navigate('/duser');
+};
+
+  const styles = {
+    container: {
+      fontFamily: 'Arial, sans-serif',
+      backgroundImage: `url(${backgroundImg})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      minHeight: '100vh',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '20px',
+    },
+    formContainer: {
+      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      padding: '30px',
+      borderRadius: '12px',
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+      width: '100%',
+      maxWidth: '400px',
+      textAlign: 'center',
+    },
+    header: {
+      fontSize: '1.8rem',
+      fontWeight: 'bold',
+      color: '#7733ff',
+      marginBottom: '20px',
+    },
+    formGroup: {
+      marginBottom: '15px',
+      textAlign: 'left',
+    },
+    label: {
+      fontSize: '1rem',
+      fontWeight: 'bold',
+      color: '#333',
+      marginBottom: '5px',
+      display: 'block',
+    },
+    select: {
+      width: '100%',
+      padding: '10px',
+      fontSize: '1rem',
+      borderRadius: '6px',
+      border: '1px solid #ccc',
+    },
+    input: {
+      width: '100%',
+      padding: '10px',
+      fontSize: '1rem',
+      borderRadius: '6px',
+      border: '1px solid #ccc',
+    },
+    button: {
+      width: '100%',
+      padding: '10px 20px',
+      fontSize: '1rem',
+      fontWeight: 'bold',
+      color: '#fff',
+      backgroundColor: '#7733ff',
+      border: 'none',
+      borderRadius: '6px',
+      cursor: 'pointer',
+      transition: 'background-color 0.3s',
+    },
+    buttonHover: {
+      backgroundColor: '#45a049',
+    },
+  };
 
   return (
-    <div className="delivery-register-container">
-      <h1>Delivery Partner Registration</h1>
-      <form onSubmit={handleSubmit} className="delivery-register-form">
-        <div className="form-group">
-          <label htmlFor="location">Select Location</label>
-          <select
-            id="location"
-            name="location"
-            value={formData.location}
-            onChange={handleInputChange}
-            required
+    <div style={styles.container}>
+     <button
+        onClick={handleBack}
+        style={{
+          alignSelf: 'flex-start',
+          marginBottom: '20px',
+          backgroundColor: '#6a0d',
+          color: '#fff',
+          border: 'none',
+          padding: '10px 20px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+        }}
+      >
+        ⬅️ Back
+      </button>
+      <div style={styles.formContainer}>
+        <h1 style={styles.header}>Delivery Partner Registration</h1>
+        <form onSubmit={handleSubmit}>
+       
+          <div style={styles.formGroup}>
+            <label htmlFor="location" style={styles.label}>Select Location</label>
+            <select
+              id="location"
+              name="location"
+              value={formData.location}
+              onChange={handleInputChange}
+              style={styles.select}
+              required
+            >
+              <option value="">-- Select a Location --</option>
+              <option value="kochi">Kochi</option>
+              <option value="trivandrum">Trivandrum</option>
+              <option value="kottayam">Kottayam</option>
+              <option value="kozhikode">Kozhikode</option>
+            </select>
+          </div>
+
+          <div style={styles.formGroup}>
+            <label htmlFor="drivingLicense" style={styles.label}>Upload Driving License</label>
+            <input
+              type="file"
+              id="drivingLicense"
+              name="drivingLicense"
+              accept="image/*,application/pdf"
+              onChange={handleFileChange}
+              style={styles.input}
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            style={styles.button}
+            onMouseOver={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
+            onMouseOut={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
           >
-            <option value="">-- Select a Location --</option>
-            <option value="kochi">Kochi</option>
-            <option value="trivandrum">Trivandrum</option>
-            <option value="kottayam">Kottayam</option>
-            <option value="kozhikode">Kozhikode</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="drivingLicense">Upload Driving License</label>
-          <input
-            type="file"
-            id="drivingLicense"
-            name="drivingLicense"
-            accept="image/*,application/pdf"
-            onChange={handleFileChange}
-            required
-          />
-        </div>
-
-        <button type="submit" className="btn-submit">Submit</button>
-      </form>
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
