@@ -9,6 +9,7 @@ const Buy = () => {
 
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
   const [error, setError] = useState('');
 
   const validateForm = () => {
@@ -18,6 +19,10 @@ const Buy = () => {
     }
     if (address.trim().length < 10) {
       setError('Address should be at least 10 characters.');
+      return false;
+    }
+    if (!selectedLocation) {
+      setError('Please select a location.');
       return false;
     }
     setError('');
@@ -54,6 +59,7 @@ const Buy = () => {
         },
         notes: {
           address: address,
+          location: selectedLocation,
         },
         theme: {
           color: '#3399cc',
@@ -67,16 +73,15 @@ const Buy = () => {
       alert('Something went wrong with the payment');
     }
   };
+
   const handleCart = () => {
-    navigate('/cart');  // Pass totalPrice to Buy component
+    navigate('/cart'); // Pass totalPrice to Buy component
   };
 
   return (
     <div className="buy-page" style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
       <h2>Checkout</h2>
-      <button onClick={handleCart}>
-    ⬅️Back
-      </button>
+      <button onClick={handleCart}>⬅️Back</button>
       <p>Total Price to Pay: ₹{totalPrice}</p>
 
       <form onSubmit={(e) => e.preventDefault()} style={{ marginTop: '20px' }}>
@@ -94,6 +99,7 @@ const Buy = () => {
             fontSize: '16px',
           }}
         />
+
         <textarea
           placeholder="Enter your address"
           value={address}
@@ -108,7 +114,28 @@ const Buy = () => {
             height: '100px',
           }}
         />
+
+        <select
+          value={selectedLocation}
+          onChange={(e) => setSelectedLocation(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '10px',
+            marginBottom: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '5px',
+            fontSize: '16px',
+          }}
+        >
+          <option value="">Select your location</option>
+          <option value="Kochi">Kochi</option>
+          <option value="Kozhikode">Kozhikode</option>
+          <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+          <option value="Kottayam">Kottayam</option>
+        </select>
+
         {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
+
         <button
           onClick={handlePayment}
           style={{

@@ -22,6 +22,8 @@ import ADashboard from './Components/Admin/Dashboard/Adashboard/Adashboard';
 import Duser from './Components/Duser/Duser';
 import DeliveryRegister from './Components/Duser/DeliveryRegister';
 import ManageDusers from './Components/Admin/ManageDusers';
+import Dnavbar from './Components/Duser/Dnavbar';
+import Duprofile from './Components/Duser/Duprofile';
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);  // Loading state
@@ -66,6 +68,8 @@ function App() {
         <Route path='/adashboard' element={<ADashboard />} />
         <Route path='/deliveryregister'element={<DeliveryRegister/>} />
         <Route path='/managedusers' element={<ManageDusers />} />
+        <Route path='/dnavbar' element={<Dnavbar />} />
+        <Route path='/duprofile' element={<Duprofile />} />
 
 
 
