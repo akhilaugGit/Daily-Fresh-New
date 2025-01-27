@@ -24,6 +24,7 @@ import DeliveryRegister from './Components/Duser/DeliveryRegister';
 import ManageDusers from './Components/Admin/ManageDusers';
 import Dnavbar from './Components/Duser/Dnavbar';
 import Duprofile from './Components/Duser/Duprofile';
+import TasteProfile from './Components/User/TasteProfile';
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);  // Loading state
@@ -70,6 +71,7 @@ function App() {
         <Route path='/managedusers' element={<ManageDusers />} />
         <Route path='/dnavbar' element={<Dnavbar />} />
         <Route path='/duprofile' element={<Duprofile />} />
+        <Route path='/taste' element={<TasteProfile />} />
 
 
 

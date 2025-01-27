@@ -1,24 +1,19 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const authRoutes = require('./authroutes');  // Ensure this file exports router properly
-const productRoutes = require('./productroutes');  // Ensure this file exports router properly
-const cartRoutes = require('./cartroutes');
-const userRoutes = require('./userRoutes');
-const duserRoutes = require('./duserroutes');
+const authRoutes = require("./authroutes");
+const productRoutes = require("./productroutes");
+const cartRoutes = require("./cartroutes");
+const userRoutes = require("./userRoutes");
+const duserRoutes = require("./duserroutes");
+const tasteProfileRoutes = require("./tasteprofileroutes");
 
+// Define routes
+router.use("/auth", authRoutes);
+router.use("/product", productRoutes);
+router.use("/cart", cartRoutes);
+router.use("/user", userRoutes);
+router.use("/duser", duserRoutes);
+router.use("/tasteprofile", tasteProfileRoutes);
 
-
-
-// Use viewproductroutes here
-router.use('/auth', authRoutes);  // Ensure authRoutes exports a valid router
-router.use('/product', productRoutes);  // Ensure productRoutes exports a valid router
-router.use('/cart', cartRoutes);
-router.use('/user', userRoutes);
-router.use('/duser', duserRoutes);
-
-  // Use product routes
-
-
-
-
+// Export router
 module.exports = router;

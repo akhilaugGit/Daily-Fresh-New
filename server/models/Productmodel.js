@@ -8,24 +8,29 @@ const productSchema = new mongoose.Schema(
     imageUrl: { type: String, required: true },
     category: {
       type: String,
-      enum: ["fish", "poultry"], // Dropdown with options
+      enum: ["fish", "poultry"],
       required: true,
     },
     offer: {
       type: String,
-      enum: ["10%", "25%","30%"], // Dropdown with options
+      enum: ["10%", "25%", "30%"],
       required: true,
     },
-
-
-
     subcategory: { type: String, required: true },
     stock: { type: Number, required: true },
-   
-    isDisabled: { type: Boolean, default: false }, // Add this field  // Text field for fish or poultry types
+    isDisabled: { type: Boolean, default: false },
+    tasteProfile: {
+      tenderness: { type: Boolean, default: false },
+      sweetness: { type: Boolean, default: false },
+      saltiness: { type: Boolean, default: false },
+      fishiness: { type: Boolean, default: false },
+      texture: { type: Boolean, default: false },
+      oiliness: { type: Boolean, default: false },
+      acidity: { type: Boolean, default: false },
+      metallic: { type: Boolean, default: false },
+      mineral: { type: Boolean, default: false },
+    },
   },
-  
-  
   { timestamps: true }
 );
 
