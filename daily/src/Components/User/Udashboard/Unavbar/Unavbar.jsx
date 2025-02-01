@@ -44,6 +44,12 @@ const Unavbar = () => {
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); // Scroll to bottom
         }, 300);
     };
+    const handleTaste = () => {
+        navigate('/taste');
+        setTimeout(() => {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); // Scroll to bottom
+        }, 300);
+    };
 
     return (
         <nav className="navbar">
@@ -56,14 +62,17 @@ const Unavbar = () => {
                 <span id="prod"  onClick={handleProductsClick} style={{ cursor: 'pointer' }}>Products</span>
                 <span onClick={handleContactClick} style={{ cursor: 'pointer' }}>Contact</span>
                 <span onClick={handleAboutClick} style={{ cursor: 'pointer' }}>About</span>
+                <span onClick={handleTaste} style={{ cursor: 'pointer' }}>✨TasteLens</span>
 
             </div>
             <div className="icons">
             <span id= "prf"onClick={handleUprofile} style={{ cursor: 'pointer' }}>Profile</span>
+           
                 <span className="icon">👤</span>
                 <span onClick={handleLogout} style={{ cursor: 'pointer' }}>Logout</span>
                 <span className="icon">🛒</span>
                 <span onClick={handleCart} style={{ cursor: 'pointer' }}>Cart</span>
+        
 
                 
             </div>

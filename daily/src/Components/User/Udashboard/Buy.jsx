@@ -89,7 +89,11 @@ const Buy = () => {
           type="text"
           placeholder="Enter your phone number"
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={(e) => {
+            if (/^\d{0,10}$/.test(e.target.value)) {
+              setPhone(e.target.value);
+            }
+          }}
           style={{
             width: '100%',
             padding: '10px',

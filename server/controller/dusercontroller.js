@@ -38,3 +38,4 @@ const registerDuser = async (req, res) => {
 module.exports = {
   registerDuser,
 };
+
