@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+
 
 const TasteProfile = () => {
+    const navigate = useNavigate();
+  
   const [preferences, setPreferences] = useState({
     tenderness: false,
     sweetness: false,
@@ -35,9 +39,14 @@ const TasteProfile = () => {
       setError("Failed to fetch recommended products. Please try again.");
     }
   };
+  const handleBack = () => {
+    navigate('/udashboard');
+  };
+  
 
   return (
     <div
+    
       style={{
         fontFamily: "Arial, sans-serif",
         maxWidth: "600px",
@@ -47,7 +56,23 @@ const TasteProfile = () => {
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         backgroundColor: "#f9f9f9",
       }}
+      
     >
+    <button
+        onClick={handleBack}
+        style={{
+          alignSelf: 'flex-start',
+          marginBottom: '20px',
+          backgroundColor: '#6a0d',
+          color: '#fff',
+          border: 'none',
+          padding: '10px 20px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+        }}
+      >
+        ⬅️ Back
+      </button>
       <h1 style={{ textAlign: "center", color: "#333" }}>Taste Profile</h1>
       <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
         {Object.keys(preferences).map((preference) => (

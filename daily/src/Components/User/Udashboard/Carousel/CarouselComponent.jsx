@@ -6,6 +6,7 @@ import '../Style.css';
 import homeImage from '../../../../assets/courosel/one.webp';
 import underImage from '../../../../assets/courosel/two.webp';
 import plateImage from '../../../../assets/courosel/four.webp';
+import ad10 from '../../../../assets/courosel/ten.gif';
 
 const CarouselComponent = () => {
     return (
@@ -20,6 +21,12 @@ const CarouselComponent = () => {
                     </BootstrapCarousel.Item>
                     <BootstrapCarousel.Item>
                         <img className="d-block w-100" src={plateImage} alt="Third slide" />
+                        <span style={{ color: 'yellow' }}>Advertisment</span>
+
+                    </BootstrapCarousel.Item>
+                    <BootstrapCarousel.Item>
+                        <img className="d-block w-100" src={ad10} alt="ad10" />
+                        <span style={{ color: 'yellow' }}>Advertisment</span>
                     </BootstrapCarousel.Item>
                 </BootstrapCarousel>
             </div>
