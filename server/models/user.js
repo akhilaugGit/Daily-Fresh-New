@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
     isDuser: {
         type: Boolean,
         default: false
+    },
+    isFuser: {
+        type: Boolean,
+        default: false
     }
 });
 

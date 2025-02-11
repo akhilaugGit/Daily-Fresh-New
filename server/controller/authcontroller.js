@@ -5,7 +5,7 @@ const otpGenerator = require('otp-generator'); // Install using npm
 const bcrypt = require('bcryptjs');
      
 const registerUser = async (req, res) => {
-    const { email, password, username, isDuser } = req.body;
+    const { email, password, username, isDuser,isFuser } = req.body;
 
     try {
         // Check if the user already exists
@@ -24,6 +24,8 @@ const registerUser = async (req, res) => {
             password: hashedPassword,
             username,
             isDuser: isDuser || false, // Default to false if not provided
+            isFuser: isFuser || false, // Default to false if not provided
+
         });
         
         await newUser.save();

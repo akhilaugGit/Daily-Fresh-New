@@ -8,7 +8,8 @@ function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isDuser, setIsDuser] = useState(false); // Track Delivery Partner checkbox state
+  const [isDuser, setIsDuser] = useState(false); // Delivery Partner checkbox state
+  const [isFuser, setIsFuser] = useState(false); // Freelancer User checkbox state
   const [errors, setErrors] = useState({ username: '', email: '', password: '' });
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const navigate = useNavigate();
@@ -106,12 +107,23 @@ function Signup() {
     setIsDuser(e.target.checked);
   };
 
+  // Handle Freelancer User checkbox change
+  const handleFuserChange = (e) => {
+    setIsFuser(e.target.checked);
+  };
+
   // Register user and navigate to login page
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!isButtonDisabled) {
-      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, { username, email, password, isDuser })
+      axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, { 
+        username, 
+        email, 
+        password, 
+        isDuser,
+        isFuser ,
+      })
         .then(result => {
           console.log(result);
           navigate('/login');  // Redirect to login on successful registration
@@ -180,6 +192,19 @@ function Signup() {
                 name="isDuser"
                 checked={isDuser}
                 onChange={handleDuserChange}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="isFuser">
+                <strong>Are you a Freelancer User?</strong>
+              </label>
+              <input
+                type="checkbox"
+                id="isFuser"
+                name="isFuser"
+                checked={isFuser}
+                onChange={handleFuserChange}
               />
             </div>
 
