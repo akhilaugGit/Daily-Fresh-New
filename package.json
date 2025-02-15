@@ -4,5 +4,10 @@
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
     "recharts": "^2.15.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^4.0.6"
   }
 }

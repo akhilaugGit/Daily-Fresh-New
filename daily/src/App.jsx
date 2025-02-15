@@ -25,7 +25,8 @@ import ManageDusers from './Components/Admin/ManageDusers';
 import Dnavbar from './Components/Duser/Dnavbar';
 import Duprofile from './Components/Duser/Duprofile';
 import TasteProfile from './Components/User/TasteProfile';
-
+import Fuser from './Components/Fuser';
+import Game from './Components/Game/Game';
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);  // Loading state
@@ -73,6 +74,11 @@ function App() {
         <Route path='/dnavbar' element={<Dnavbar />} />
         <Route path='/duprofile' element={<Duprofile />} />
         <Route path='/taste' element={<TasteProfile />} />
+        <Route path='/fuser' element={<Fuser />} />
+        <Route path='/game' element={<Game />} />
+
+
+
         
 
 
