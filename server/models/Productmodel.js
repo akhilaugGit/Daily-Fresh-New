@@ -14,9 +14,9 @@ const productSchema = new mongoose.Schema(
     offer: {
       type: String,
       enum: ["10%", "25%", "30%"],
-      required: true,
+      required: false,
     },
-    subcategory: { type: String, required: true },
+    subcategory: { type: String, required: false },
     stock: { type: Number, required: true },
     isDisabled: { type: Boolean, default: false },
     tasteProfile: {
