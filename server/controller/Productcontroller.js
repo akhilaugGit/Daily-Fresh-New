@@ -36,7 +36,7 @@ const viewProductById = async (req, res) => {
 // Add a new product
 const addProduct = async (req, res) => {
   try {
-    const { name, description, price, category, offer,subcategory,stock } = req.body;
+    const { name, description, price, category, offer,subcategory,stock,isDisabled } = req.body;
 
     let imageUrl = "";
 
@@ -60,6 +60,8 @@ const addProduct = async (req, res) => {
       offer, // Category dropdown field
       subcategory, // Subcategory text field
       stock,
+      isDisabled,
+
       
     });
 

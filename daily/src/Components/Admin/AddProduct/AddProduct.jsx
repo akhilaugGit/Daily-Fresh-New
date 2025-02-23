@@ -10,39 +10,33 @@ const AddProduct = () => {
   const [stock, setStock] = useState("");
   const [imageUrl, setImage] = useState("");
   const [category, setCategory] = useState("fish"); // Default category
-  const [subcategory, setSubcategory] = useState(""); // Subcategory field
-  const [offer, setOffer] = useState(""); // Offer field
+  const [subcategory, setSubcategory] = useState("");
+  const [offer, setOffer] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate(); // useNavigate hook
+  const navigate = useNavigate();
+
+  const validateText = (text) => {
+    return /^[A-Za-z\s]+$/.test(text); // Ensures only letters and spaces are allowed
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Clear previous error message
     setErrorMessage("");
 
-    // Validate price
-    if (price <= 0) {
-      setErrorMessage("Price must be greater than 0.");
+    if (!validateText(name)) {
+      setErrorMessage("Product name must not contain numbers or special characters.");
       return;
     }
-    if (price > 100000) {
-      setErrorMessage("Price cannot exceed 100,000.");
+    if (!validateText(description)) {
+      setErrorMessage("Description must not contain numbers or special characters.");
+      return;
+    }
+    if (price <= 0 || price > 100000) {
+      setErrorMessage("Price must be between 1 and 100,000.");
       return;
     }
 
-    // Proceed if validations pass
     try {
-      const data = {
-        name,
-        description,
-        price,
-        imageUrl,
-        category,
-        subcategory,
-        stock,
-        offer,
-      };
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
@@ -52,8 +46,6 @@ const AddProduct = () => {
       formData.append("image", imageUrl);
       formData.append("stock", stock);
       formData.append("offer", offer);
-
-      console.log(data); // For debugging
 
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/product/add`,
@@ -65,8 +57,6 @@ const AddProduct = () => {
         }
       );
       alert(response.data.message);
-
-      // Reset form fields
       setName("");
       setDescription("");
       setPrice("");
@@ -76,10 +66,7 @@ const AddProduct = () => {
       setOffer("");
       setSubcategory("");
     } catch (error) {
-      console.error("There was an error adding the product!", error);
-      setErrorMessage(
-        "There was an error adding the product. Please try again."
-      );
+      setErrorMessage("There was an error adding the product. Please try again.");
     }
   };
 
@@ -93,20 +80,18 @@ const AddProduct = () => {
 
   return (
     <form onSubmit={handleSubmit} className="add-product-form">
-      <span onClick={handleHomeClick} style={{ cursor: "pointer" }}>
-        🏛️Home
-      </span>
+      <span onClick={handleHomeClick} style={{ cursor: "pointer" }}>🏛️Home</span>
       <input
         type="text"
         placeholder="Product Name"
         value={name}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => validateText(e.target.value) && setName(e.target.value)}
         required
       />
       <textarea
         placeholder="Description"
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={(e) => validateText(e.target.value) && setDescription(e.target.value)}
         required
       />
       <input
@@ -127,33 +112,17 @@ const AddProduct = () => {
         min="1"
         max="100000"
       />
-      <input
-        type="file"
-        placeholder="Image URL"
-        onChange={imageUpload}
-        required
-      />
-      {/* Category Dropdown */}
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        required
-      >
+      <input type="file" placeholder="Image URL" onChange={imageUpload} required />
+      <select value={category} onChange={(e) => setCategory(e.target.value)} required>
         <option value="fish">Fish</option>
         <option value="poultry">Poultry</option>
       </select>
-       {/* Offer Dropdown */}
-       <select
-        value={offer}
-        onChange={(e) => setOffer(e.target.value)}
-        required
-      >
+      <select value={offer} onChange={(e) => setOffer(e.target.value)} required>
         <option value="">Select Offer</option>
         <option value="10%">10% off</option>
         <option value="25%">25% off</option>
         <option value="30%">30% off</option>
       </select>
-      {/* Subcategory field */}
       <input
         type="text"
         placeholder={`Enter ${category} type`}
@@ -161,8 +130,7 @@ const AddProduct = () => {
         onChange={(e) => setSubcategory(e.target.value)}
         required
       />
-     
-      {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <button type="submit">Add Product</button>
     </form>
   );
