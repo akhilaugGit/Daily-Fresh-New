@@ -6,7 +6,7 @@ const cartRoutes = require("./cartroutes");
 const userRoutes = require("./userRoutes");
 const duserRoutes = require("./duserroutes");
 const tasteProfileRoutes = require("./tasteprofileroutes");
-const orderRoutes = require("./orderroutes");
+const orderRoutes = require("./orderroutes2");
 // Define routes
 router.use("/auth", authRoutes);
 router.use("/product", productRoutes);

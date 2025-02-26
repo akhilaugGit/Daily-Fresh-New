@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';  // Adjusted import
 
-const OrderDetails = () => {
+const ViewOrder = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const navigate = useNavigate();
 
-  // Fetch orders when component mounts
+  // Fetch user's orders when component mounts
   useEffect(() => {
-    fetchOrders();
+    fetchUserOrders();
   }, []);
 
-  const fetchOrders = async () => {
+  const fetchUserOrders = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
@@ -26,7 +25,8 @@ const OrderDetails = () => {
         return;
       }
 
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/orders/all`, {
+      // Call the endpoint that gets orders for the logged-in user
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/orders/user`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -36,38 +36,8 @@ const OrderDetails = () => {
       setLoading(false);
     } catch (err) {
       console.error('Error fetching orders:', err);
-      setError('Failed to load orders. Please try again later.');
+      setError('Failed to load your orders. Please try again later.');
       setLoading(false);
-    }
-  };
-
-  const updateOrderStatus = async (orderId, newStatus) => {
-    try {
-      const token = localStorage.getItem('token');
-      
-      if (!token) {
-        setError('Not authenticated. Please login.');
-        return;
-      }
-      
-      await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/orders/update-status`,
-        { orderId, status: newStatus },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-
-      // Update local state to reflect changes
-      setOrders(orders.map(order => 
-        order._id === orderId ? { ...order, status: newStatus } : order
-      ));
-
-    } catch (err) {
-      console.error('Error updating order status:', err);
-      setError('Failed to update order status. Please try again.');
     }
   };
 
@@ -97,24 +67,45 @@ const OrderDetails = () => {
     }
   };
 
+  const getStatusMessage = (status) => {
+    switch (status) {
+      case 'pending':
+        return 'Your order is being processed';
+      case 'completed':
+        return 'Your order has been delivered';
+      case 'failed':
+        return 'There was an issue with your order';
+      default:
+        return '';
+    }
+  };
+
   const handleBack = () => {
-    navigate('/admin-dashboard'); // Adjust based on your admin dashboard route
+    navigate('/udashboard'); // Navigate back to user dashboard
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.header}>
         <button onClick={handleBack} style={styles.backButton}>⬅️ Back</button>
-        <h1 style={styles.title}>Order Management</h1>
-        <button onClick={fetchOrders} style={styles.refreshButton}>🔄 Refresh</button>
+        <h1 style={styles.title}>My Orders</h1>
+        <button onClick={fetchUserOrders} style={styles.refreshButton}>🔄 Refresh</button>
       </div>
 
       {error && <div style={styles.error}>{error}</div>}
       
       {loading ? (
-        <div style={styles.loading}>Loading orders...</div>
+        <div style={styles.loading}>Loading your orders...</div>
       ) : orders.length === 0 ? (
-        <div style={styles.noOrders}>No orders found</div>
+        <div style={styles.noOrders}>
+          <p>You haven't placed any orders yet.</p>
+          <button 
+            onClick={() => navigate('/cart')} 
+            style={styles.shopButton}
+          >
+            View Cart
+          </button>
+        </div>
       ) : (
         <div style={styles.ordersContainer}>
           {orders.map((order) => (
@@ -140,72 +131,75 @@ const OrderDetails = () => {
 
               {expandedOrderId === order._id && (
                 <div style={styles.orderDetails}>
-                  <div style={styles.customerInfo}>
-                    <h3>Customer Information</h3>
+                  <div style={styles.statusMessage}>
+                    <p style={{
+                      color: getStatusColor(order.status),
+                      fontWeight: 'bold'
+                    }}>
+                      {getStatusMessage(order.status)}
+                    </p>
+                  </div>
+                  
+                  <div style={styles.shippingInfo}>
+                    <h3>Shipping Information</h3>
                     <p><strong>Phone:</strong> {order.phone}</p>
                     <p><strong>Location:</strong> {order.location}</p>
                     <p><strong>Address:</strong> {order.address}</p>
+                  </div>
+
+                  <div style={styles.paymentInfo}>
+                    <h3>Payment Information</h3>
                     <p><strong>Payment ID:</strong> {order.paymentId}</p>
+                    <p><strong>Order Date:</strong> {formatDate(order.orderDate)}</p>
+                    <p><strong>Total Amount:</strong> ₹{order.amount}</p>
                   </div>
 
                   <div style={styles.productList}>
                     <h3>Products Ordered</h3>
                     {order.products && order.products.length > 0 ? (
-                      <ul style={styles.productListItems}>
+                      <div style={styles.productsGrid}>
                         {order.products.map((product, index) => (
-                          <li key={index} style={styles.productItem}>
-                            {product.productId && product.productId.name ? (
+                          <div key={index} style={styles.productCard}>
+                            {product.productId && (
                               <>
-                                <span>{product.productId.name}</span>
-                                <span>Qty: {product.quantity}</span>
-                                <span>₹{product.productId.price * product.quantity}</span>
+                                <div style={styles.productImageContainer}>
+                                  {product.productId.imageUrl && (
+                                    <img 
+                                      src={`${import.meta.env.VITE_BACKEND_URL}${product.productId.imageUrl}`} 
+                                      alt={product.productId.name || 'Product'} 
+                                      style={styles.productImage}
+                                    />
+                                  )}
+                                </div>
+                                <div style={styles.productInfo}>
+                                  <p style={styles.productName}>{product.productId.name}</p>
+                                  <p style={styles.productPrice}>
+                                    ₹{product.productId.price} × {product.quantity}
+                                  </p>
+                                  <p style={styles.productTotal}>
+                                    Total: ₹{product.productId.price * product.quantity}
+                                  </p>
+                                </div>
                               </>
-                            ) : (
-                              <span>Product details not available</span>
                             )}
-                          </li>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     ) : (
                       <p>No product details available</p>
                     )}
                   </div>
 
-                  <div style={styles.statusControl}>
-                    <h3>Update Status</h3>
-                    <div style={styles.statusButtons}>
+                  {order.status === 'completed' && (
+                    <div style={styles.reorderSection}>
                       <button
-                        style={{
-                          ...styles.statusButton,
-                          backgroundColor: order.status === 'pending' ? '#FFA500' : '#f0f0f0',
-                          color: order.status === 'pending' ? '#fff' : '#333'
-                        }}
-                        onClick={() => updateOrderStatus(order._id, 'pending')}
+                        onClick={() => navigate('/products')}
+                        style={styles.reorderButton}
                       >
-                        Pending
-                      </button>
-                      <button
-                        style={{
-                          ...styles.statusButton,
-                          backgroundColor: order.status === 'completed' ? '#008000' : '#f0f0f0',
-                          color: order.status === 'completed' ? '#fff' : '#333'
-                        }}
-                        onClick={() => updateOrderStatus(order._id, 'completed')}
-                      >
-                        Completed
-                      </button>
-                      <button
-                        style={{
-                          ...styles.statusButton,
-                          backgroundColor: order.status === 'failed' ? '#FF0000' : '#f0f0f0',
-                          color: order.status === 'failed' ? '#fff' : '#333'
-                        }}
-                        onClick={() => updateOrderStatus(order._id, 'failed')}
-                      >
-                        Failed
+                        Shop Again
                       </button>
                     </div>
-                  </div>
+                  )}
                 </div>
               )}
             </div>
@@ -218,7 +212,7 @@ const OrderDetails = () => {
 
 const styles = {
   container: {
-    maxWidth: '1200px',
+    maxWidth: '1000px',
     margin: '0 auto',
     padding: '20px',
     fontFamily: 'Arial, sans-serif',
@@ -263,10 +257,20 @@ const styles = {
   },
   noOrders: {
     textAlign: 'center',
-    padding: '30px',
+    padding: '40px',
     backgroundColor: '#f9f9f9',
     borderRadius: '8px',
     color: '#666',
+  },
+  shopButton: {
+    marginTop: '15px',
+    padding: '10px 20px',
+    backgroundColor: '#3399cc',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '16px',
   },
   ordersContainer: {
     display: 'flex',
@@ -293,6 +297,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '15px',
+    flexWrap: 'wrap',
   },
   orderDate: {
     fontSize: '14px',
@@ -314,41 +319,78 @@ const styles = {
     color: '#666',
   },
   orderDetails: {
-    padding: '15px',
+    padding: '20px',
     borderTop: '1px solid #eee',
   },
-  customerInfo: {
+  statusMessage: {
+    marginBottom: '20px',
+    textAlign: 'center',
+  },
+  shippingInfo: {
+    marginBottom: '20px',
+  },
+  paymentInfo: {
     marginBottom: '20px',
   },
   productList: {
     marginBottom: '20px',
   },
-  productListItems: {
-    listStyle: 'none',
-    padding: '0',
-    margin: '0',
+  productsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+    gap: '15px',
+    marginTop: '15px',
   },
-  productItem: {
+  productCard: {
+    border: '1px solid #eee',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+  },
+  productImageContainer: {
+    height: '150px',
+    overflow: 'hidden',
+    backgroundColor: '#f9f9f9',
     display: 'flex',
-    justifyContent: 'space-between',
-    padding: '10px 0',
-    borderBottom: '1px solid #eee',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  statusControl: {
+  productImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  productInfo: {
+    padding: '10px',
+  },
+  productName: {
+    margin: '0 0 5px 0',
+    fontWeight: 'bold',
+  },
+  productPrice: {
+    margin: '0 0 5px 0',
+    color: '#666',
+  },
+  productTotal: {
+    margin: '0',
+    fontWeight: 'bold',
+    color: '#3399cc',
+  },
+  reorderSection: {
+    display: 'flex',
+    justifyContent: 'center',
     marginTop: '20px',
   },
-  statusButtons: {
-    display: 'flex',
-    gap: '10px',
-  },
-  statusButton: {
-    padding: '8px 15px',
+  reorderButton: {
+    padding: '10px 20px',
+    backgroundColor: '#3399cc',
+    color: 'white',
     border: 'none',
     borderRadius: '4px',
     cursor: 'pointer',
+    fontSize: '16px',
     fontWeight: 'bold',
-    transition: 'background-color 0.2s, color 0.2s',
-  }
+  },
 };
 
-export default OrderDetails;
+export default ViewOrder;
