@@ -193,7 +193,7 @@ const ViewOrder = () => {
                   {order.status === 'completed' && (
                     <div style={styles.reorderSection}>
                       <button
-                        onClick={() => navigate('/products')}
+                        onClick={() => navigate('/udashboard')}
                         style={styles.reorderButton}
                       >
                         Shop Again

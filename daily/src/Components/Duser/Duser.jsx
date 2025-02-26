@@ -9,7 +9,7 @@ const Duser = () => {
   const styles = {
     container: {
       fontFamily: 'Arial, sans-serif',
-      backgroundColor: '#3b00b3',
+      backgroundColor: '#2A5CB3',
       color: '#333',
       minHeight: '100vh',
       display: 'flex',
@@ -27,11 +27,11 @@ const Duser = () => {
       fontSize: '2.5rem',
       fontWeight: 'bold',
       marginBottom: '5px',
-      color: '#f2f2f2', // Purple
+      color: '#f2f2f2',
     },
     subtitle: {
       fontSize: '1.2rem',
-      color: '#4CAF50', // Green
+      color: '#4CAF50',
     },
     content: {
       position: 'absolute',
@@ -39,8 +39,9 @@ const Duser = () => {
       left: '50%',
       transform: 'translate(-50%, -50%)',
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       alignItems: 'center',
+      gap: '20px',
       zIndex: 2,
     },
     card: {
@@ -51,7 +52,6 @@ const Duser = () => {
       width: '90%',
       maxWidth: '400px',
       textAlign: 'center',
-      marginBottom: '20px',
     },
     cardTitle: {
       fontSize: '1.8rem',
@@ -94,7 +94,7 @@ const Duser = () => {
       marginTop: 'auto',
       textAlign: 'center',
       padding: '20px',
-      backgroundColor: '#3b00b3',
+      backgroundColor: '#2A5CB3',
       color: '#fff',
       width: '100%',
       fontSize: '0.9rem',
@@ -106,7 +106,7 @@ const Duser = () => {
       <Dnavbar />
 
       <header style={styles.header}>
-        <h1 style={styles.title}>Welcome, Delivery Partner!</h1>
+        <h1 style={styles.title}>Welcome, Delivery Partner!🛵</h1>
         <p style={styles.subtitle}>Your dashboard to manage deliveries and more.</p>
       </header>
 
@@ -121,6 +121,19 @@ const Duser = () => {
             onClick={() => navigate('/deliveryregister')}
           >
             Register Now
+          </button>
+        </div>
+
+        <div style={styles.card}>
+          <h2 style={styles.cardTitle}>Order Management</h2>
+          <p style={styles.cardDescription}>Manage and track your delivery orders efficiently.</p>
+          <button
+            style={styles.button}
+            onMouseOver={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
+            onMouseOut={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
+            onClick={() => navigate('/orderdetails')}
+          >
+            Manage Orders
           </button>
         </div>
       </div>

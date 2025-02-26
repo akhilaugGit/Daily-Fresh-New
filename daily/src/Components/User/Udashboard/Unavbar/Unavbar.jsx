@@ -20,6 +20,14 @@ const Unavbar = () => {
         navigate('/uprofile');
     };
 
+    const handleOrderClick = () => {
+        
+        navigate('/vieworder');
+    };
+
+
+
+
 
     const handleHomeClick = () => {
         navigate('/udashboard');
@@ -62,6 +70,8 @@ const Unavbar = () => {
                 <span id="prod"  onClick={handleProductsClick} style={{ cursor: 'pointer' }}>Products</span>
                 <span onClick={handleContactClick} style={{ cursor: 'pointer' }}>Contact</span>
                 <span onClick={handleAboutClick} style={{ cursor: 'pointer' }}>About</span>
+                <span onClick={handleOrderClick} style={{ cursor: 'pointer' }}>Orders</span>
+
                 <span onClick={handleTaste} style={{ cursor: 'pointer' }}>✨TasteLens</span>
 
             </div>

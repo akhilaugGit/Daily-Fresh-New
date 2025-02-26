@@ -98,7 +98,7 @@ const OrderDetails = () => {
   };
 
   const handleBack = () => {
-    navigate('/admin-dashboard'); // Adjust based on your admin dashboard route
+    navigate('/duser'); // Adjust based on your admin dashboard route
   };
 
   return (

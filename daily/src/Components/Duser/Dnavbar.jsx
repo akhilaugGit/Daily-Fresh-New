@@ -49,6 +49,7 @@ const Dnavbar = () => {
             <div className="logo-container">
                 <img className="logo-small" src={logosImage} alt="Logo" />
                 <div className="logo-text">Daily Fresh</div>
+
             </div>
             <div className="navbar-items">
 
