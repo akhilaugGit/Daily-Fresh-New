@@ -45,14 +45,17 @@ const Buy = () => {
       const { orderId } = data;
 
       const options = {
-        key: 'rzp_test_ivyPo2IHVQrSPX', // Replace with your Razorpay key ID
+        key: 'rzp_test_7qXqryRXwyy9GP', // Replace with your Razorpay key ID
         amount: totalPrice * 100,
         currency: 'INR',
         name: 'Your Store Name',
         description: 'Thank you for your purchase!',
         order_id: orderId,
-        handler: function (response) {
+        handler: async function (response) {
           alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+          
+          // Send payment details to the backend
+          await savePaymentDetails(response.razorpay_payment_id);
         },
         prefill: {
           contact: phone,
@@ -71,6 +74,36 @@ const Buy = () => {
     } catch (error) {
       console.error('Error in payment:', error);
       alert('Something went wrong with the payment');
+    }
+  };
+
+  // New function to save payment details
+  const savePaymentDetails = async (paymentId) => {
+    try {
+      const token = localStorage.getItem('token'); // Get token from localStorage
+      const response = await fetch('http://localhost:3001/api/cart/save-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Add token to headers
+        },
+        body: JSON.stringify({
+          amount: totalPrice,
+          phone,
+          address,
+          location: selectedLocation,
+          paymentId,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Payment details saved successfully');
+        navigate('/udashboard'); // Redirect to dashboard after successful payment
+      } else {
+        console.error('Failed to save payment details');
+      }
+    } catch (error) {
+      console.error('Error saving payment details:', error);
     }
   };
 

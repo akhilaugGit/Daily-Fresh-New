@@ -28,6 +28,7 @@ import TasteProfile from './Components/User/TasteProfile';
 import Fuser from './Components/Fuser';
 import Game from './Components/Game/Game';
 import FarmerAddProduct from './Components/Farmer/FarmerAddProduct';
+import OrderDetails from './Components/User/Udashboard/OrderDetails';
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);  // Loading state
@@ -78,6 +79,7 @@ function App() {
         <Route path='/fuser' element={<Fuser />} />
         <Route path='/game' element={<Game />} />
         <Route path='/farmeraddproduct' element={<FarmerAddProduct />} />
+        <Route path='/orderdetails' element={<OrderDetails />} />
 
 
 

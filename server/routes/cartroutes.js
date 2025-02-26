@@ -10,6 +10,7 @@ router.post('/add', cartController.addItemToCart);
 router.get('/view', verifyToken, cartController.viewCart);
 router.delete('/remove', verifyToken, cartController.removeItemFromCart);
 router.put('/update', verifyToken, cartController.updateCartItemQuantity);
+router.post('/save-payment', verifyToken, cartController.savePaymentDetails);
 
 
 

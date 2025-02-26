@@ -2,6 +2,7 @@ const Cart = require('../models/Cartmodel');
 const Product = require('../models/Productmodel');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId; // Import ObjectId correctly
+const Payment = require('../models/Paymentmodel');
 
 // Add item to cart
 const addItemToCart = async (req, res) => {
@@ -142,4 +143,53 @@ const removeItemFromCart = async (req, res) => {
     }
 };
 
-module.exports = { addItemToCart, viewCart, updateCartItemQuantity, removeItemFromCart };
+// Add this new function to save payment details
+const savePaymentDetails = async (req, res) => {
+    const { amount, phone, address, location, paymentId } = req.body;
+    const userId = req.identifier; // Get userId from token
+
+    try {
+        // Get the user's cart to save the products
+        const cart = await Cart.findOne({ userId });
+        
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
+        }
+
+        // Create new payment record
+        const payment = new Payment({
+            userId,
+            products: cart.products,
+            amount,
+            phone,
+            address,
+            location,
+            paymentId
+        });
+
+        // Save the payment details
+        await payment.save();
+
+        // Clear the user's cart after successful payment
+        cart.products = [];
+        await cart.save();
+
+        console.log('Payment details saved successfully:', {
+            amount,
+            phone,
+            address,
+            location,
+            paymentId,
+        });
+
+        res.status(200).json({ 
+            message: 'Payment details saved successfully',
+            payment
+        });
+    } catch (error) {
+        console.error('Error saving payment details:', error);
+        res.status(500).json({ message: 'Failed to save payment details' });
+    }
+};
+
+module.exports = { addItemToCart, viewCart, updateCartItemQuantity, removeItemFromCart, savePaymentDetails };
