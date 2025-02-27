@@ -9,10 +9,36 @@ const OrderDetails = () => {
   const [error, setError] = useState('');
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(null);
 
-  // Fetch orders when component mounts
   useEffect(() => {
-    fetchOrders();
+    // Fetch user profile first, then fetch orders
+    const initialize = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setError('Not authenticated. Please login.');
+          return;
+        }
+
+        // Fetch user profile first
+        const profileResponse = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/user/profile`,
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+        setUserInfo(profileResponse.data);
+
+        // Then fetch orders
+        await fetchOrders();
+      } catch (err) {
+        console.error('Error initializing:', err);
+        setError('Failed to initialize. Please try again later.');
+      }
+    };
+
+    initialize();
   }, []);
 
   const fetchOrders = async () => {
@@ -26,11 +52,17 @@ const OrderDetails = () => {
         return;
       }
 
+      // Add console.log to see user info before fetching
+      console.log('Current user info:', userInfo);
+
       const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/orders/all`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
+
+      // Add console.log to see response data
+      console.log('Orders received:', response.data);
 
       setOrders(response.data);
       setLoading(false);
@@ -105,7 +137,11 @@ const OrderDetails = () => {
     <div style={styles.container}>
       <div style={styles.header}>
         <button onClick={handleBack} style={styles.backButton}>⬅️ Back</button>
-        <h1 style={styles.title}>Order Management</h1>
+        <h1 style={styles.title}>
+          {userInfo?.isDuser 
+            ? `Orders for ${userInfo.location}`
+            : 'All Orders'}
+        </h1>
         <button onClick={fetchOrders} style={styles.refreshButton}>🔄 Refresh</button>
       </div>
 
