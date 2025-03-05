@@ -8,7 +8,7 @@ const Fuser = () => {
   const styles = {
     container: {
       fontFamily: 'Arial, sans-serif',
-      backgroundColor: '#006400', // Dark green for farming theme
+      background: 'linear-gradient(to right, #01644c, #4ac195)', // Green gradient
       color: '#fff',
       minHeight: '100vh',
       display: 'flex',
@@ -38,8 +38,9 @@ const Fuser = () => {
       left: '50%',
       transform: 'translate(-50%, -50%)',
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       alignItems: 'center',
+      gap: '20px',
       zIndex: 2,
     },
     card: {
@@ -50,7 +51,6 @@ const Fuser = () => {
       width: '90%',
       maxWidth: '400px',
       textAlign: 'center',
-      marginBottom: '20px',
     },
     cardTitle: {
       fontSize: '1.8rem',
@@ -93,7 +93,7 @@ const Fuser = () => {
       marginTop: 'auto',
       textAlign: 'center',
       padding: '20px',
-      backgroundColor: '#006400',
+      backgroundColor: '#01644c',
       color: '#fff',
       width: '100%',
       fontSize: '0.9rem',
@@ -109,15 +109,27 @@ const Fuser = () => {
 
       <div style={styles.content}>
         <div style={styles.card}>
-          <h2 style={styles.cardTitle}>Daily Fresh Poultry farmer</h2>
-          <p style={styles.cardDescription}>Daily Fresh Poultry farmer </p>
+          <h2 style={styles.cardTitle}>Daily Fresh Poultry Farmer</h2>
+          <p style={styles.cardDescription}>Daily Fresh Poultry Farmer</p>
           <button
             style={styles.button}
             onMouseOver={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
             onMouseOut={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
-            onClick={() => navigate('/farmerregister')}
+            onClick={() => navigate('/deliveryregister')}
           >
             Register Now
+          </button>
+        </div>
+        <div style={styles.card}>
+          <h2 style={styles.cardTitle}>Add Product</h2>
+          <p style={styles.cardDescription}>Manage and add your products for sale.</p>
+          <button
+            style={styles.button}
+            onMouseOver={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
+            onMouseOut={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
+            onClick={() => navigate('/farmeraddproduct')}
+          >
+            Add Now
           </button>
         </div>
       </div>

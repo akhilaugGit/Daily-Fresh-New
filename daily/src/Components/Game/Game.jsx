@@ -143,7 +143,7 @@ const Game = () => {
     startGameSoundRef.current.currentTime = 0;
     startGameSoundRef.current.play();
     setScore(0);
-    setGameSpeed(5);
+    setGameSpeed(5 );
     setCrocodileX(800);
     setFishY(groundLevel);
     setIsJumping(false);

@@ -5,14 +5,17 @@ import Footer from "./Footer/Footer";
 import CarouselComponent from "./Carousel/CarouselComponent";
 import axios from "axios";
 import "./Style.css";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const Udashboard = () => {
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("all"); // State to track selected category
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
-  const [priceFilter, setPriceFilter] = useState(""); // State for price filter
-  const [darkMode, setDarkMode] = useState(false); // State for dark mode
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [priceFilter, setPriceFilter] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
+  // Your existing useEffect and handler functions...
   useEffect(() => {
     // Fetch products when component mounts and whenever selectedCategory, searchQuery, or priceFilter changes
     const fetchProducts = async () => {
@@ -45,18 +48,23 @@ const Udashboard = () => {
     };
 
     fetchProducts();
-  }, [selectedCategory, searchQuery, priceFilter]); // Run this effect when selectedCategory, searchQuery, or priceFilter changes
+  }, [selectedCategory, searchQuery, priceFilter]);
 
   const handleSearch = (event) => {
-    setSearchQuery(event.target.value); // Update the search query state
+    setSearchQuery(event.target.value);
   };
 
   const handlePriceFilterChange = (event) => {
-    setPriceFilter(event.target.value); // Update the price filter state
+    setPriceFilter(event.target.value);
   };
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode); // Toggle the dark mode state
+    setDarkMode(!darkMode);
+  };
+
+  // Add a new function to handle chatbot navigation
+  const handleChatbotClick = () => {
+    navigate("/chatbot"); // Navigate to the chatbot page
   };
 
   return (
@@ -66,17 +74,16 @@ const Udashboard = () => {
 
       {/* Dark Mode Toggle Button */}
       <div className="toggle-container">
-    <label className="dark-mode-toggle">
-        <p style={{ color: 'white' }}>Dark</p>
-        <input 
+        <label className="dark-mode-toggle">
+          <p style={{ color: 'white' }}>Dark</p>
+          <input 
             type="checkbox" 
             onChange={toggleDarkMode} 
             checked={darkMode} 
-            style={{ display: 'none' }} // Hide the default checkbox
-        />
-    </label>
-</div>
-
+            style={{ display: 'none' }}
+          />
+        </label>
+      </div>
 
       {/* Search Bar */}
       <div className="search-bar">
@@ -137,6 +144,63 @@ const Udashboard = () => {
             offer={product.offer}
           />
         ))}
+      </div>
+
+      {/* Add Chatbot Floating Button */}
+      <div 
+        onClick={handleChatbotClick}
+        style={{
+          position: 'fixed',
+          bottom: '30px',
+          right: '30px',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          backgroundColor: darkMode ? '#4a90e2' : '#2979ff',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
+          cursor: 'pointer',
+          zIndex: '1000',
+          transition: 'all 0.3s ease'
+        }}
+      >
+        {/* Chatbot Icon - using CSS to create a simple chat bubble icon */}
+        <div style={{
+          position: 'relative',
+          width: '30px',
+          height: '30px'
+        }}>
+          <div style={{
+            position: 'absolute',
+            width: '26px',
+            height: '26px',
+            borderRadius: '50% 50% 50% 0',
+            backgroundColor: 'white',
+            transform: 'rotate(-45deg)',
+            top: '2px',
+            left: '2px'
+          }}></div>
+          <div style={{
+            position: 'absolute',
+            width: '6px',
+            height: '6px',
+            borderRadius: '50%',
+            backgroundColor: darkMode ? '#4a90e2' : '#2979ff',
+            top: '12px',
+            left: '10px'
+          }}></div>
+          <div style={{
+            position: 'absolute',
+            width: '6px',
+            height: '6px',
+            borderRadius: '50%',
+            backgroundColor: darkMode ? '#4a90e2' : '#2979ff',
+            top: '12px',
+            right: '10px'
+          }}></div>
+        </div>
       </div>
 
       <Footer />

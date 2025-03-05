@@ -30,6 +30,8 @@ import Game from './Components/Game/Game';
 import FarmerAddProduct from './Components/Farmer/FarmerAddProduct';
 import OrderDetails from './Components/User/Udashboard/OrderDetails';
 import ViewOrder from './Components/User/Udashboard/Vieworder';
+import ChatBot from './Components/Chat/ChatBot';
+
 // PrivateRoute Component
 const PrivateRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);  // Loading state
@@ -83,7 +85,7 @@ function App() {
         <Route path='/orderdetails' element={<OrderDetails />} />
         <Route path='/vieworder' element={<ViewOrder />} />
 
-        
+        <Route path='/chatbot' element={<ChatBot />} />
 
 
 

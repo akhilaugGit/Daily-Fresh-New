@@ -122,7 +122,7 @@ function FarmerAddProduct() {
   };
 
   const handleHomeClick = () => {
-    navigate("/farmer-dashboard");
+    navigate("/fuser");
   };
 
   return (
@@ -233,7 +233,7 @@ function FarmerAddProduct() {
       <button type="submit" style={{
         width: "100%",
         padding: "12px",
-        backgroundColor: "#4CAF50",
+        backgroundColor: "#01644c",
         color: "white",
         border: "none",
         borderRadius: "4px",

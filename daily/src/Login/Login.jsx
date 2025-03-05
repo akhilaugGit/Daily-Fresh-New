@@ -58,21 +58,31 @@ function Login() {
 
         // Navigate based on the `isDuser` field
         if (result.data.isDuser) {
+          console.log("it is d user");
           navigate('/duser'); // Redirect to Duser page
           console.log('API Response:', result.data);
-console.log('isDuser:', result.data.isDuser);
-        } else if (email === 'akhilaugustine2025@mca.ajce.in') {
-          navigate('/dashboard'); // Redirect to admin dashboard
-        } else {
           console.log('isDuser:', result.data.isDuser);
+        } 
+        else if (result.data.isFuser) {
+          console.log("fuser");
+          navigate('/fuser'); // Redirect to Fuser page
+          console.log('isFuser:', result.data.isFuser);
+        } 
+        else if (email === 'akhilaugustine2025@mca.ajce.in') {
+          navigate('/dashboard'); // Redirect to admin dashboard
+        } 
+        else {
+          console.log('isDuser:', result.data.isDuser);
+          console.log('isFuser:', result.data.isFuser);
           navigate('/udashboard'); // Redirect to user dashboard
         }
-      } else {
-        // If the backend response is not as expected, handle it here
-        const errorMessage = result.data?.message || 'Unexpected error occurred';
-        setErrorMessage(errorMessage);
-        toast.error(errorMessage);
-      }
+      } 
+      // else {
+      //   // If the backend response is not as expected, handle it here
+      //   const errorMessage = result.data?.message || 'Unexpected error occurred';
+      //   setErrorMessage(errorMessage);
+      //   toast.error(errorMessage);
+      // }
     } catch (error) {
       // Handle network or server errors
       const backendMessage = error.response?.data?.message || 'Error logging in';

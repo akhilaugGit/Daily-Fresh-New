@@ -145,7 +145,7 @@ const handleBack = () => {
         ⬅️ Back
       </button>
       <div style={styles.formContainer}>
-        <h1 style={styles.header}>Delivery Partner Registration</h1>
+        <h1 style={styles.header}> Registration</h1>
         <form onSubmit={handleSubmit}>
        
           <div style={styles.formGroup}>
@@ -167,7 +167,7 @@ const handleBack = () => {
           </div>
 
           <div style={styles.formGroup}>
-            <label htmlFor="drivingLicense" style={styles.label}>Upload Driving License</label>
+            <label htmlFor="drivingLicense" style={styles.label}>Upload  License</label>
             <input
               type="file"
               id="drivingLicense"

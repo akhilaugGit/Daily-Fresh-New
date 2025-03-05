@@ -42,7 +42,7 @@ const Dashboard = () => {
                 fill="black"
                 textAnchor={x > cx ? 'start' : 'end'}
                 dominantBaseline="central"
-                fontSize="12"
+                fontSize="10"
             >
                 {`${name}: ${value}`}
             </text>
@@ -143,19 +143,31 @@ const Dashboard = () => {
                         placeholder="🔎 Search by name"
                         value={searchQuery}
                         onChange={handleSearch}
+                        style={{
+                width: "23%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "25px",
+                outline: "none",
+                transition: "all 0.3s ease-in-out",
+                boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)"
+            }}
+            onFocus={(e) => (e.target.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.2)")}
+            onBlur={(e) => (e.target.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.1)")}
                         className="w-full p-2 border rounded-lg"
                     />
                 </div>
+                <br/>
 
                 <div className="flex gap-4 mb-6">
                     <button 
-                        className={`px-4 py-2 rounded-lg ${selectedCategory === 'fish' ? 'bg-blue-500 text-white' : 'bg-white'}`}
+                        className={`px-4 py-2 rounded-lg ${selectedCategory === 'fish' ? 'bg-green-500 text-black' : 'bg-green'}`}
                         onClick={() => filterProducts('fish')}
                     >
                         Fish
                     </button>
                     <button 
-                        className={`px-4 py-2 rounded-lg ${selectedCategory === 'poultry' ? 'bg-blue-500 text-white' : 'bg-white'}`}
+                        className={`px-4 py-2 rounded-lg ${selectedCategory === 'poultry' ? 'bg-green-500 text-black' : 'bg-green'}`}
                         onClick={() => filterProducts('poultry')}
                     >
                         Poultry

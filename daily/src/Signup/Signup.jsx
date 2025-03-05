@@ -197,7 +197,7 @@ function Signup() {
 
             <div className="mb-3">
               <label htmlFor="isFuser">
-                <strong>Are you a Freelancer User?</strong>
+                <strong>Are you a Poultry Farmer?</strong>
               </label>
               <input
                 type="checkbox"
