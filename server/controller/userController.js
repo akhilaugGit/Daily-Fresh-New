@@ -33,6 +33,54 @@ const toggleUserStatus = async (req, res) => {
     res.status(500).json({ error: 'Error updating user status' });
   }
 };
+
+// Function to enable/disable a duser ordervisibilty
+const toggleUserVisibility = async (req, res) => {
+  const { id } = req.params;
+  const { isDovisible } = req.body;
+
+  try {
+    const user = await UserModel.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Update the user status
+    user.isDovisible = isDovisible;
+    await user.save();
+
+    res.status(200).json({ message: 'User status updated successfully', user });
+  } catch (error) {
+    console.error('Error updating user status:', error);
+    res.status(500).json({ error: 'Error updating user status' });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Function to get the logged-in user's profile
 const 
 
@@ -74,7 +122,8 @@ module.exports = {
   getAllUsers,
   toggleUserStatus,
   getUserProfile,
-  fetchDUsers
+  fetchDUsers,
+  toggleUserVisibility
 
 
 }

@@ -42,6 +42,25 @@ const ManageDUsers = () => {
     }
   };
 
+  // Function to toggle delivery user's order management visibility
+  const toggleOrderManagement = async (userId, currentStatus) => {
+    try {
+      const updatedStatus = !currentStatus;
+      await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/user/${userId}/visibility`, { isDovisible: updatedStatus }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      setDUsers((prevDUsers) =>
+        prevDUsers.map((user) =>
+          user._id === userId ? { ...user, isDovisible: updatedStatus } : user
+        )
+      );
+    } catch (error) {
+      console.error('Error updating order management visibility:', error);
+    }
+  };
+
   const handledashboard = () => {
     navigate('/dashboard');
   };
@@ -77,6 +96,8 @@ const ManageDUsers = () => {
             <th style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>Image</th>
             <th style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>Status</th>
             <th style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>Action</th>
+            <th style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>Order Management</th>
+            <th style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>Order Action</th>
           </tr>
         </thead>
         <tbody>
@@ -126,6 +147,24 @@ const ManageDUsers = () => {
                   }}
                 >
                   {user.isEnabled ? 'Disable' : 'Enable'}
+                </button>
+              </td>
+              <td style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>
+                {user.isDovisible ? 'Visible' : 'Hidden'}
+              </td>
+              <td style={{ border: '1px solid #ddd', padding: '10px', textAlign: 'center' }}>
+                <button
+                  onClick={() => toggleOrderManagement(user._id, user.isDovisible)}
+                  style={{
+                    padding: '5px 10px',
+                    backgroundColor: user.isDovisible ? '#FF6347' : '#32CD32',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {user.isDovisible ? 'Hide Orders' : 'Show Orders'}
                 </button>
               </td>
             </tr>

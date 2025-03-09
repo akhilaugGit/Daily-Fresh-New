@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    isDovisible: {
+        type: Boolean,
+        default: false
+    },
+
+
     isFuser: {
         type: Boolean,
         default: false
