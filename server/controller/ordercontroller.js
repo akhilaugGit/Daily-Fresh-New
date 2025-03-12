@@ -1,6 +1,10 @@
 const Payment = require('../models/Paymentmodel');
 const User = require('../models/user');
 const mongoose = require('mongoose');
+const { sendOrderCompletionOTP } = require('../utils/emailService');
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Get all orders (for admin use)
 const getAllOrders = async (req, res) => {
@@ -116,4 +120,115 @@ const getOrderById = async (req, res) => {
     }
 };
 
-module.exports = { getAllOrders, getUserOrders, updateOrderStatus, getOrderById };
+// Generate OTP for order completion
+const generateCompletionOTP = async (req, res) => {
+    try {
+        const { orderId } = req.body;
+        const order = await Payment.findById(orderId)
+            .populate('userId', 'email');
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        // Generate 6-digit OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+        // Save OTP to order
+        order.completionOtp = {
+            code: otp,
+            expiresAt: otpExpiry,
+            verified: false
+        };
+        await order.save();
+
+        // Set up nodemailer (using same config as forgot password)
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'akhilaugustine2025@mca.ajce.in',
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        // Send OTP email
+        const mailOptions = {
+            from: 'akhilaugustine2025@mca.ajce.in',
+            to: order.userId.email,
+            subject: 'Order Completion OTP',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h2 style="color: #0b3d5a;">Order Completion Verification</h2>
+                    <p>Your order completion verification code is: <strong style="font-size: 24px; color: #107dac;">${otp}</strong></p>
+                    <p>This code will expire in 10 minutes.</p>
+                    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px;">
+                        <h3 style="color: #0b3d5a;">Order Details:</h3>
+                        <p><strong>Order ID:</strong> ${order._id}</p>
+                        <p><strong>Amount:</strong> ₹${order.amount}</p>
+                    </div>
+                    <p>Please provide this code to the delivery person to confirm delivery.</p>
+                </div>
+            `
+        };
+
+        // Send email
+        await transporter.sendMail(mailOptions);
+
+        res.status(200).json({ 
+            message: 'OTP sent successfully',
+            email: order.userId.email.replace(/(.{2})(.*)(@.*)/, '$1****$3') // Mask email
+        });
+
+    } catch (error) {
+        console.error('Error generating/sending OTP:', error);
+        res.status(500).json({ message: 'Failed to send OTP' });
+    }
+};
+
+// Verify OTP and complete order
+const verifyCompletionOTP = async (req, res) => {
+    try {
+        const { orderId, otp } = req.body;
+        const order = await Payment.findById(orderId);
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        if (!order.completionOtp?.code) {
+            return res.status(400).json({ message: 'No OTP was generated for this order' });
+        }
+
+        if (order.completionOtp.verified) {
+            return res.status(400).json({ message: 'Order already verified' });
+        }
+
+        if (new Date() > order.completionOtp.expiresAt) {
+            return res.status(400).json({ message: 'OTP has expired' });
+        }
+
+        if (order.completionOtp.code !== otp) {
+            return res.status(400).json({ message: 'Invalid OTP' });
+        }
+
+        // Mark OTP as verified and order as completed
+        order.completionOtp.verified = true;
+        order.status = 'completed';
+        await order.save();
+
+        res.status(200).json({ 
+            message: 'Order completed successfully',
+            order: {
+                id: order._id,
+                status: order.status,
+                completedAt: new Date()
+            }
+        });
+    } catch (error) {
+        console.error('Error verifying OTP:', error);
+        res.status(500).json({ message: 'Failed to verify OTP' });
+    }
+};
+
+module.exports = { getAllOrders, getUserOrders, updateOrderStatus, getOrderById, generateCompletionOTP, verifyCompletionOTP };

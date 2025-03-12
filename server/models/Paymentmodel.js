@@ -37,11 +37,16 @@ const paymentSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['pending', 'completed', 'failed'],
-        default: 'completed'
+        default: 'pending'
     },
     orderDate: {
         type: Date,
         default: Date.now
+    },
+    completionOtp: {
+        code: { type: String },
+        expiresAt: { type: Date },
+        verified: { type: Boolean, default: false }
     }
 });
 

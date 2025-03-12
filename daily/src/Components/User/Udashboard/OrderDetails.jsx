@@ -10,6 +10,9 @@ const OrderDetails = () => {
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
+  const [otpInput, setOtpInput] = useState('');
+  const [showOtpInput, setShowOtpInput] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
 
   useEffect(() => {
     // Fetch user profile first, then fetch orders
@@ -133,6 +136,59 @@ const OrderDetails = () => {
     navigate('/duser'); // Adjust based on your admin dashboard route
   };
 
+  const handleCompleteOrder = async (orderId) => {
+    try {
+      const token = localStorage.getItem('token');
+      setLoading(true);
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/orders/generate-otp`,
+        { orderId },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      // Show success message with masked email
+      alert(`OTP has been sent to ${response.data.email}. Please ask the customer to check their email.`);
+      
+      setSelectedOrderId(orderId);
+      setShowOtpInput(true);
+    } catch (error) {
+      console.error('Error initiating order completion:', error);
+      alert(error.response?.data?.message || 'Failed to send OTP. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOTP = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/orders/verify-otp`,
+        {
+          orderId: selectedOrderId,
+          otp: otpInput
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      // Reset states and refresh orders
+      setShowOtpInput(false);
+      setOtpInput('');
+      setSelectedOrderId(null);
+      fetchOrders();
+      alert('Order completed successfully!');
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      alert(error.response?.data?.message || 'Failed to verify OTP');
+    }
+  };
+
   return (
     <div style={styles.container}>
       <div style={styles.header}>
@@ -226,9 +282,10 @@ const OrderDetails = () => {
                           backgroundColor: order.status === 'completed' ? '#008000' : '#f0f0f0',
                           color: order.status === 'completed' ? '#fff' : '#333'
                         }}
-                        onClick={() => updateOrderStatus(order._id, 'completed')}
+                        onClick={() => handleCompleteOrder(order._id)}
+                        disabled={order.status === 'completed'}
                       >
-                        Completed
+                        Complete Order
                       </button>
                       <button
                         style={{
@@ -241,6 +298,24 @@ const OrderDetails = () => {
                         Failed
                       </button>
                     </div>
+                    
+                    {showOtpInput && selectedOrderId === order._id && (
+                      <div style={styles.otpContainer}>
+                        <input
+                          type="text"
+                          value={otpInput}
+                          onChange={(e) => setOtpInput(e.target.value)}
+                          placeholder="Enter OTP"
+                          style={styles.otpInput}
+                        />
+                        <button
+                          onClick={handleVerifyOTP}
+                          style={styles.verifyButton}
+                        >
+                          Verify OTP
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -384,6 +459,24 @@ const styles = {
     cursor: 'pointer',
     fontWeight: 'bold',
     transition: 'background-color 0.2s, color 0.2s',
+  },
+  otpContainer: {
+    marginTop: '15px',
+    display: 'flex',
+    gap: '10px',
+  },
+  otpInput: {
+    padding: '8px',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
+  },
+  verifyButton: {
+    padding: '8px 15px',
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
   }
 };
 

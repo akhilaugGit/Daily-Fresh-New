@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const otpGenerator = require('otp-generator'); // Install using npm
 const bcrypt = require('bcryptjs');
+const dotenv = require('dotenv');
+
+dotenv.config();
      
 const registerUser = async (req, res) => {
     const { email, password, username, isDuser,isFuser } = req.body;
@@ -121,7 +124,7 @@ const forgotPassword = async (req, res) => {
             service: 'gmail',
             auth: {
                 user: 'akhilaugustine2025@mca.ajce.in',
-                pass: process.env.APP_MAIL_PASSWORD // Use environment variables for security in production
+                pass: process.env.EMAIL_PASS // Use environment variables for security in production
             }
         });
 

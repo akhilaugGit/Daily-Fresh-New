@@ -15,4 +15,7 @@ router.put('/update-status', verifyToken, orderController.updateOrderStatus);
 // Get order details by ID
 router.get('/:id', verifyToken, orderController.getOrderById);
 
+router.post('/generate-otp', verifyToken, orderController.generateCompletionOTP);
+router.post('/verify-otp', verifyToken, orderController.verifyCompletionOTP);
+
 module.exports = router;
