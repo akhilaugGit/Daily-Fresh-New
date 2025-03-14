@@ -198,7 +198,7 @@ const OrderDetails = () => {
             ? `Orders for ${userInfo.location}`
             : 'All Orders'}
         </h1>
-        <button onClick={fetchOrders} style={styles.refreshButton}>🔄 Refresh</button>
+        <button id = "orderdetail" onClick={fetchOrders} style={styles.refreshButton}>🔄 Refresh</button>
       </div>
 
       {error && <div style={styles.error}>{error}</div>}

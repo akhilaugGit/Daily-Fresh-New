@@ -118,7 +118,7 @@ const Home = () => {
           left: 0,
           width: '100%',
           height: '100%',
-          backgroundImage: 'url("https://images.pexels.com/photos/6294495/pexels-photo-6294495.jpeg?auto=compress&cs=tinysrgb&w=1600")',
+          backgroundImage: 'url("https://images.pexels.com/photos/27083552/pexels-photo-27083552/free-photo-of-flock-of-chickens.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           transform: `translateY(${(scrollPosition - window.innerHeight * 2) * 0.3}px)`,

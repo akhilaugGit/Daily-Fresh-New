@@ -62,11 +62,15 @@ const Duser = () => {
       alignItems: 'center',
       position: 'relative',
       padding: '0',
+      margin: '0',
+      width: '100%',
+      boxSizing: 'border-box',
     },
     header: {
       textAlign: 'center',
-      marginTop: '20px',
-      marginBottom: '10px',
+      marginTop: '40px',
+      marginBottom: '20px',
+      width: '100%',
     },
     title: {
       fontSize: '2.5rem',
@@ -79,23 +83,26 @@ const Duser = () => {
       color: '#4CAF50',
     },
     content: {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
+      width: '100%',
+      maxWidth: '1200px',
       display: 'flex',
       flexDirection: 'row',
+      justifyContent: 'center',
       alignItems: 'center',
       gap: '20px',
-      zIndex: 2,
+      padding: '0 20px',
+      boxSizing: 'border-box',
+      flexWrap: 'wrap',
+      marginTop: '20px',
+      marginBottom: '40px',
     },
     card: {
       backgroundColor: '#fff',
       boxShadow: '0 8px 15px rgba(0, 0, 0, 0.2)',
       borderRadius: '20px',
       padding: '20px',
-      width: '90%',
-      maxWidth: '400px',
+      width: '100%',
+      maxWidth: '350px',
       textAlign: 'center',
     },
     cardTitle: {
@@ -124,11 +131,11 @@ const Duser = () => {
       backgroundColor: '#45a049',
     },
     imageContainer: {
-      position: 'relative',
-      width: '90%',
-      height: 'auto',
-      overflow: 'hidden',
-      zIndex: 1,
+      width: '100%',
+      maxWidth: '800px',
+      padding: '0 20px',
+      boxSizing: 'border-box',
+      marginTop: '20px',
     },
     image: {
       width: '100%',
@@ -139,10 +146,11 @@ const Duser = () => {
       marginTop: 'auto',
       textAlign: 'center',
       padding: '20px',
-      backgroundColor: '#2A5CB3',
+      backgroundColor: '#1a4a8d',
       color: '#fff',
       width: '100%',
       fontSize: '0.9rem',
+      boxSizing: 'border-box',
     },
     loadingText: {
       color: '#fff',
@@ -231,6 +239,7 @@ const Duser = () => {
             <h2 style={styles.cardTitle}>Order Management</h2>
             <p style={styles.cardDescription}>Manage and track your delivery orders efficiently.</p>
             <button
+            id ="manageb"
               style={styles.button}
               onMouseOver={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
               onMouseOut={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
@@ -242,9 +251,7 @@ const Duser = () => {
         )}
       </div>
 
-      <div style={styles.imageContainer}>
-        <img src={delvImage} alt="Delivery" style={styles.image} />
-      </div>
+      
 
       <footer style={styles.footer}>
         <p>Thank you for being part of our delivery partner team!</p>
