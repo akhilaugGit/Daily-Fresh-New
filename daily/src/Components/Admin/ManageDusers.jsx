@@ -80,7 +80,7 @@ const ManageDUsers = () => {
       >
         ⬅️ Back
       </button>
-      <h1 style={{ textAlign: 'center', margin: '20px 0' }}>Manage Delivery Users</h1>
+      <h1 style={{ textAlign: 'center', margin: '20px 0' }}>Manage  Delivery-boy/Framer </h1>
       <table
         style={{
           width: '100%',
