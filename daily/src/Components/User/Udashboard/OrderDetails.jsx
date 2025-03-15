@@ -225,7 +225,7 @@ const OrderDetails = () => {
                     {order.status.toUpperCase()}
                   </span>
                 </div>
-                <div style={styles.expandIcon}>
+                <div style={styles.expandIcon} className='dropdownclick'>
                   {expandedOrderId === order._id ? '▼' : '▶'}
                 </div>
               </div>
@@ -288,6 +288,7 @@ const OrderDetails = () => {
                         Complete Order
                       </button>
                       <button
+                      id = "failedbutton"
                         style={{
                           ...styles.statusButton,
                           backgroundColor: order.status === 'failed' ? '#FF0000' : '#f0f0f0',
