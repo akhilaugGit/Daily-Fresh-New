@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import logosImage from '../../src/assets/file.png'
+
 
 const Home = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -42,15 +44,31 @@ const Home = () => {
   const tailWag = Math.sin(animationTime * 0.4) * 10;
   const finWave = Math.sin(animationTime * 0.3) * 5;
 
-  // Professional chick animation values
-const chickHorizontalPosition = Math.sin(scrollPosition * 0.002) * (window.innerWidth * 0.35);
-const chickVerticalPosition = window.innerHeight * 0.25; // Fixed at 25% of screen height
+
+// Completely replace the horizontal position calculation
+// No more sine wave or center starting position
+const startX = -100; // Start position (off left edge)
+const endX = window.innerWidth + 100; // End position (off right edge)
+
+// Linear interpolation based on scroll
+const scrollMax = window.innerHeight * 2; // Total scroll distance needed
+const progress = Math.min(1, Math.max(0, scrollPosition / scrollMax));
+const chickHorizontalPosition = startX + (progress * (endX - startX));
+
+// Fixed vertical position - no changes based on scroll or sine waves
+const chickVerticalPosition = window.innerHeight * 0.45;
+
+// Keep opacity and wing flap calculations
 const chickOpacity = Math.min(1, scrollPosition / 200) * Math.max(0, 1 - (scrollPosition - window.innerHeight * 2) / 500);
-const wingFlapSpeed = 0.4 + Math.abs(Math.cos(scrollPosition * 0.002)) * 0.2; // Wing speed varies with direction
+const wingFlapSpeed = 0.4 + Math.abs(Math.cos(scrollPosition * 0.005)) * 0.2;
 const wingFlapAmplitude = Math.sin(animationTime * wingFlapSpeed) * 6;
 
+
   return (
+    
+    
     <div style={{ backgroundColor: '#0a0a0a', color: '#ffffff', fontFamily: '"Montserrat", sans-serif' }}>
+    
       {/* Fish Animation Element */}
       <div style={{
         position: 'fixed',
@@ -61,7 +79,18 @@ const wingFlapAmplitude = Math.sin(animationTime * wingFlapSpeed) * 6;
         opacity: fishOpacity,
         transition: 'transform 0.1s ease-out',
         pointerEvents: 'none',
+        
+
       }}>
+       <img src={logosImage} 
+                                  alt="Daily Fresh Fish" 
+                                  style={{
+                                      height: '7.5rem',
+                                      marginRight: '0.75rem',
+                                      
+                                  }}
+                              />
+      
         <svg width="150" height="80" viewBox="0 0 150 80">
           {/* Fish body with subtle pulse */}
           <path 
@@ -70,6 +99,20 @@ const wingFlapAmplitude = Math.sin(animationTime * wingFlapSpeed) * 6;
             stroke="#ffffff" 
             strokeWidth="1" 
           />
+           {/* Logo */}
+                          <div style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                          }}>
+                              <img src={logosImage} 
+                                  alt="Daily Fresh Fish" 
+                                  style={{
+                                      height: '2.5rem',
+                                      marginRight: '0.75rem',
+                                      
+                                  }}
+                              />
+                              /</div>
           
           {/* Eye */}
           <circle cx="25" cy="35" r="4" fill="#000000" />
@@ -188,8 +231,8 @@ const wingFlapAmplitude = Math.sin(animationTime * wingFlapSpeed) * 6;
           <div style={{ position: 'absolute', right: '10px', top: '-40px' }}>
             <div style={{ 
               position: 'absolute', 
-              width: '10px', 
-              height: '10px', 
+              width: '20px', 
+              height: '20px', 
               backgroundColor: 'transparent',
               border: '1px solid rgba(255,255,255,0.7)',
               borderRadius: '50%',
@@ -199,8 +242,8 @@ const wingFlapAmplitude = Math.sin(animationTime * wingFlapSpeed) * 6;
             }}></div>
             <div style={{ 
               position: 'absolute', 
-              width: '6px', 
-              height: '6px', 
+              width: '10px', 
+              height: '10px', 
               backgroundColor: 'transparent',
               border: '1px solid rgba(255,255,255,0.7)',
               borderRadius: '50%',
@@ -210,8 +253,8 @@ const wingFlapAmplitude = Math.sin(animationTime * wingFlapSpeed) * 6;
             }}></div>
             <div style={{ 
               position: 'absolute', 
-              width: '4px', 
-              height: '4px', 
+              width: '8px', 
+              height: '8px', 
               backgroundColor: 'transparent',
               border: '1px solid rgba(255,255,255,0.7)',
               borderRadius: '50%',
@@ -234,7 +277,7 @@ const wingFlapAmplitude = Math.sin(animationTime * wingFlapSpeed) * 6;
           opacity: Math.min(1, (scrollPosition - 50) / 100) * (1 - (scrollPosition - 150) / 150),
           pointerEvents: 'none',
         }}>
-          <svg width="100" height="30" viewBox="0 0 100 30">
+          <svg width="100" height="50" viewBox="0 0 100 30">
             <path 
               d={`M50,0 C${45 + Math.sin(animationTime * 0.8) * 5},10 ${30 + Math.sin(animationTime * 0.6) * 3},15 20,20 C${10 + Math.sin(animationTime * 0.7) * 2},25 5,20 0,30 L100,30 C95,20 ${90 + Math.sin(animationTime * 0.7) * 2},25 80,20 C${70 + Math.sin(animationTime * 0.6) * 3},15 ${55 + Math.sin(animationTime * 0.8) * 5},10 50,0 Z`}
               fill="rgba(255,255,255,0.5)" 
@@ -281,7 +324,6 @@ const wingFlapAmplitude = Math.sin(animationTime * wingFlapSpeed) * 6;
           <p style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)', fontWeight: 300, maxWidth: '800px', marginBottom: '40px', letterSpacing: '0.05em' }}>
             Premium fish and poultry sourced from the finest farms and waters around the world
           </p>
-          <Link to="/register" className="cta-button">DIVE IN</Link>
           
           <div style={{ position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)', textAlign: 'center' }}>
             <span style={{ display: 'block', marginBottom: '10px' }}>Scroll to explore</span>
@@ -399,6 +441,8 @@ const wingFlapAmplitude = Math.sin(animationTime * wingFlapSpeed) * 6;
           <p style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)', fontWeight: 300, maxWidth: '800px', marginBottom: '20px', letterSpacing: '0.05em' }}>
             From our trusted producers to your kitchen within 24 hours
           </p>
+          <Link to="/register" className="cta-button">DIVE IN</Link>
+
         </div>
       </div>
 
