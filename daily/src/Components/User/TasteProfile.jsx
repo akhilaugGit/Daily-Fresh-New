@@ -49,7 +49,7 @@ const TasteProfile = () => {
     
       style={{
         fontFamily: "Arial, sans-serif",
-        maxWidth: "600px",
+        maxWidth: "800px",
         margin: "50px auto",
         padding: "20px",
         borderRadius: "12px",
@@ -137,22 +137,61 @@ const TasteProfile = () => {
       {recommendedProducts.length > 0 && (
         <div style={{ marginTop: "30px" }}>
           <h2 style={{ color: "#333" }}>Recommended Products</h2>
-          <ul style={{ listStyleType: "none", padding: 0 }}>
+          <div style={{ 
+            display: "grid", 
+            gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+            gap: "20px",
+            marginTop: "20px"
+          }}>
             {recommendedProducts.map((product) => (
-              <li
-                key={product._id}
+              <div
+                key={product.name}
                 style={{
                   backgroundColor: "#fff",
-                  marginBottom: "10px",
-                  padding: "10px",
+                  padding: "15px",
                   borderRadius: "8px",
                   boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px"
                 }}
               >
-                {product.name}
-              </li>
+                <img 
+                  src={product.imageUrl} 
+                  alt={product.name}
+                  style={{
+                    width: "100%",
+                    height: "150px",
+                    objectFit: "cover",
+                    borderRadius: "4px"
+                  }}
+                />
+                <h3 style={{ margin: "0", color: "#333" }}>{product.name}</h3>
+                <p style={{ margin: "0", color: "#666", fontSize: "14px" }}>
+                  {product.description}
+                </p>
+                <div style={{ 
+                  display: "flex", 
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: "auto"
+                }}>
+                  <span style={{ fontWeight: "bold", color: "#2ecc71" }}>
+                    ₹{product.price}
+                  </span>
+                  <span style={{
+                    backgroundColor: `hsl(${product.matchPercentage}, 70%, 50%)`,
+                    color: "white",
+                    padding: "4px 8px",
+                    borderRadius: "12px",
+                    fontSize: "12px"
+                  }}>
+                    {product.matchPercentage}% Match
+                  </span>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       )}
     </div>

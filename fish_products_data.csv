@@ -1,0 +1,16 @@
+name,description,price,imageUrl,category,offer,stock,tenderness,sweetness,saltiness,fishiness,texture,oiliness,acidity,metallic,mineral
+Salmon (Atlantic),Fresh Atlantic Salmon - Rich in Omega-3,799,https://example.com/salmon.jpg,fish,10%,50,true,true,false,true,true,true,false,false,false
+Tuna (Yellowfin),Premium Yellowfin Tuna Steaks,899,https://example.com/tuna.jpg,fish,25%,40,true,false,true,true,true,false,false,true,true
+Mackerel,Fresh Indian Mackerel,299,https://example.com/mackerel.jpg,fish,30%,60,false,false,true,true,false,true,false,false,true
+Pomfret,White Pomfret - Perfect for Frying,599,https://example.com/pomfret.jpg,fish,,45,true,true,false,false,true,false,false,false,false
+Sardines,Fresh Local Sardines,199,https://example.com/sardines.jpg,fish,10%,80,false,false,true,true,false,true,true,false,true
+Sea Bass,Premium Sea Bass Fillets,699,https://example.com/seabass.jpg,fish,,35,true,true,false,false,true,false,false,false,true
+Red Snapper,Fresh Red Snapper - Whole,549,https://example.com/redsnapper.jpg,fish,25%,30,true,false,true,false,true,false,true,false,false
+King Fish (Surmai),Fresh King Fish Steaks,749,https://example.com/kingfish.jpg,fish,,40,true,false,true,true,true,true,false,false,false
+Pearl Spot (Karimeen),Fresh Pearl Spot,449,https://example.com/pearlspot.jpg,fish,10%,25,true,true,false,false,true,false,false,false,true
+Anchovy,Fresh Anchovies,149,https://example.com/anchovy.jpg,fish,30%,100,false,false,true,true,false,true,true,true,false
+Cod Fish,Premium Cod Fillets,899,https://example.com/cod.jpg,fish,,20,true,true,false,false,true,false,false,false,true
+Rohu,Fresh Water Rohu,399,https://example.com/rohu.jpg,fish,25%,55,true,false,false,false,true,false,false,false,true
+Hilsa,Bengali Hilsa Fish,999,https://example.com/hilsa.jpg,fish,,15,false,false,true,true,true,true,false,false,true
+Mahi Mahi,Fresh Mahi Mahi Fillets,649,https://example.com/mahimahi.jpg,fish,10%,30,true,true,false,true,true,false,false,false,false
+Butter Fish,Fresh Butter Fish,349,https://example.com/butterfish.jpg,fish,,40,true,true,false,false,true,true,false,false,false 
