@@ -35,9 +35,8 @@ function Login() {
       setEmailError('');
     }
   };
-
- // Updated handleSubmit for regular login
- const handleSubmit = async (e) => {
+// Updated handleSubmit for regular login
+const handleSubmit = async (e) => {
   e.preventDefault();
 
   if (validateEmail(email)) {
@@ -56,33 +55,33 @@ function Login() {
         // Show success toast
         toast.success(result.data.message);
 
-        // Navigate based on the `isDuser` field
-        if (result.data.isDuser) {
-          console.log("it is d user");
-          navigate('/duser'); // Redirect to Duser page
-          console.log('API Response:', result.data);
-          console.log('isDuser:', result.data.isDuser);
+        // Debug the response data
+        console.log('API Response:', result.data);
+        
+        // Navigate based on user role using explicit boolean checks
+        if (result.data.isFuser === true) {
+          console.log("Redirecting to duser page");
+          navigate('/fuser');
         } 
-        else if (result.data.isFuser) {
-          console.log("fuser");
-          navigate('/fuser'); // Redirect to Fuser page
-          console.log('isFuser:', result.data.isFuser);
+        else if (result.data.isDuser === true) {
+          console.log("Redirecting to fuser page");
+          navigate('/duser');
         } 
         else if (email === 'akhilaugustine2025@mca.ajce.in') {
-          navigate('/dashboard'); // Redirect to admin dashboard
+          console.log("Redirecting to admin dashboard");
+          navigate('/dashboard');
         } 
         else {
-          console.log('isDuser:', result.data.isDuser);
-          console.log('isFuser:', result.data.isFuser);
-          navigate('/udashboard'); // Redirect to user dashboard
+          console.log("Redirecting to user dashboard");
+          navigate('/udashboard');
         }
       } 
-      // else {
-      //   // If the backend response is not as expected, handle it here
-      //   const errorMessage = result.data?.message || 'Unexpected error occurred';
-      //   setErrorMessage(errorMessage);
-      //   toast.error(errorMessage);
-      // }
+      else {
+        // If the backend response is not as expected, handle it here
+        const errorMessage = result.data?.message || 'Unexpected error occurred';
+        setErrorMessage(errorMessage);
+        toast.error(errorMessage);
+      }
     } catch (error) {
       // Handle network or server errors
       const backendMessage = error.response?.data?.message || 'Error logging in';

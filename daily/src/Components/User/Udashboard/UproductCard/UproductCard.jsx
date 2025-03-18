@@ -53,8 +53,23 @@ const ProductCard = ({ productId, imageUrl, name, description, price, category,o
             <p>Price: ₹{price}</p>
             <p className="offer">Offer: {offer}</p>
 
-            <button id="acrt" className="add-to-cart-btn" onClick={handleAddToCart}>
-                Add to Cart{addtoCart}
+            <button
+                id={`add-to-cart-${productId}`}
+                onClick={handleAddToCart}
+                style={{
+                    backgroundColor: "#389246",
+                    color: "white",
+                    padding: "8px 16px",
+                    borderRadius: "4px",
+                    border: "none",
+                    cursor: "pointer",
+                    width: "100%",
+                    marginTop: "10px",
+                    position: "relative",
+                    zIndex: "1"
+                }}
+            >
+                Add to Cart
             </button>
         </div>
     );

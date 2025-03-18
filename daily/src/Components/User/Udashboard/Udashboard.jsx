@@ -390,7 +390,8 @@ const Udashboard = () => {
       </div>
 
       {/* Chatbot Button with enhanced styling and animation */}
-      <div 
+      <div   id="chat-bot-button"  // Add this ID
+
         onClick={handleChatbotClick}
         style={{
           position: 'fixed',
