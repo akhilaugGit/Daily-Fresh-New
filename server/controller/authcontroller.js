@@ -96,7 +96,8 @@ loginUser = async (req, res) => {
         res.json({ 
             message: 'Login successful', 
             token, 
-            isDuser: user.isDuser // Include the isDuser field
+            isDuser: user.isDuser,
+            isFuser: user.isFuser // Include the isDuser field
         });
     } catch (error) {
         console.error('Error logging in:', error);  // Log the error for better debugging

@@ -59,13 +59,14 @@ const handleSubmit = async (e) => {
         console.log('API Response:', result.data);
         
         // Navigate based on user role using explicit boolean checks
-        if (result.data.isFuser === true) {
+        
+        if (result.data.isDuser === true) {
           console.log("Redirecting to duser page");
-          navigate('/fuser');
-        } 
-        else if (result.data.isDuser === true) {
-          console.log("Redirecting to fuser page");
           navigate('/duser');
+        } 
+        else if (result.data.isFuser === true) {
+          console.log("Redirecting to fuser page");
+          navigate('/fuser');
         } 
         else if (email === 'akhilaugustine2025@mca.ajce.in') {
           console.log("Redirecting to admin dashboard");

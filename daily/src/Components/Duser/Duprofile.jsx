@@ -54,7 +54,7 @@ const Duprofile = () => {
     ⬅️Back
       </button>
       <div className="profile-details">
-      <h2>Hello Delivery person {user.username}</h2>
+      <h2>Hello  {user.username}</h2>
         <p><strong>👤Name:</strong> {user.username}</p>
         <p><strong>📩Email id:</strong> {user.email}</p>
         {/* Only show last four characters of the password for security */}

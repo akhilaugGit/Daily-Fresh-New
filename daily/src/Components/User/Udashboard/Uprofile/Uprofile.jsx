@@ -397,6 +397,7 @@ const Uprofile = () => {
       >
         <h2 style={profileHeadingStyle}>
           Welcome, {user.username}
+          
           <div style={decorationStyle}></div>
         </h2>
 
