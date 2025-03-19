@@ -1,6 +1,4 @@
 const Product = require("../models/Productmodel");
-const fs = require('fs');
-const path = require('path');
 
 exports.getRecommendedProducts = async (req, res) => {
     try {
@@ -9,51 +7,46 @@ exports.getRecommendedProducts = async (req, res) => {
             .filter(([_, value]) => value)
             .map(([key]) => key);
 
-        // Read CSV file
-        const csvFilePath = path.join(__dirname, '../../fish_products_data.csv');
-        const fileContent = fs.readFileSync(csvFilePath, 'utf-8');
+        // Build the query to match products with selected taste profiles
+        const query = {
+            isDisabled: false, // Only get active products
+            $and: selectedPreferences.map(pref => ({
+                [`tasteProfile.${pref}`]: true
+            }))
+        };
 
-        // Parse CSV manually
-        const [headers, ...rows] = fileContent.split('\n');
-        const headerArray = headers.split(',');
+        // Get matching products from database
+        const dbProducts = await Product.find(query);
 
-        // Convert CSV rows to objects
-        const records = rows.map(row => {
-            const values = row.split(',');
-            return headerArray.reduce((obj, header, index) => {
-                obj[header.trim()] = values[index]?.trim() || '';
-                return obj;
-            }, {});
-        });
+        // Calculate match percentage and sort products
+        const recommendedProducts = dbProducts
+            .map(product => {
+                // Count how many preferences match
+                const matchCount = selectedPreferences.filter(pref => 
+                    product.tasteProfile[pref] === true
+                ).length;
 
-        // Filter products based on selected preferences
-        const recommendedProducts = records.filter(product => {
-            return selectedPreferences.every(pref => {
-                return product[pref]?.toLowerCase() === 'true';
-            });
-        });
+                const matchPercentage = (matchCount / selectedPreferences.length) * 100;
 
-        // Sort by matching characteristics count
-        const sortedProducts = recommendedProducts.sort((a, b) => {
-            const aMatches = selectedPreferences.filter(pref => a[pref]?.toLowerCase() === 'true').length;
-            const bMatches = selectedPreferences.filter(pref => b[pref]?.toLowerCase() === 'true').length;
-            return bMatches - aMatches;
-        });
-
-        // Add match percentage
-        const productsWithScore = sortedProducts.map(product => {
-            const matchCount = selectedPreferences.filter(pref => product[pref]?.toLowerCase() === 'true').length;
-            const matchPercentage = (matchCount / selectedPreferences.length) * 100;
-            return {
-                ...product,
-                matchPercentage: Math.round(matchPercentage)
-            };
-        });
+                return {
+                    _id: product._id,
+                    name: product.name,
+                    description: product.description,
+                    price: product.price,
+                    imageUrl: product.imageUrl,
+                    category: product.category,
+                    stock: product.stock,
+                    offer: product.offer,
+                    matchPercentage: Math.round(matchPercentage)
+                };
+            })
+            .filter(product => product.matchPercentage > 0) // Only include products with matches
+            .sort((a, b) => b.matchPercentage - a.matchPercentage); // Sort by match percentage
 
         res.status(200).json({
             success: true,
             message: "Recommended products fetched successfully",
-            data: productsWithScore
+            data: recommendedProducts
         });
 
     } catch (error) {
