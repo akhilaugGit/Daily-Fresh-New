@@ -20,6 +20,7 @@ const TasteProfile = () => {
 
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, checked } = e.target;
@@ -33,10 +34,12 @@ const TasteProfile = () => {
         preferences,
       });
       setRecommendedProducts(data.data);
+      setMessage(data.message);
       setError(""); // Clear any existing errors
     } catch (error) {
       console.error("Error fetching recommendations:", error);
       setError("Failed to fetch recommended products. Please try again.");
+      setRecommendedProducts([]);
     }
   };
   const handleBack = () => {
@@ -134,6 +137,18 @@ const TasteProfile = () => {
           {error}
         </p>
       )}
+      {message && (
+        <p style={{
+          padding: "10px",
+          marginTop: "20px",
+          borderRadius: "8px",
+          backgroundColor: recommendedProducts.length ? "#e3f2fd" : "#fff3e0",
+          color: recommendedProducts.length ? "#1565c0" : "#ef6c00",
+          textAlign: "center"
+        }}>
+          {message}
+        </p>
+      )}
       {recommendedProducts.length > 0 && (
         <div style={{ marginTop: "30px" }}>
           <h2 style={{ color: "#333" }}>Recommended Products</h2>
@@ -145,7 +160,7 @@ const TasteProfile = () => {
           }}>
             {recommendedProducts.map((product) => (
               <div
-                key={product.name}
+                key={product._id}
                 style={{
                   backgroundColor: "#fff",
                   padding: "15px",
@@ -157,7 +172,7 @@ const TasteProfile = () => {
                 }}
               >
                 <img 
-                  src={product.imageUrl} 
+                  src={`${import.meta.env.VITE_BACKEND_URL}${product.imageUrl}`}
                   alt={product.name}
                   style={{
                     width: "100%",
@@ -179,15 +194,29 @@ const TasteProfile = () => {
                   <span style={{ fontWeight: "bold", color: "#2ecc71" }}>
                     ₹{product.price}
                   </span>
-                  <span style={{
-                    backgroundColor: `hsl(${product.matchPercentage}, 70%, 50%)`,
-                    color: "white",
-                    padding: "4px 8px",
-                    borderRadius: "12px",
-                    fontSize: "12px"
-                  }}>
-                    {product.matchPercentage}% Match
-                  </span>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+                    <span style={{
+                      backgroundColor: product.matchType === 'Exact Match' 
+                        ? `hsl(${product.matchPercentage}, 70%, 50%)`
+                        : '#9575cd',
+                      color: "white",
+                      padding: "4px 8px",
+                      borderRadius: "12px",
+                      fontSize: "12px",
+                      marginBottom: "4px"
+                    }}>
+                      {product.matchType}
+                    </span>
+                    <span style={{
+                      backgroundColor: '#f0f0f0',
+                      color: '#666',
+                      padding: "2px 6px",
+                      borderRadius: "8px",
+                      fontSize: "11px"
+                    }}>
+                      {product.matchPercentage}% Match
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
