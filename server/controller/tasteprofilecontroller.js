@@ -1,7 +1,7 @@
 const Product = require("../models/Productmodel");
 
 exports.getRecommendedProducts = async (req, res) => {
-    try {
+  try {
         const { preferences, k = 5 } = req.body; // k is the number of nearest neighbors to consider
         const selectedPreferences = Object.entries(preferences)
             .filter(([_, value]) => value)
@@ -106,8 +106,8 @@ exports.getRecommendedProducts = async (req, res) => {
         const knnMatches = nearestNeighbors.length;
         const directMatches = exactMatches.length;
 
-        res.status(200).json({
-            success: true,
+    res.status(200).json({
+      success: true,
             message: `Found ${knnMatches} fish products as nearest neighbors and ${directMatches} additional exact matches`,
             data: recommendedProducts.map(product => ({
                 ...product,
@@ -118,14 +118,14 @@ exports.getRecommendedProducts = async (req, res) => {
             }))
         });
 
-    } catch (error) {
+  } catch (error) {
         console.error('Error in fish taste profile recommendation:', error);
-        res.status(500).json({
-            success: false,
+    res.status(500).json({
+      success: false,
             message: "Error fetching fish recommendations",
             error: error.message
-        });
-    }
+    });
+  }
 };
 
 // Helper function to create a feature vector from taste preferences
