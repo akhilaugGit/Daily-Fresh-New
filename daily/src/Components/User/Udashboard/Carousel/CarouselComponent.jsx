@@ -3,9 +3,9 @@ import { Carousel as BootstrapCarousel } from 'react-bootstrap';
 import '../Style.css'; 
 
 // Importing images correctly
-import homeImage from '../../../../assets/courosel/one.webp';
-import underImage from '../../../../assets/courosel/two.webp';
-import plateImage from '../../../../assets/courosel/four.webp';
+import homeImage from '../../../../assets/courosel/prince1.png';
+import underImage from '../../../../assets/courosel/prin2.png';
+import plateImage from '../../../../assets/courosel/prince3.png';
 import ad10 from '../../../../assets/courosel/ten.gif';
 
 const CarouselComponent = () => {
@@ -24,10 +24,7 @@ const CarouselComponent = () => {
                         <span style={{ color: 'yellow' }}>Advertisment</span>
 
                     </BootstrapCarousel.Item>
-                    <BootstrapCarousel.Item>
-                        <img className="d-block w-100" src={ad10} alt="ad10" />
-                        <span style={{ color: 'yellow' }}>Advertisment</span>
-                    </BootstrapCarousel.Item>
+                    
                 </BootstrapCarousel>
             </div>
         </div>

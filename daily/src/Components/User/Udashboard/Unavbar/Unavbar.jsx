@@ -151,7 +151,7 @@ const Unavbar = () => {
                         display: 'flex',
                         alignItems: 'center',
                     }} onClick={handleHomeClick}>
-                        Daily Fresh
+                        Electrux
                         <span style={{
                             fontSize: '0.8rem',
                             background: `linear-gradient(135deg, ${colors.accent}, #4ECDC4)`,
@@ -161,7 +161,7 @@ const Unavbar = () => {
                             marginLeft: '0.5rem',
                             boxShadow: '0 2px 8px rgba(78, 205, 196, 0.5)',
                         }}>
-                            Premium Seafood
+                            Premium Electronics
                         </span>
                     </h1>
                 </div>
@@ -236,31 +236,7 @@ const Unavbar = () => {
                         </div>
                     ))}
                     
-                    <div
-                        onClick={handleTaste}
-                        style={{
-                            ...buttonStyle,
-                            background: `linear-gradient(135deg, #4ECDC4, #49b6e9)`,
-                            color: '#fff',
-                            display: 'flex',
-                            alignItems: 'center',
-                            boxShadow: '0 4px 15px rgba(255, 94, 98, 0.3)',
-                            ':hover': {
-                                transform: 'translateY(-2px)',
-                                boxShadow: '0 6px 20px rgba(255, 94, 98, 0.4)',
-                            }
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-2px)';
-                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(255, 94, 98, 0.4)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 94, 98, 0.3)';
-                        }}
-                    >
-                        ✨ TasteLens
-                    </div>
+                 
                 </div>
 
                 {/* User Actions */}

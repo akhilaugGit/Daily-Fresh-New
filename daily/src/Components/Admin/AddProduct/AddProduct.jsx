@@ -114,8 +114,8 @@ const AddProduct = () => {
       />
       <input type="file" placeholder="Image URL" onChange={imageUpload} required />
       <select value={category} onChange={(e) => setCategory(e.target.value)} required>
-        <option value="fish">Fish</option>
-        <option value="poultry">Poultry</option>
+        <option value="fish">TV</option>
+        <option value="poultry">fRIDGE</option>
       </select>
       <select value={offer} onChange={(e) => setOffer(e.target.value)} required>
         <option value="">Select Offer</option>

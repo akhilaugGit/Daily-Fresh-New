@@ -301,8 +301,9 @@ const Udashboard = () => {
                 : `0 2px 8px ${theme.shadow}`,
               minWidth: "100px",
             }}
+            
           >
-            Fish
+            TV
           </button>
           <button
             onClick={() => setSelectedCategory("poultry")}
@@ -317,8 +318,9 @@ const Udashboard = () => {
               minWidth: "100px",
             }}
           >
-            Poultry
+          FRIDGE
           </button>
+          
         </div>
 
         {/* Results Summary */}

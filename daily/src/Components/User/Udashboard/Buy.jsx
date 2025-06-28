@@ -114,7 +114,7 @@ const Buy = () => {
   return (
     <div className="buy-page" style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
       <h2>Checkout</h2>
-      <button onClick={handleCart}>⬅️Back</button>
+      <button onClick={handleCart}>⬅️Backk</button>
       <p>Total Price to Pay: ₹{totalPrice}</p>
 
       <form onSubmit={(e) => e.preventDefault()} style={{ marginTop: '20px' }}>
